@@ -18,7 +18,7 @@
     const [previousVolume, setPreviousVolume] = useState(50);
     // Profile image cycling
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const profileImages = ['prof.jpg', 'Grad1.jpg', 'Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
+    const profileImages = ['Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
 
 // Playlist state
     const [playlist] = useState([
@@ -983,8 +983,8 @@ const playPrevious = () => {
                         }
 
                         .profile-image {
-                            width: 280px;
-                            height: 280px;
+                            width: 300px;
+                            height: 300px;
                             border-radius: 16px;
                             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             display: flex;
@@ -1019,7 +1019,7 @@ const playPrevious = () => {
                         .profile-image img {
                             width: calc(100% - 6px);
                             height: calc(100% - 6px);
-                            object-fit: cover;
+                            object-fit: contain;
                             border-radius: 13px;
                             display: block;
                         }
@@ -1048,8 +1048,8 @@ const playPrevious = () => {
                             }
                             
                             .profile-image {
-                                width: 320px;
-                                height: 320px;
+                                width: 350px;
+                                height: 350px;
                                 border-radius: 20px;
                                 padding: 4px;
                             }
