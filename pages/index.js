@@ -625,7 +625,7 @@ export default function LoadingPage() {
                                 )}
                                 {msg.id === 'msg6' && (
                                     <>
-                                        <span className="success">✓</span> Portfolio ready!
+                                        <span className="success"></span> Portfolio ready!
                                     </>
                                 )}
                                 {msg.id === 'msg1' && msg.text}
