@@ -1049,7 +1049,7 @@ const playPrevious = () => {
                             
                             .profile-image {
                                 width: 350px;
-                                height: 367px;
+                                height: 467px;
                                 border-radius: 20px;
                                 padding: 4px;
                             }
@@ -1647,7 +1647,8 @@ Your browser does not support the audio element.
     <i className="fas fa-user fallback-icon"></i>
 </div>
                             <div className="about-text">
-                                <p>
+                                <p><br>
+                                </br>
                                     I'm a 22-year-old Tech Enthusiast and TUP Manila graduate with a BTVTED Major in Computer Programming. 
                                     My passion for technology started in high school, from customizing Nokia phones with GBA games
                                     to exploring programming and problem-solving on my own. Over the years, that curiosity grew into real-world 
