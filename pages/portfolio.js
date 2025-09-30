@@ -1,6 +1,8 @@
     import React, { useEffect, useRef, useState } from "react";
     import Head from "next/head";
     import emailjs from '@emailjs/browser';
+    
+
 
     export default function Portfolio() {
     const [floatingChars, setFloatingChars] = useState([]);
@@ -854,24 +856,24 @@ const playPrevious = () => {
                             line-height: 1.2;
                         }
 
-                        .hero-title-hover {
+                       .hero-title-hover {
                             position: relative;
                             cursor: pointer;
                             display: inline-block;
                             white-space: nowrap;
                         }
 
-                        .hero-name,
-                        .hero-name-alt {
-                            display: block;
+                        .hero-title-hover .hero-name,
+                        .hero-title-hover .hero-name-alt {
+                            display: inline-block;
                             white-space: nowrap;
+                            transition: opacity 0.3s ease;
                         }
 
-                        .hero-name-alt {
+                        .hero-title-hover .hero-name-alt {
                             position: absolute;
                             top: 0;
                             left: 0;
-                            width: max-content;
                             opacity: 0;
                             background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
                             background-clip: text;
@@ -880,11 +882,11 @@ const playPrevious = () => {
                         }
 
                         .hero-title-hover:hover .hero-name {
-                            animation: glitchOut 0.1s ease forwards;
+                            animation: glitchOut 0.3s ease forwards;
                         }
 
                         .hero-title-hover:hover .hero-name-alt {
-                            animation: glitchIn 0.1s ease forwards;
+                            animation: glitchIn 0.3s ease forwards;
                         }
 
                         @keyframes glitchOut {
@@ -1688,9 +1690,12 @@ Your browser does not support the audio element.
                 <section id="home" className="hero">
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
-                        <h1 className="hero-title hero-title-hover">
-                            <span className="hero-name">Laurence De Guzman</span>
-                            <span className="hero-name-alt">watch me make history</span>
+                        <h1 className="hero-title">
+                        <span className="hero-name">Laurence De </span>
+                        <span className="hero-title-hover">
+                            <span className="hero-name">Guzman</span>
+                            <span className="hero-name-alt">Gudman</span>
+                        </span>
                         </h1>
                         <div className="typing-container">
                             I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
