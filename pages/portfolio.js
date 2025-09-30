@@ -983,8 +983,8 @@ const playPrevious = () => {
                         }
 
                         .profile-image {
-                            width: 200px;
-                            height: 200px;
+                            width: 280px;
+                            height: 280px;
                             border-radius: 16px;
                             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             display: flex;
@@ -994,7 +994,27 @@ const playPrevious = () => {
                             overflow: hidden;
                             padding: 3px;
                             margin: 0 auto;
+                            cursor: pointer;
+                            transition: all 0.4s ease;
                         }
+
+                        .profile-image:hover {
+                            transform: scale(1.05) rotate(2deg);
+                            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.4);
+                        }
+
+.profile-image:active {
+    transform: scale(0.98);
+}
+
+.profile-image:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.4);
+}
+
+.profile-image:active {
+    transform: scale(0.98);
+}
 
                         .profile-image img {
                             width: calc(100% - 6px);
