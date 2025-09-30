@@ -357,14 +357,15 @@ export default function LoadingPage() {
                         text-align: left;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
-                        padding: 0.75rem;
+                        padding: 1rem;
                         border-left: 4px solid #0ea5e9;
                         display: flex;
                         flex-direction: column;
-                        gap: 0.4rem;
+                        gap: 0.5rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
-                    }
+                        min-height: 180px;
+}
 
                     /* Scrollbar styles removed - no longer needed */
 
