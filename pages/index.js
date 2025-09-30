@@ -351,16 +351,17 @@ export default function LoadingPage() {
                         font-weight: 600;
                     }
 
-                  .status-messages {
+                    .status-messages {
                         margin-top: 1rem;
-                                                text-align: left;
+                        margin-bottom: 2rem;
+                        text-align: left;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
                         padding: 0.75rem;
                         border-left: 4px solid #0ea5e9;
                         display: flex;
                         flex-direction: column;
-                        gap: 0.3rem;
+                        gap: 0.4rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
                     }
@@ -374,7 +375,7 @@ export default function LoadingPage() {
                         opacity: 0;
                         transform: translateY(10px);
                         font-family: 'JetBrains Mono', monospace;
-                        padding-left: 0;
+                        padding-left: 0.25rem;
                         line-height: 1.4;
                         word-break: break-word;
                         transition: all 0.3s ease;
@@ -390,15 +391,15 @@ export default function LoadingPage() {
                     .status-message .accent { color: #f59e0b; }
 
                  .complete-section {
-                        margin-top: 1.5rem;
-                        opacity: 0;
-                        transform: scale(0.8);
-                        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                    }
+                    margin-top: 2.5rem;
+                    opacity: 0;
+                    transform: scale(0.8);
+                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
 
                     .complete-section.show {
                         opacity: 1;
