@@ -16,6 +16,9 @@
     const [duration, setDuration] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     const [previousVolume, setPreviousVolume] = useState(50);
+    // Profile image cycling
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const profileImages = ['prof.jpg', 'Grad1.jpg', 'Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
 
 // Playlist state
     const [playlist] = useState([
@@ -1615,14 +1618,14 @@ Your browser does not support the audio element.
                     <div className="container">
                         <h2 className="section-title">About Me</h2>
                         <div className="about-content fade-in">
-                            <div className="profile-image">
-                                <img 
-                                    src="/prof.jpg" 
-                                    alt="Laurence De Guzman" 
-                                    onError={handleImageError}
-                                />
-                                <i className="fas fa-user fallback-icon"></i>
-                            </div>
+                           <div className="profile-image" onClick={() => setCurrentImageIndex((prev) => (prev + 1) % profileImages.length)} style={{ cursor: 'pointer' }}>
+    <img 
+        src={`/${profileImages[currentImageIndex]}`}
+        alt="Laurence De Guzman" 
+        onError={handleImageError}
+    />
+    <i className="fas fa-user fallback-icon"></i>
+</div>
                             <div className="about-text">
                                 <p>
                                     I'm a 22-year-old Tech Enthusiast and TUP Manila graduate with a BTVTED Major in Computer Programming. 
