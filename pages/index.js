@@ -29,31 +29,31 @@ export default function LoadingPage() {
         'Ready to deploy!'
     ];
 
-    useEffect(() => {
-        const progressTimer = setInterval(() => {
-            setProgress(prev => {
-                const increment = Math.random() * 8 + 2;
-                const newProgress = Math.min(prev + increment, 100);
-                
-                messages.forEach((msg, index) => {
-                    if (newProgress >= msg.threshold && messageIndex === index) {
-                        setMessageIndex(index + 1);
-                        if (index < compileTexts.length) {
-                            setCompileStatus(compileTexts[index]);
-                        }
+  useEffect(() => {
+    const progressTimer = setInterval(() => {
+        setProgress(prev => {
+            const increment = 1;
+            const newProgress = Math.min(prev + increment, 100);
+            
+            messages.forEach((msg, index) => {
+                if (newProgress >= msg.threshold && messageIndex === index) {
+                    setMessageIndex(index + 1);
+                    if (index < compileTexts.length) {
+                        setCompileStatus(compileTexts[index]);
                     }
-                });
-
-                if (newProgress >= 100) {
-                    clearInterval(progressTimer);
-                    setTimeout(() => {
-                        setShowComplete(true);
-                    }, 500);
                 }
-
-                return newProgress;
             });
-        }, 150);
+
+            if (newProgress >= 100) {
+                clearInterval(progressTimer);
+                setTimeout(() => {
+                    setShowComplete(true);
+                }, 500);
+            }
+
+            return newProgress;
+        });
+    }, 47);
 
         setTimeout(() => {
             startAutoPlay();
@@ -236,7 +236,7 @@ export default function LoadingPage() {
                         66% { transform: translateX(-100px) translateY(50px) rotate(240deg); }
                     }
 
-                    .intro-container {
+                    ..intro-container {
                         text-align: center;
                         max-width: min(90vw, 600px);
                         width: 100%;
@@ -245,8 +245,6 @@ export default function LoadingPage() {
                         flex-direction: column;
                         justify-content: center;
                         box-sizing: border-box;
-                        max-height: 90vh;
-                        overflow-y: auto;
                     }
 
                     .name {
@@ -340,11 +338,12 @@ export default function LoadingPage() {
                         100% { left: 100%; }
                     }
 
-                    .progress-text {
+                 .progress-text {
                         margin-top: 1rem;
                         font-size: clamp(0.85rem, 2.5vw, 1rem);
                         color: #94a3b8;
                         font-family: 'JetBrains Mono', monospace;
+                        text-align: center;
                     }
 
                     .percentage {
@@ -352,34 +351,21 @@ export default function LoadingPage() {
                         font-weight: 600;
                     }
 
-                    .status-messages {
+                   .status-messages {
                         margin-top: 1rem;
                         text-align: left;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
                         padding: 0.75rem;
                         border-left: 4px solid #0ea5e9;
-                        min-height: 100px;
-                        max-height: 130px;
-                        overflow-y: auto;
                         display: flex;
                         flex-direction: column;
+                        gap: 0.3rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
                     }
 
-                    .status-messages::-webkit-scrollbar {
-                        width: 4px;
-                    }
-
-                    .status-messages::-webkit-scrollbar-track {
-                        background: rgba(30, 41, 59, 0.3);
-                    }
-
-                    .status-messages::-webkit-scrollbar-thumb {
-                        background: rgba(14, 165, 233, 0.5);
-                        border-radius: 2px;
-                    }
+                    /* Scrollbar styles removed - no longer needed */
 
                     .status-message {
                         font-size: clamp(0.75rem, 2.2vw, 0.9rem);
@@ -403,11 +389,15 @@ export default function LoadingPage() {
                     .status-message .primary { color: #0ea5e9; }
                     .status-message .accent { color: #f59e0b; }
 
-                    .complete-section {
+                   .complete-section {
                         margin-top: 0.5rem;
                         opacity: 0;
                         transform: scale(0.8);
                         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
                     }
 
                     .complete-section.show {
@@ -558,7 +548,7 @@ export default function LoadingPage() {
                 `}</style>
             </Head>
 
-            <audio id="backgroundMusic" preload="auto" loop>
+            <audio id="backgroundMusic" preload="auto">
                 <source src="/electronic-game2-332868.mp3" type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
@@ -644,11 +634,11 @@ export default function LoadingPage() {
                 
                 <div className={`complete-section ${showComplete ? 'show' : ''}`}>
                     <div className="success-message">
-                        <span>🎉</span>
+                        <span></span>
                         <span>Compilation successful!</span>
                     </div>
                     <button className="enter-button" onClick={enterPortfolio}>
-                        <span>🚀</span>
+                        <span></span>
                         <span>Enter Portfolio</span>
                     </button>
                 </div>
