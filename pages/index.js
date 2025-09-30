@@ -248,7 +248,7 @@ export default function LoadingPage() {
                     }
 
                     .name {
-                        font-size: clamp(2rem, 8vw, 3.5rem);
+                        font-size: clamp(1.75rem, 7vw, 3rem);
                         font-weight: 700;
                         margin-bottom: 0.5rem;
                         background: linear-gradient(135deg, #f8fafc, #0ea5e9);
