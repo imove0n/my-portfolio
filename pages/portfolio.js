@@ -702,6 +702,30 @@ const playPrevious = () => {
                             display: flex;
                             align-items: center;
                             gap: 0.3rem;
+                            position: relative;
+                            cursor: pointer;
+                        }
+
+                        .logo-text,
+                        .logo-hover-text {
+                            transition: opacity 0.3s ease, transform 0.3s ease;
+                        }
+
+                        .logo-hover-text {
+                            position: absolute;
+                            opacity: 0;
+                            transform: translateY(5px);
+                            pointer-events: none;
+                        }
+
+                        .logo:hover .logo-text {
+                            opacity: 0;
+                            transform: translateY(-5px);
+                        }
+
+                        .logo:hover .logo-hover-text {
+                            opacity: 1;
+                            transform: translateY(0);
                         }
 
                         /* Mobile Navigation */
@@ -828,6 +852,57 @@ const playPrevious = () => {
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.4s forwards;
                             line-height: 1.2;
+                        }
+
+                        .hero-title-hover {
+                            position: relative;
+                            cursor: pointer;
+                            display: inline-block;
+                            white-space: nowrap;
+                        }
+
+                        .hero-name,
+                        .hero-name-alt {
+                            display: block;
+                            white-space: nowrap;
+                        }
+
+                        .hero-name-alt {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: max-content;
+                            opacity: 0;
+                            background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+                            background-clip: text;
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
+
+                        .hero-title-hover:hover .hero-name {
+                            animation: glitchOut 0.1s ease forwards;
+                        }
+
+                        .hero-title-hover:hover .hero-name-alt {
+                            animation: glitchIn 0.1s ease forwards;
+                        }
+
+                        @keyframes glitchOut {
+                            0% { opacity: 1; transform: translateX(0); }
+                            20% { opacity: 0.8; transform: translateX(-5px) skew(-5deg); }
+                            40% { opacity: 0.4; transform: translateX(3px) skew(3deg); }
+                            60% { opacity: 0.2; transform: translateX(-2px) skew(-2deg); }
+                            80% { opacity: 0.1; transform: translateX(1px) skew(1deg); }
+                            100% { opacity: 0; transform: translateX(0); }
+                        }
+
+                        @keyframes glitchIn {
+                            0% { opacity: 0; transform: translateX(10px) skew(5deg); filter: blur(3px); }
+                            20% { opacity: 0.3; transform: translateX(-8px) skew(-8deg); filter: blur(2px); }
+                            40% { opacity: 0.5; transform: translateX(5px) skew(5deg); filter: blur(1px); }
+                            60% { opacity: 0.7; transform: translateX(-3px) skew(-3deg); filter: blur(0.5px); }
+                            80% { opacity: 0.9; transform: translateX(1px) skew(1deg); filter: blur(0px); }
+                            100% { opacity: 1; transform: translateX(0) skew(0deg); filter: blur(0px); }
                         }
 
                         .typing-container {
@@ -1591,8 +1666,8 @@ Your browser does not support the audio element.
                 <nav className="navbar">
                     <div className="nav-container">
                         <div className="logo">
-
-                            Laurence De Guzman
+                            <span className="logo-text">Laurence De Guzman</span>
+                            <span className="logo-hover-text">I was born like this</span>
                         </div>
                         <ul className={`nav-menu ${isNavMenuActive ? 'active' : ''}`}>
                             <li><a href="#home" onClick={closeMenu}>Home</a></li>
@@ -1613,7 +1688,10 @@ Your browser does not support the audio element.
                 <section id="home" className="hero">
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
-                        <h1 className="hero-title">Laurence De Guzman</h1>
+                        <h1 className="hero-title hero-title-hover">
+                            <span className="hero-name">Laurence De Guzman</span>
+                            <span className="hero-name-alt">watch me make history</span>
+                        </h1>
                         <div className="typing-container">
                             I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
                         </div>
