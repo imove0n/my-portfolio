@@ -984,7 +984,7 @@ const playPrevious = () => {
 
                         .profile-image {
                             width: 300px;
-                            height: 300px;
+                            height: 400px;
                             border-radius: 16px;
                             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             display: flex;
@@ -1049,7 +1049,7 @@ const playPrevious = () => {
                             
                             .profile-image {
                                 width: 350px;
-                                height: 350px;
+                                height: 367px;
                                 border-radius: 20px;
                                 padding: 4px;
                             }
