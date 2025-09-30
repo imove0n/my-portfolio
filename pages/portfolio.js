@@ -882,31 +882,40 @@ const playPrevious = () => {
                         }
 
                         .hero-title-hover:hover .hero-name {
-                            animation: glitchOut 0.3s ease forwards;
+                            animation: glitchOut 0.1s ease forwards;
                         }
 
                         .hero-title-hover:hover .hero-name-alt {
-                            animation: glitchIn 0.3s ease forwards;
+                            animation: glitchSequence 1s ease forwards;
+                        }
+
+                        .hero-title-hover .hero-name-alt::before {
+                            content: 'Guzman';
+                        }
+
+                        @keyframes glitchSequence {
+                            0% { content: 'Guzman'; opacity: 1; }
+                            10% { content: 'Gxzman'; opacity: 0.8; transform: translateX(-2px); }
+                            20% { content: 'Gkrman'; opacity: 0.6; transform: translateX(2px); }
+                            30% { content: 'Glpman'; opacity: 0.7; transform: translateX(-1px); }
+                            40% { content: 'Gnqman'; opacity: 0.5; transform: translateX(3px); }
+                            50% { content: 'Gwtman'; opacity: 0.6; transform: translateX(-2px); }
+                            60% { content: 'Grsdan'; opacity: 0.7; transform: translateX(1px); }
+                            70% { content: 'Gvjman'; opacity: 0.8; transform: translateX(-1px); }
+                            80% { content: 'Gybman'; opacity: 0.9; transform: translateX(2px); }
+                            90% { content: 'Gufman'; opacity: 0.95; transform: translateX(0); }
+                            100% { content: 'Gudman'; opacity: 1; transform: translateX(0); }
                         }
 
                         @keyframes glitchOut {
-                            0% { opacity: 1; transform: translateX(0); }
-                            20% { opacity: 0.8; transform: translateX(-5px) skew(-5deg); }
-                            40% { opacity: 0.4; transform: translateX(3px) skew(3deg); }
-                            60% { opacity: 0.2; transform: translateX(-2px) skew(-2deg); }
-                            80% { opacity: 0.1; transform: translateX(1px) skew(1deg); }
-                            100% { opacity: 0; transform: translateX(0); }
+                            0% { opacity: 1; }
+                            100% { opacity: 0; }
                         }
 
                         @keyframes glitchIn {
-                            0% { opacity: 0; transform: translateX(10px) skew(5deg); filter: blur(3px); }
-                            20% { opacity: 0.3; transform: translateX(-8px) skew(-8deg); filter: blur(2px); }
-                            40% { opacity: 0.5; transform: translateX(5px) skew(5deg); filter: blur(1px); }
-                            60% { opacity: 0.7; transform: translateX(-3px) skew(-3deg); filter: blur(0.5px); }
-                            80% { opacity: 0.9; transform: translateX(1px) skew(1deg); filter: blur(0px); }
-                            100% { opacity: 1; transform: translateX(0) skew(0deg); filter: blur(0px); }
+                            0% { opacity: 0; }
+                            100% { opacity: 1; }
                         }
-
                         .typing-container {
                             font-size: 1.2rem;
                             color: var(--text-secondary);
