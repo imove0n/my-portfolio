@@ -856,66 +856,33 @@ const playPrevious = () => {
                             line-height: 1.2;
                         }
 
-                       .hero-title-hover {
-                            position: relative;
-                            cursor: pointer;
-                            display: inline-block;
-                            white-space: nowrap;
-                        }
+                       .glitch-text {
+                                position: relative;
+                                cursor: pointer;
+                                display: inline-block;
+                            }
 
-                        .hero-title-hover .hero-name,
-                        .hero-title-hover .hero-name-alt {
-                            display: inline-block;
-                            white-space: nowrap;
-                            transition: opacity 0.3s ease;
-                        }
+                            .glitch-text:hover::before {
+                                content: attr(data-text);
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                animation: glitchAnim 0.8s steps(10) forwards;
+                            }
 
-                        .hero-title-hover .hero-name-alt {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            opacity: 0;
-                            background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
-                            background-clip: text;
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                        }
-
-                        .hero-title-hover:hover .hero-name {
-                            animation: glitchOut 0.1s ease forwards;
-                        }
-
-                        .hero-title-hover:hover .hero-name-alt {
-                            animation: glitchSequence 1s ease forwards;
-                        }
-
-                        .hero-title-hover .hero-name-alt::before {
-                            content: 'Guzman';
-                        }
-
-                        @keyframes glitchSequence {
-                            0% { content: 'Guzman'; opacity: 1; }
-                            10% { content: 'Gxzman'; opacity: 0.8; transform: translateX(-2px); }
-                            20% { content: 'Gkrman'; opacity: 0.6; transform: translateX(2px); }
-                            30% { content: 'Glpman'; opacity: 0.7; transform: translateX(-1px); }
-                            40% { content: 'Gnqman'; opacity: 0.5; transform: translateX(3px); }
-                            50% { content: 'Gwtman'; opacity: 0.6; transform: translateX(-2px); }
-                            60% { content: 'Grsdan'; opacity: 0.7; transform: translateX(1px); }
-                            70% { content: 'Gvjman'; opacity: 0.8; transform: translateX(-1px); }
-                            80% { content: 'Gybman'; opacity: 0.9; transform: translateX(2px); }
-                            90% { content: 'Gufman'; opacity: 0.95; transform: translateX(0); }
-                            100% { content: 'Gudman'; opacity: 1; transform: translateX(0); }
-                        }
-
-                        @keyframes glitchOut {
-                            0% { opacity: 1; }
-                            100% { opacity: 0; }
-                        }
-
-                        @keyframes glitchIn {
-                            0% { opacity: 0; }
-                            100% { opacity: 1; }
-                        }
+                            @keyframes glitchAnim {
+                                0% { content: 'Guzman'; opacity: 1; }
+                                10% { content: 'Gxrman'; transform: translateX(-2px); }
+                                20% { content: 'Gktman'; transform: translateX(2px); }
+                                30% { content: 'Glpdan'; transform: translateX(-1px); }
+                                40% { content: 'Gnqman'; transform: translateX(3px); }
+                                50% { content: 'Gwtsan'; transform: translateX(-2px); }
+                                60% { content: 'Grjdan'; transform: translateX(1px); }
+                                70% { content: 'Gvkman'; transform: translateX(-1px); }
+                                80% { content: 'Gybdan'; transform: translateX(2px); }
+                                90% { content: 'Gufman'; transform: translateX(0); }
+                                100% { content: 'Gudman'; opacity: 1; transform: translateX(0); }
+                            }
                         .typing-container {
                             font-size: 1.2rem;
                             color: var(--text-secondary);
@@ -1700,11 +1667,7 @@ Your browser does not support the audio element.
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
                         <h1 className="hero-title">
-                        <span className="hero-name">Laurence De </span>
-                        <span className="hero-title-hover">
-                            <span className="hero-name">Guzman</span>
-                            <span className="hero-name-alt">Gudman</span>
-                        </span>
+                            Laurence De <span className="glitch-text" data-text="Guzman">Guzman</span>
                         </h1>
                         <div className="typing-container">
                             I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
