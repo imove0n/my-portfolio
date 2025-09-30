@@ -236,7 +236,7 @@ export default function LoadingPage() {
                         66% { transform: translateX(-100px) translateY(50px) rotate(240deg); }
                     }
 
-                    ..intro-container {
+                    .intro-container {
                         text-align: center;
                         max-width: min(90vw, 600px);
                         width: 100%;
