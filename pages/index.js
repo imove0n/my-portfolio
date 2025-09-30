@@ -351,16 +351,17 @@ export default function LoadingPage() {
                         font-weight: 600;
                     }
 
-                   .status-messages {
+                  .status-messages {
                         margin-top: 1rem;
+                        margin-bottom: 1rem;
                         text-align: left;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
-                        padding: 0.75rem;
+                        padding: 0.75rem 0.75rem 0.75rem 1rem;
                         border-left: 4px solid #0ea5e9;
                         display: flex;
                         flex-direction: column;
-                        gap: 0.3rem;
+                        gap: 0.4rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
                     }
@@ -389,8 +390,8 @@ export default function LoadingPage() {
                     .status-message .primary { color: #0ea5e9; }
                     .status-message .accent { color: #f59e0b; }
 
-                   .complete-section {
-                        margin-top: 0.5rem;
+                 .complete-section {
+                        margin-top: 1.5rem;
                         opacity: 0;
                         transform: scale(0.8);
                         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
