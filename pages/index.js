@@ -353,15 +353,14 @@ export default function LoadingPage() {
 
                   .status-messages {
                         margin-top: 1rem;
-                        margin-bottom: 1rem;
-                        text-align: left;
+                                                text-align: left;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
-                        padding: 0.75rem 0.75rem 0.75rem 1rem;
+                        padding: 0.75rem;
                         border-left: 4px solid #0ea5e9;
                         display: flex;
                         flex-direction: column;
-                        gap: 0.4rem;
+                        gap: 0.3rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
                     }
