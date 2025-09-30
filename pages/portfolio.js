@@ -1042,14 +1042,14 @@ const playPrevious = () => {
                         @media (min-width: 769px) {
                             .about-content {
                                 display: grid;
-                                grid-template-columns: 300px 1fr;
+                                grid-template-columns: 350px 1fr;
                                 gap: 4rem;
                                 text-align: left;
                             }
                             
                             .profile-image {
-                                width: 250px;
-                                height: 250px;
+                                width: 320px;
+                                height: 320px;
                                 border-radius: 20px;
                                 padding: 4px;
                             }
