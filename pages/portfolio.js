@@ -21,6 +21,7 @@
     // Profile image cycling
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const profileImages = ['Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
+    const [glitchText, setGlitchText] = useState('Guzman');
 
 // Playlist state
     const [playlist] = useState([
@@ -371,6 +372,33 @@ const playPrevious = () => {
             if (fallbackIcon) fallbackIcon.style.display = 'block';
         }
     };
+
+    const handleGlitch = () => {
+    const glitchSequence = [
+        'Guzman',
+        'Gxrman',
+        'Gktman', 
+        'Glpdan',
+        'Gnqman',
+        'Gwtsan',
+        'Grjdan',
+        'Gvkman',
+        'Gybdan',
+        'Gufman',
+        'Gudman'
+    ];
+    
+    let index = 0;
+    const interval = setInterval(() => {
+        if (index < glitchSequence.length) {
+            setGlitchText(glitchSequence[index]);
+            index++;
+        } else {
+            clearInterval(interval);
+            setTimeout(() => setGlitchText('Guzman'), 500);
+        }
+    }, 80);
+};
 
     return (
         <>
@@ -1667,7 +1695,7 @@ Your browser does not support the audio element.
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
                         <h1 className="hero-title">
-                            Laurence De <span className="glitch-text" data-text="Guzman">Guzman</span>
+                            Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>Guzman</span>
                         </h1>
                         <div className="typing-container">
                             I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
