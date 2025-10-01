@@ -355,9 +355,9 @@ export default function LoadingPage() {
                         margin-top: 1rem;
                         margin-bottom: 2rem;
                         text-align: center;
-                        background: rgba(30, 41, 59, 0.3);
-                        border-radius: 8px;
-                        padding: 1rem;
+                        background: transparent;
+                        border-radius: 0;
+                        padding: 0;
                         display: flex;
                         flex-direction: column;
                         gap: 0.5rem;
