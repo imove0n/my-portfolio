@@ -465,16 +465,16 @@ useEffect(() => {
                     }
 
                         :root {
-                            --primary-color: #0ea5e9;
-                            --secondary-color: #1e293b;
-                            --accent-color: #f59e0b;
-                            --text-primary: #f8fafc;
-                            --text-secondary: #94a3b8;
-                            --bg-primary: #0f172a;
-                            --bg-secondary: #1e293b;
-                            --bg-card: #1e293b;
-                            --border-color: #334155;
-                        }
+                        --primary-color: #0ea5e9;
+                        --secondary-color: #1e293b;
+                        --accent-color: #3b82f6;
+                        --text-primary: #f8fafc;
+                        --text-secondary: #94a3b8;
+                        --bg-primary: #0f172a;
+                        --bg-secondary: #1e293b;
+                        --bg-card: #1e293b;
+                        --border-color: #334155;
+                    }
 
                         body {
                             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
