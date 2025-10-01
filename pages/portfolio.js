@@ -2109,7 +2109,7 @@ Your browser does not support the audio element.
                                 <div className="contact-links">
                                     <a href="mailto:laurencedeguzman04142003@gmail.com" className="contact-link" target="_blank">
                                         <i className="fas fa-envelope"></i>
-                                        Email
+                                        laurencedeguzman04142003@gmail.com
                                     </a>
                                 </div>
 
