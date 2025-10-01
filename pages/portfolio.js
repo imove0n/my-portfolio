@@ -27,7 +27,7 @@
     const [playlist] = useState([
     { id: 1, src: '/1.mp3', title: 'Track 1' },
     { id: 2, src: '/2.mp3', title: 'Track 2' },
-    { id: 3, src: '/3-01. Hateno Village.mp3', title: 'Hateno Village' },
+    { id: 3, src: '/3-01. Hateno Village.mp3', title: 'Track 3' },
     { id: 4, src: '/4.mp3', title: 'Track 4' },
     { id: 5, src: '/5.mp3', title: 'Track 5' },
     { id: 6, src: '/6.mp3', title: 'Track 6' }
