@@ -885,32 +885,14 @@ const playPrevious = () => {
                         }
 
                        .glitch-text {
-                                position: relative;
-                                cursor: pointer;
-                                display: inline-block;
-                            }
+                            cursor: pointer;
+                            display: inline-block;
+                            transition: color 0.1s ease;
+                        }
 
-                            .glitch-text:hover::before {
-                                content: attr(data-text);
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                animation: glitchAnim 0.8s steps(10) forwards;
-                            }
-
-                            @keyframes glitchAnim {
-                                0% { content: 'Guzman'; opacity: 1; }
-                                10% { content: 'Gxrman'; transform: translateX(-2px); }
-                                20% { content: 'Gktman'; transform: translateX(2px); }
-                                30% { content: 'Glpdan'; transform: translateX(-1px); }
-                                40% { content: 'Gnqman'; transform: translateX(3px); }
-                                50% { content: 'Gwtsan'; transform: translateX(-2px); }
-                                60% { content: 'Grjdan'; transform: translateX(1px); }
-                                70% { content: 'Gvkman'; transform: translateX(-1px); }
-                                80% { content: 'Gybdan'; transform: translateX(2px); }
-                                90% { content: 'Gufman'; transform: translateX(0); }
-                                100% { content: 'Gudman'; opacity: 1; transform: translateX(0); }
-                            }
+                        .glitch-text:hover {
+                            color: var(--primary-color);
+                        }
                         .typing-container {
                             font-size: 1.2rem;
                             color: var(--text-secondary);
@@ -1695,7 +1677,7 @@ Your browser does not support the audio element.
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
                         <h1 className="hero-title">
-                            Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>Guzman</span>
+                            Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>{glitchText}</span>
                         </h1>
                         <div className="typing-container">
                             I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
