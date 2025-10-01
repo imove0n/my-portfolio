@@ -47,10 +47,18 @@ export default function LoadingPage() {
             if (newProgress >= 100) {
                 clearInterval(progressTimer);
                 setShowComplete(true);
-                // Auto redirect immediately after completion
+                // Smooth fade out before redirect
                 setTimeout(() => {
-                    router.push('/portfolio');
-                }, 800);
+                    const container = document.querySelector('.intro-container');
+                    if (container) {
+                        container.style.transition = 'all 1.2s ease-out';
+                        container.style.transform = 'scale(0.95)';
+                        container.style.opacity = '0';
+                    }
+                    setTimeout(() => {
+                        router.push('/portfolio');
+                    }, 1200);
+                }, 500);
             }
 
             return newProgress;
