@@ -152,9 +152,9 @@ export default function LoadingPage() {
                         width: 200%;
                         height: 200%;
                         background: 
-                            radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
-                            radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-                            radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+                            radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                            radial-gradient(circle at 40% 40%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
                         animation: backgroundMove 20s ease-in-out infinite;
                         z-index: -1;
                     }
@@ -315,7 +315,7 @@ export default function LoadingPage() {
 
                     .progress-bar {
                         height: clamp(6px, 2vw, 8px);
-                        background: linear-gradient(90deg, #0ea5e9, #f59e0b);
+                        background: linear-gradient(90deg, #0ea5e9, #3b82f6);
                         border-radius: 10px;
                         transition: width 0.3s ease;
                         position: relative;
@@ -389,7 +389,7 @@ export default function LoadingPage() {
 
                     .status-message .success { color: #10b981; }
                     .status-message .primary { color: #0ea5e9; }
-                    .status-message .accent { color: #f59e0b; }
+                   .status-message .accent { color: #3b82f6; }
 
                  .complete-section {
                     margin-top: 2.5rem;
@@ -419,7 +419,7 @@ export default function LoadingPage() {
                     }
 
                     .enter-button {
-                        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
                         color: white;
                         border: none;
                         padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 24px);
