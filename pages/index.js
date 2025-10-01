@@ -474,9 +474,10 @@ export default function LoadingPage() {
 
                     .loading-dots {
                         display: flex;
-                        gap: 0.5rem;
+                        gap: 0.2rem;
                         align-items: center;
                         justify-content: center;
+                        margin-top: 0.3rem;
                     }
 
                     .dot {
@@ -879,11 +880,12 @@ export default function LoadingPage() {
 
                     <div className="progress-text">
                         <span className="percentage">{Math.floor(progress)}%</span> complete
-                        <div className="loading-dots" style={{ display: showComplete ? 'none' : 'flex' }}>
-                            <span className="dot"></span>
-                            <span className="dot"></span>
-                            <span className="dot"></span>
-                        </div>
+                    </div>
+
+                    <div className="loading-dots" style={{ display: showComplete ? 'none' : 'flex' }}>
+                        <span className="dot"></span>
+                        <span className="dot"></span>
+                        <span className="dot"></span>
                     </div>
 
                     <div className="status-messages">
