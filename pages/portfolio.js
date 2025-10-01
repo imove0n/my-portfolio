@@ -12,7 +12,7 @@
     const [audioError, setAudioError] = useState(false);
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isMinimized, setIsMinimized] = useState(false);
+    const [isMinimized, setIsMinimized] = useState(true);
     const [volume, setVolume] = useState(50);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
