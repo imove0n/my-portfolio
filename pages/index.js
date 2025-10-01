@@ -418,13 +418,13 @@ export default function LoadingPage() {
                     .status-message .accent { color: #3b82f6; display: inline; }
 
                     .status-icon {
-                        width: 16px;
-                        height: 16px;
-                        border: 2px solid #0ea5e9;
-                        border-top: 2px solid transparent;
-                        border-radius: 50%;
+                        font-size: 1.2rem;
+                        color: #0ea5e9;
                         animation: spin 1s linear infinite;
                         flex-shrink: 0;
+                        display: inline-block;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-weight: bold;
                     }
 
                  .complete-section {
@@ -634,13 +634,16 @@ export default function LoadingPage() {
                     </div>
                     
                     <div className="status-messages">
-                        {messages.map((msg, index) => (
-                            messageIndex === index + 1 && (
+                        {messages.map((msg, index) => {
+                            const symbols = ['<>', '{}', '[]', '()', ';', '//'];
+                            const randomSymbol = symbols[index % symbols.length];
+                            
+                            return messageIndex === index + 1 && (
                                 <div 
                                     key={msg.id}
                                     className="status-message show fade-message"
                                 >
-                                    <div className="status-icon"></div>
+                                    <span className="status-icon">{randomSymbol}</span>
                                     {msg.id === 'msg2' && (
                                         <span>Loading <span className="primary">React components</span>...</span>
                                     )}
@@ -658,8 +661,8 @@ export default function LoadingPage() {
                                     )}
                                     {msg.id === 'msg1' && <span>{msg.text}</span>}
                                 </div>
-                            )
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
                 
