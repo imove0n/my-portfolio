@@ -1618,6 +1618,10 @@ useEffect(() => {
                             justify-content: center;
                         }
 
+                        .social-link.linkedin { background: #0077b5; }
+                        .social-link.linkedin:hover { background: #006399; transform: translateY(-2px); }
+                        .social-link.github { background: #333; }
+                        .social-link.github:hover { background: #000; transform: translateY(-2px); }
                         .social-link.facebook { background: #1877f2; }
                         .social-link.facebook:hover { background: #166fe5; transform: translateY(-2px); }
                         .social-link.email { background: #ea4335; }
@@ -2107,13 +2111,17 @@ Your browser does not support the audio element.
                                         <i className="fas fa-envelope"></i>
                                         Email
                                     </a>
-                                    <a href="#" className="contact-link">
-                                        <i className="fas fa-map-marker-alt"></i>
-                                        Bulacan, PH
-                                    </a>
                                 </div>
 
                                 <div className="social-links">
+                                    <a href="https://www.linkedin.com/in/laurence-de-guzman-32386b309/" className="social-link linkedin" target="_blank">
+                                        <i className="fab fa-linkedin-in"></i>
+                                        LinkedIn
+                                    </a>
+                                    <a href="https://github.com/imove0n" className="social-link github" target="_blank">
+                                        <i className="fab fa-github"></i>
+                                        GitHub
+                                    </a>
                                     <a href="https://www.facebook.com/imove0n" className="social-link facebook" target="_blank">
                                         <i className="fab fa-facebook-f"></i>
                                         Facebook
