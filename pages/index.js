@@ -358,14 +358,36 @@ export default function LoadingPage() {
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
                         padding: 1rem;
-                        border-left: 4px solid #0ea5e9;
                         display: flex;
                         flex-direction: column;
                         gap: 0.5rem;
                         justify-content: flex-start;
                         box-sizing: border-box;
                         min-height: 180px;
-}
+                    }
+                        
+                        .fade-message {
+                        animation: fadeInOut 3s ease-in-out;
+                    }
+
+                    @keyframes fadeInOut {
+                        0% {
+                            opacity: 0;
+                            transform: translateX(-20px);
+                        }
+                        15% {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                        85% {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                        100% {
+                            opacity: 0;
+                            transform: translateX(20px);
+                        }
+                    }
 
                     /* Scrollbar styles removed - no longer needed */
 
@@ -602,7 +624,7 @@ export default function LoadingPage() {
                             messageIndex === index + 1 && (
                                 <div 
                                     key={msg.id}
-                                    className="status-message show"
+                                    className="status-message show fade-message"
                                 >
                                     {msg.id === 'msg2' && (
                                         <>
