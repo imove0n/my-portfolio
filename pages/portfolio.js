@@ -147,6 +147,12 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
             setDuration(audio.duration);
         };
 
+        const handleCanPlay = () => {
+            if (audio.duration && !isNaN(audio.duration)) {
+                setDuration(audio.duration);
+            }
+        };
+
         const handleEnded = () => {
             setIsPlaying(false);
         };
@@ -156,14 +162,24 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
             setAudioError(true);
         };
 
+        // Load metadata immediately if available
+        if (audio.duration && !isNaN(audio.duration)) {
+            setDuration(audio.duration);
+        }
+
         audio.addEventListener('timeupdate', handleTimeUpdate);
         audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+        audio.addEventListener('canplay', handleCanPlay);
         audio.addEventListener('ended', handleEnded);
         audio.addEventListener('error', handleError);
+
+        // Force load the audio metadata
+        audio.load();
 
         return () => {
             audio.removeEventListener('timeupdate', handleTimeUpdate);
             audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+            audio.removeEventListener('canplay', handleCanPlay);
             audio.removeEventListener('ended', handleEnded);
             audio.removeEventListener('error', handleError);
         };
