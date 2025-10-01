@@ -599,37 +599,39 @@ export default function LoadingPage() {
                     
                     <div className="status-messages">
                         {messages.map((msg, index) => (
-                            <div 
-                                key={msg.id}
-                                className={`status-message ${messageIndex > index ? 'show' : ''}`}
-                            >
-                                {msg.id === 'msg2' && (
-                                    <>
-                                        Loading <span className="primary">React components</span>...
-                                    </>
-                                )}
-                                {msg.id === 'msg3' && (
-                                    <>
-                                        Connecting to <span className="accent">databases</span>...
-                                    </>
-                                )}
-                                {msg.id === 'msg4' && (
-                                    <>
-                                        Building <span className="primary">full-stack solutions</span>...
-                                    </>
-                                )}
-                                {msg.id === 'msg5' && (
-                                    <>
-                                        Optimizing <span className="accent">performance</span>...
-                                    </>
-                                )}
-                                {msg.id === 'msg6' && (
-                                    <>
-                                        <span className="success"></span> Portfolio ready!
-                                    </>
-                                )}
-                                {msg.id === 'msg1' && msg.text}
-                            </div>
+                            messageIndex === index + 1 && (
+                                <div 
+                                    key={msg.id}
+                                    className="status-message show"
+                                >
+                                    {msg.id === 'msg2' && (
+                                        <>
+                                            Loading <span className="primary">React components</span>...
+                                        </>
+                                    )}
+                                    {msg.id === 'msg3' && (
+                                        <>
+                                            Connecting to <span className="accent">databases</span>...
+                                        </>
+                                    )}
+                                    {msg.id === 'msg4' && (
+                                        <>
+                                            Building <span className="primary">full-stack solutions</span>...
+                                        </>
+                                    )}
+                                    {msg.id === 'msg5' && (
+                                        <>
+                                            Optimizing <span className="accent">performance</span>...
+                                        </>
+                                    )}
+                                    {msg.id === 'msg6' && (
+                                        <>
+                                            <span className="success"></span> Portfolio ready!
+                                        </>
+                                    )}
+                                    {msg.id === 'msg1' && msg.text}
+                                </div>
+                            )
                         ))}
                     </div>
                 </div>
