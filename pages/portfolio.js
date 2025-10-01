@@ -1971,7 +1971,7 @@ Your browser does not support the audio element.
                             <div className="about-text">
                                 <p><br>
                                 </br>
-                                    I'm a 22-year-old Tech Enthusiast and TUP Manila graduate with a BTVTED Major in Computer Programming. 
+                                    I'm a 22-year-old Tech Enthusiast and TUP Manila Fresh Graduate with a BTVTED Major in Computer Programming. 
                                     My passion for technology started in high school, from customizing Nokia phones with GBA games
                                     to exploring programming and problem-solving on my own. Over the years, that curiosity grew into real-world 
                                     skills in coding, troubleshooting, and building projects across software and hardware.
