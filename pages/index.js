@@ -522,7 +522,7 @@ export default function LoadingPage() {
                     @keyframes fadeInOut {
                         0% {
                             opacity: 0;
-                            transform: translateX(-20px);
+                            transform: translateX(20px);
                         }
                         15% {
                             opacity: 1;
@@ -534,7 +534,7 @@ export default function LoadingPage() {
                         }
                         100% {
                             opacity: 0;
-                            transform: translateX(20px);
+                            transform: translateX(-20px);
                             display: none;
                         }
                     }
