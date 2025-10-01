@@ -172,7 +172,7 @@ export default function LoadingPage() {
 
                     .symbol {
                         position: absolute;
-                        color: rgba(14, 165, 233, 0.1);
+                        color: rgba(14, 165, 233, 0.2);
                         font-family: 'JetBrains Mono', monospace;
                         font-weight: bold;
                         animation: float 15s infinite ease-in-out;
@@ -592,14 +592,18 @@ export default function LoadingPage() {
             </audio>
 
             <div className="floating-symbols">
+                <div className="symbol">{'<>'}</div>
                 <div className="symbol">{'{'}</div>
                 <div className="symbol">{'}'}</div>
-                <div className="symbol">;</div>
-                <div className="symbol">{'{'}</div>
-                <div className="symbol">{'}'}</div>
-                <div className="symbol">;</div>
-                <div className="symbol">{'{'}</div>
-                <div className="symbol">{'}'}</div>
+                <div className="symbol">{';'}</div>
+                <div className="symbol">{'[]'}</div>
+                <div className="symbol">{'()'}</div>
+                <div className="symbol">{'\\'}</div>
+                <div className="symbol">{'/'}</div>
+                <div className="symbol">{'<'}</div>
+                <div className="symbol">{'>'}</div>
+                <div className="symbol">{'='}</div>
+                <div className="symbol">{'+'}</div>
             </div>
 
             <div className="audio-controls">
