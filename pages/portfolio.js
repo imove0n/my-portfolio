@@ -1711,75 +1711,6 @@ useEffect(() => {
                             * { animation-duration: 0.01ms !important; }
                         }
 
-                        /* Resume Section */
-                        .resume-section {
-                            background: var(--bg-card);
-                            border: 1px solid var(--border-color);
-                            border-radius: 12px;
-                            padding: 1.5rem;
-                            margin: 1.5rem 0;
-                            text-align: center;
-                        }
-
-                        .resume-section h3 {
-                            color: var(--text-primary);
-                            margin-bottom: 0.8rem;
-                            font-size: 1.3rem;
-                        }
-
-                        .resume-section p {
-                            color: var(--text-secondary);
-                            margin-bottom: 1.2rem;
-                            font-size: 0.95rem;
-                        }
-
-                        .resume-buttons {
-                            display: flex;
-                            gap: 0.8rem;
-                            justify-content: center;
-                            flex-direction: column;
-                            align-items: center;
-                        }
-
-                        .resume-btn {
-                            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-                            color: white;
-                            padding: 12px 20px;
-                            border-radius: 8px;
-                            text-decoration: none;
-                            font-weight: 500;
-                            transition: all 0.3s ease;
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 6px;
-                            font-size: 0.9rem;
-                            min-width: 160px;
-                            justify-content: center;
-                        }
-
-                        .resume-btn:hover {
-                            transform: translateY(-2px);
-                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
-                        }
-
-                        .resume-btn.secondary {
-                            background: transparent;
-                            border: 2px solid var(--primary-color);
-                            color: var(--primary-color);
-                        }
-
-                        .resume-btn.secondary:hover {
-                            background: var(--primary-color);
-                            color: white;
-                        }
-
-                        @media (min-width: 769px) {
-                            .resume-section { border-radius: 16px; padding: 2rem; }
-                            .resume-section h3 { font-size: 1.5rem; }
-                            .resume-section p { font-size: 1rem; }
-                            .resume-buttons { flex-direction: row; }
-                            .resume-btn { font-size: 1rem; min-width: auto; }
-                        }
                     `}</style>
                 </Head>
 
@@ -1920,7 +1851,6 @@ Your browser does not support the audio element.
                             <li><a href="#experience" onClick={closeMenu}>Experience</a></li>
                             <li><a href="#skills" onClick={closeMenu}>Skills</a></li>
                             <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
-                            <li><a href="#resume" onClick={closeMenu}>Resume</a></li>
                             <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
                         </ul>
                         <button className="mobile-menu-btn" onClick={toggleMenu}>
@@ -2157,49 +2087,6 @@ Your browser does not support the audio element.
                                         <span className="tag">Online Testing</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Resume Section */}
-                <section id="resume" className="section">
-                    <div className="container">
-                        <h2 className="section-title">Resume</h2>
-                        <div className="resume-section fade-in">
-                            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                                <i className="fas fa-file-alt" style={{ fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '1rem' }}></i>
-                            </div>
-                            <h3>
-                                <i className="fas fa-download" style={{ marginRight: '8px' }}></i>
-                                Download My Resume
-                            </h3>
-                            <p>Get a comprehensive overview of my experience, skills, and achievements in tech leadership and development.</p>
-                            <div className="resume-buttons">
-                                <a 
-                                    href="#" 
-                                    className="resume-btn" 
-                                    target="_blank" 
-                                    onClick={() => alert('Resume PDF will be available soon! For now, please contact me directly.')}
-                                >
-                                    <i className="fas fa-file-pdf"></i>
-                                    Download PDF
-                                </a>
-                                <a 
-                                    href="#" 
-                                    className="resume-btn secondary" 
-                                    target="_blank" 
-                                    onClick={() => alert('Resume DOC will be available soon! For now, please contact me directly.')}
-                                >
-                                    <i className="fas fa-file-word"></i>
-                                    Download DOC
-                                </a>
-                            </div>
-                            <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
-                                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                                    <i className="fas fa-info-circle" style={{ marginRight: '8px' }}></i>
-                                    Resume files will be available soon. In the meantime, feel free to contact me directly for the most up-to-date version.
-                                </p>
                             </div>
                         </div>
                     </div>
