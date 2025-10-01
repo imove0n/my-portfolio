@@ -283,14 +283,53 @@ export default function LoadingPage() {
                         background-clip: text;
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease 0.2s forwards, gradientShift 5s ease infinite;
+                        animation: spiralEntrance 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                                   gradientShift 5s ease infinite 1.5s,
+                                   wiggle 2s ease-in-out infinite 1.5s;
                         line-height: 1.1;
+                        transform-origin: center;
+                    }
+
+                    @keyframes spiralEntrance {
+                        0% {
+                            opacity: 0;
+                            transform: scale(0) rotate(0deg);
+                            filter: blur(10px);
+                        }
+                        50% {
+                            opacity: 0.5;
+                            transform: scale(0.5) rotate(180deg);
+                            filter: blur(5px);
+                        }
+                        80% {
+                            transform: scale(1.1) rotate(350deg);
+                            filter: blur(0px);
+                        }
+                        100% {
+                            opacity: 1;
+                            transform: scale(1) rotate(360deg);
+                            filter: blur(0px);
+                        }
                     }
 
                     @keyframes gradientShift {
                         0%, 100% { background-position: 0% 50%; }
                         50% { background-position: 100% 50%; }
+                    }
+
+                    @keyframes wiggle {
+                        0%, 100% {
+                            transform: rotate(0deg) scale(1);
+                        }
+                        25% {
+                            transform: rotate(2deg) scale(1.02);
+                        }
+                        50% {
+                            transform: rotate(0deg) scale(1);
+                        }
+                        75% {
+                            transform: rotate(-2deg) scale(1.02);
+                        }
                     }
 
                     .title {
