@@ -214,20 +214,20 @@ export default function LoadingPage() {
 
                     @keyframes float {
                         0%, 100% {
-                            transform: translateY(0px) rotate(0deg);
-                            opacity: 0.1;
-                        }
-                        25% {
-                            transform: translateY(-20px) rotate(5deg);
-                            opacity: 0.25;
-                        }
-                        50% {
-                            transform: translateY(-10px) rotate(-3deg);
+                            transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
                             opacity: 0.15;
                         }
-                        75% {
-                            transform: translateY(-30px) rotate(8deg);
+                        25% {
+                            transform: translateY(-30px) translateX(15px) rotate(10deg) scale(1.1);
+                            opacity: 0.35;
+                        }
+                        50% {
+                            transform: translateY(-15px) translateX(-10px) rotate(-5deg) scale(0.95);
                             opacity: 0.2;
+                        }
+                        75% {
+                            transform: translateY(-40px) translateX(20px) rotate(15deg) scale(1.05);
+                            opacity: 0.3;
                         }
                     }
 
@@ -246,19 +246,31 @@ export default function LoadingPage() {
                         flex-direction: column;
                         justify-content: center;
                         box-sizing: border-box;
+                        animation: containerFloat 6s ease-in-out infinite;
+                    }
+
+                    @keyframes containerFloat {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-10px); }
                     }
 
                     .name {
                         font-size: clamp(1.75rem, 7vw, 3rem);
                         font-weight: 700;
                         margin-bottom: 0.5rem;
-                        background: linear-gradient(135deg, #f8fafc, #0ea5e9);
+                        background: linear-gradient(135deg, #f8fafc, #0ea5e9, #3b82f6, #0ea5e9);
+                        background-size: 300% 100%;
                         background-clip: text;
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
                         opacity: 0;
-                        animation: fadeInUp 1s ease 0.2s forwards;
+                        animation: fadeInUp 1s ease 0.2s forwards, gradientShift 5s ease infinite;
                         line-height: 1.1;
+                    }
+
+                    @keyframes gradientShift {
+                        0%, 100% { background-position: 0% 50%; }
+                        50% { background-position: 100% 50%; }
                     }
 
                     .title {
@@ -286,6 +298,18 @@ export default function LoadingPage() {
                         justify-content: center;
                         gap: 0.5rem;
                         flex-wrap: wrap;
+                        animation: textPulse 3s ease-in-out infinite;
+                    }
+
+                    @keyframes textPulse {
+                        0%, 100% {
+                            opacity: 0.9;
+                            filter: brightness(1);
+                        }
+                        50% {
+                            opacity: 1;
+                            filter: brightness(1.2);
+                        }
                     }
 
                     .spinner {
@@ -330,13 +354,29 @@ export default function LoadingPage() {
                         left: -100%;
                         width: 100%;
                         height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-                        animation: shimmer 2s infinite;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+                        animation: shimmer 1.5s infinite;
+                    }
+
+                    .progress-bar::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
+                        animation: pulse-glow 2s ease-in-out infinite;
                     }
 
                     @keyframes shimmer {
                         0% { left: -100%; }
                         100% { left: 100%; }
+                    }
+
+                    @keyframes pulse-glow {
+                        0%, 100% { opacity: 0.5; }
+                        50% { opacity: 1; }
                     }
 
                  .progress-text {
@@ -350,6 +390,13 @@ export default function LoadingPage() {
                     .percentage {
                         color: #10b981;
                         font-weight: 600;
+                        animation: countPulse 0.5s ease-in-out;
+                    }
+
+                    @keyframes countPulse {
+                        0% { transform: scale(1); }
+                        50% { transform: scale(1.15); color: #0ea5e9; }
+                        100% { transform: scale(1); }
                     }
 
                     .status-messages {
@@ -421,11 +468,30 @@ export default function LoadingPage() {
                     .status-icon {
                         font-size: 1.2rem;
                         color: #0ea5e9;
-                        animation: spin 1s linear infinite;
+                        animation: spinBounce 2s ease-in-out infinite;
                         flex-shrink: 0;
                         display: inline-block;
                         font-family: 'JetBrains Mono', monospace;
                         font-weight: bold;
+                    }
+
+                    @keyframes spinBounce {
+                        0%, 100% {
+                            transform: rotate(0deg) scale(1);
+                            filter: brightness(1);
+                        }
+                        25% {
+                            transform: rotate(90deg) scale(1.2);
+                            filter: brightness(1.5);
+                        }
+                        50% {
+                            transform: rotate(180deg) scale(1);
+                            filter: brightness(1);
+                        }
+                        75% {
+                            transform: rotate(270deg) scale(1.2);
+                            filter: brightness(1.5);
+                        }
                     }
 
                  .complete-section {
@@ -453,10 +519,23 @@ export default function LoadingPage() {
                         justify-content: center;
                         gap: 0.5rem;
                         flex-wrap: wrap;
+                        animation: successGlow 2s ease-in-out infinite;
+                    }
+
+                    @keyframes successGlow {
+                        0%, 100% {
+                            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+                            filter: brightness(1);
+                        }
+                        50% {
+                            text-shadow: 0 0 20px rgba(16, 185, 129, 1), 0 0 30px rgba(16, 185, 129, 0.5);
+                            filter: brightness(1.3);
+                        }
                     }
 
                     .enter-button {
-                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                        background: linear-gradient(135deg, #0ea5e9, #3b82f6, #0ea5e9);
+                        background-size: 200% 100%;
                         color: white;
                         border: none;
                         padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 24px);
@@ -471,15 +550,48 @@ export default function LoadingPage() {
                         gap: 0.5rem;
                         min-height: 44px;
                         touch-action: manipulation;
+                        position: relative;
+                        overflow: hidden;
+                        animation: buttonGradient 3s ease infinite;
+                        box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+                    }
+
+                    @keyframes buttonGradient {
+                        0%, 100% { background-position: 0% 50%; }
+                        50% { background-position: 100% 50%; }
+                    }
+
+                    .enter-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 0;
+                        height: 0;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.3);
+                        transform: translate(-50%, -50%);
+                        transition: width 0.6s, height 0.6s;
+                    }
+
+                    .enter-button:hover::before {
+                        width: 300px;
+                        height: 300px;
                     }
 
                     .enter-button:hover {
-                        transform: translateY(-3px) scale(1.05);
-                        box-shadow: 0 15px 30px rgba(14, 165, 233, 0.3);
+                        transform: translateY(-5px) scale(1.08);
+                        box-shadow: 0 20px 40px rgba(14, 165, 233, 0.5);
+                        animation: buttonGradient 1s ease infinite, buttonFloat 3s ease-in-out infinite;
+                    }
+
+                    @keyframes buttonFloat {
+                        0%, 100% { transform: translateY(-5px) scale(1.08); }
+                        50% { transform: translateY(-8px) scale(1.08); }
                     }
 
                     .enter-button:active {
-                        transform: translateY(-1px) scale(1.02);
+                        transform: translateY(-2px) scale(1.03);
                     }
 
                     .audio-controls {
@@ -507,12 +619,23 @@ export default function LoadingPage() {
                         min-height: 44px;
                         min-width: 44px;
                         touch-action: manipulation;
+                        animation: audioPulse 3s ease-in-out infinite;
+                    }
+
+                    @keyframes audioPulse {
+                        0%, 100% {
+                            box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
+                        }
+                        50% {
+                            box-shadow: 0 0 0 10px rgba(14, 165, 233, 0);
+                        }
                     }
 
                     .audio-btn:hover {
                         background: rgba(14, 165, 233, 0.2);
                         border-color: #0ea5e9;
-                        transform: scale(1.1);
+                        transform: scale(1.15) rotate(15deg);
+                        animation: audioPulse 1s ease-in-out infinite;
                     }
 
                     .audio-btn:active {
@@ -522,6 +645,12 @@ export default function LoadingPage() {
                     .audio-btn.active {
                         background: #0ea5e9;
                         border-color: #0ea5e9;
+                        animation: audioPulse 2s ease-in-out infinite, audioRotate 10s linear infinite;
+                    }
+
+                    @keyframes audioRotate {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
                     }
 
                     @keyframes fadeInUp {
