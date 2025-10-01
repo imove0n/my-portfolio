@@ -48,6 +48,10 @@ export default function LoadingPage() {
                 clearInterval(progressTimer);
                 setTimeout(() => {
                     setShowComplete(true);
+                    // Auto redirect after showing completion message
+                    setTimeout(() => {
+                        enterPortfolio();
+                    }, 500);
                 }, 500);
             }
 
