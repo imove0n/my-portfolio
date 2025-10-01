@@ -354,18 +354,19 @@ export default function LoadingPage() {
                     .status-messages {
                         margin-top: 1rem;
                         margin-bottom: 2rem;
-                        text-align: left;
+                        text-align: center;
                         background: rgba(30, 41, 59, 0.3);
                         border-radius: 8px;
                         padding: 1rem;
                         display: flex;
                         flex-direction: column;
                         gap: 0.5rem;
-                        justify-content: flex-start;
+                        justify-content: center;
+                        align-items: center;
                         box-sizing: border-box;
                         min-height: 180px;
                     }
-                        
+
                         .fade-message {
                         animation: fadeInOut 3s ease-in-out;
                     }
@@ -398,10 +399,13 @@ export default function LoadingPage() {
                         opacity: 0;
                         transform: translateY(10px);
                         font-family: 'JetBrains Mono', monospace;
-                        padding-left: 0.25rem;
                         line-height: 1.4;
                         word-break: break-word;
                         transition: all 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.5rem;
                     }
 
                     .status-message.show {
@@ -409,9 +413,19 @@ export default function LoadingPage() {
                         transform: translateY(0);
                     }
 
-                    .status-message .success { color: #10b981; }
-                    .status-message .primary { color: #0ea5e9; }
-                   .status-message .accent { color: #3b82f6; }
+                    .status-message .success { color: #10b981; display: inline; }
+                    .status-message .primary { color: #0ea5e9; display: inline; }
+                    .status-message .accent { color: #3b82f6; display: inline; }
+
+                    .status-icon {
+                        width: 16px;
+                        height: 16px;
+                        border: 2px solid #0ea5e9;
+                        border-top: 2px solid transparent;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        flex-shrink: 0;
+                    }
 
                  .complete-section {
                     margin-top: 2.5rem;
@@ -626,32 +640,23 @@ export default function LoadingPage() {
                                     key={msg.id}
                                     className="status-message show fade-message"
                                 >
+                                    <div className="status-icon"></div>
                                     {msg.id === 'msg2' && (
-                                        <>
-                                            Loading <span className="primary">React components</span>...
-                                        </>
+                                        <span>Loading <span className="primary">React components</span>...</span>
                                     )}
                                     {msg.id === 'msg3' && (
-                                        <>
-                                            Connecting to <span className="accent">databases</span>...
-                                        </>
+                                        <span>Connecting to <span className="accent">databases</span>...</span>
                                     )}
                                     {msg.id === 'msg4' && (
-                                        <>
-                                            Building <span className="primary">full-stack solutions</span>...
-                                        </>
+                                        <span>Building <span className="primary">full-stack solutions</span>...</span>
                                     )}
                                     {msg.id === 'msg5' && (
-                                        <>
-                                            Optimizing <span className="accent">performance</span>...
-                                        </>
+                                        <span>Optimizing <span className="accent">performance</span>...</span>
                                     )}
                                     {msg.id === 'msg6' && (
-                                        <>
-                                            <span className="success"></span> Portfolio ready!
-                                        </>
+                                        <span><span className="success">✓</span> Portfolio ready!</span>
                                     )}
-                                    {msg.id === 'msg1' && msg.text}
+                                    {msg.id === 'msg1' && <span>{msg.text}</span>}
                                 </div>
                             )
                         ))}
