@@ -454,6 +454,10 @@ export default function LoadingPage() {
                         color: #94a3b8;
                         font-family: 'JetBrains Mono', monospace;
                         text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 0.5rem;
                     }
 
                     .percentage {
@@ -466,6 +470,46 @@ export default function LoadingPage() {
                         0% { transform: scale(1); }
                         50% { transform: scale(1.15); color: #0ea5e9; }
                         100% { transform: scale(1); }
+                    }
+
+                    .loading-dots {
+                        display: flex;
+                        gap: 0.5rem;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .dot {
+                        width: 12px;
+                        height: 12px;
+                        background: #0ea5e9;
+                        border-radius: 50%;
+                        animation: dotBounce 1.4s ease-in-out infinite;
+                        box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+                    }
+
+                    .dot:nth-child(1) {
+                        animation-delay: 0s;
+                    }
+
+                    .dot:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    .dot:nth-child(3) {
+                        animation-delay: 0.4s;
+                    }
+
+                    @keyframes dotBounce {
+                        0%, 80%, 100% {
+                            transform: scale(0.8) translateY(0);
+                            opacity: 0.5;
+                        }
+                        40% {
+                            transform: scale(1.2) translateY(-15px);
+                            opacity: 1;
+                            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
+                        }
                     }
 
                     .status-messages {
@@ -835,6 +879,11 @@ export default function LoadingPage() {
 
                     <div className="progress-text">
                         <span className="percentage">{Math.floor(progress)}%</span> complete
+                        <div className="loading-dots" style={{ display: showComplete ? 'none' : 'flex' }}>
+                            <span className="dot"></span>
+                            <span className="dot"></span>
+                            <span className="dot"></span>
+                        </div>
                     </div>
 
                     <div className="status-messages">
