@@ -172,10 +172,11 @@ export default function LoadingPage() {
 
                     .symbol {
                         position: absolute;
-                        color: rgba(14, 165, 233, 0.2);
+                        color: rgba(14, 165, 233, 0.25);
                         font-family: 'JetBrains Mono', monospace;
                         font-weight: bold;
                         animation: float 15s infinite ease-in-out;
+                        z-index: 1;
                     }
 
                     .symbol:nth-child(1) { 
@@ -218,15 +219,15 @@ export default function LoadingPage() {
                         }
                         25% { 
                             transform: translateY(-20px) rotate(5deg); 
-                            opacity: 0.15; 
+                            opacity: 0.25; 
                         }
                         50% { 
                             transform: translateY(-10px) rotate(-3deg); 
-                            opacity: 0.08; 
+                            opacity: 0.15; 
                         }
                         75% { 
                             transform: translateY(-30px) rotate(8deg); 
-                            opacity: 0.12; 
+                            opacity: 0.2; 
                         }
                     }
 
