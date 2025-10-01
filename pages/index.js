@@ -172,11 +172,13 @@ export default function LoadingPage() {
 
                     .symbol {
                         position: absolute;
-                        color: rgba(14, 165, 233, 0.3);
+                        color: rgba(14, 165, 233, 0.6);
                         font-family: 'JetBrains Mono', monospace;
                         font-weight: bold;
                         animation: riseUp 15s infinite ease-out;
                         z-index: 1;
+                        text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+                        filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.4));
                     }
 
                     .symbol:nth-child(1) {
@@ -234,14 +236,14 @@ export default function LoadingPage() {
                             opacity: 0;
                         }
                         10% {
-                            opacity: 0.3;
+                            opacity: 0.7;
                         }
                         50% {
                             transform: translateY(-50vh) translateX(20px) rotate(180deg) scale(1);
-                            opacity: 0.25;
+                            opacity: 0.6;
                         }
                         80% {
-                            opacity: 0.15;
+                            opacity: 0.4;
                         }
                         100% {
                             transform: translateY(-110vh) translateX(-15px) rotate(360deg) scale(0.6);
@@ -434,7 +436,7 @@ export default function LoadingPage() {
                     }
 
                         .fade-message {
-                        animation: fadeInOut 3s ease-in-out;
+                        animation: fadeInOut 2.5s ease-in-out forwards;
                     }
 
                     @keyframes fadeInOut {
@@ -446,13 +448,14 @@ export default function LoadingPage() {
                             opacity: 1;
                             transform: translateX(0);
                         }
-                        85% {
+                        70% {
                             opacity: 1;
                             transform: translateX(0);
                         }
                         100% {
                             opacity: 0;
                             transform: translateX(20px);
+                            display: none;
                         }
                     }
 
