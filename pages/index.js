@@ -381,20 +381,6 @@ export default function LoadingPage() {
                         }
                     }
 
-                    .spinner {
-                        width: 16px;
-                        height: 16px;
-                        border: 2px solid transparent;
-                        border-top: 2px solid #0ea5e9;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        flex-shrink: 0;
-                    }
-
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                    }
 
                     .progress-container {
                         width: 100%;
@@ -867,7 +853,6 @@ export default function LoadingPage() {
 
                 <div className="loading-section">
                     <div className="compile-text">
-                        <div className="spinner" style={{ display: showComplete ? 'none' : 'block' }}></div>
                         <span>{compileStatus}</span>
                     </div>
 
