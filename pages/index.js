@@ -172,62 +172,80 @@ export default function LoadingPage() {
 
                     .symbol {
                         position: absolute;
-                        color: rgba(14, 165, 233, 0.25);
+                        color: rgba(14, 165, 233, 0.3);
                         font-family: 'JetBrains Mono', monospace;
                         font-weight: bold;
-                        animation: float 15s infinite ease-in-out;
+                        animation: riseUp 15s infinite ease-out;
                         z-index: 1;
                     }
 
                     .symbol:nth-child(1) {
-                        top: 10%; left: 10%; font-size: clamp(16px, 4vw, 24px);
-                        animation-delay: 0s; animation-duration: 18s;
+                        bottom: -10%; left: 10%; font-size: clamp(16px, 4vw, 24px);
+                        animation-delay: 0s; animation-duration: 12s;
                     }
                     .symbol:nth-child(2) {
-                        top: 20%; right: 15%; font-size: clamp(20px, 5vw, 32px);
-                        animation-delay: -3s; animation-duration: 22s;
+                        bottom: -10%; right: 15%; font-size: clamp(20px, 5vw, 32px);
+                        animation-delay: -2s; animation-duration: 15s;
                     }
                     .symbol:nth-child(3) {
-                        top: 60%; left: 5%; font-size: clamp(18px, 4.5vw, 28px);
-                        animation-delay: -6s; animation-duration: 20s;
+                        bottom: -10%; left: 5%; font-size: clamp(18px, 4.5vw, 28px);
+                        animation-delay: -4s; animation-duration: 13s;
                     }
                     .symbol:nth-child(4) {
-                        bottom: 20%; right: 10%; font-size: clamp(17px, 4.2vw, 26px);
-                        animation-delay: -9s; animation-duration: 16s;
+                        bottom: -10%; right: 10%; font-size: clamp(17px, 4.2vw, 26px);
+                        animation-delay: -6s; animation-duration: 14s;
                     }
                     .symbol:nth-child(5) {
-                        top: 40%; left: 80%; font-size: clamp(19px, 4.8vw, 30px);
-                        animation-delay: -12s; animation-duration: 24s;
+                        bottom: -10%; left: 80%; font-size: clamp(19px, 4.8vw, 30px);
+                        animation-delay: -8s; animation-duration: 16s;
                     }
                     .symbol:nth-child(6) {
-                        bottom: 40%; left: 20%; font-size: clamp(15px, 3.8vw, 22px);
-                        animation-delay: -2s; animation-duration: 19s;
+                        bottom: -10%; left: 20%; font-size: clamp(15px, 3.8vw, 22px);
+                        animation-delay: -1s; animation-duration: 11s;
                     }
                     .symbol:nth-child(7) {
-                        top: 70%; right: 40%; font-size: clamp(21px, 5.2vw, 34px);
-                        animation-delay: -8s; animation-duration: 21s;
-                    }
-                    .symbol:nth-child(8) {
-                        top: 30%; left: 50%; font-size: clamp(16px, 4.1vw, 25px);
+                        bottom: -10%; right: 40%; font-size: clamp(21px, 5.2vw, 34px);
                         animation-delay: -5s; animation-duration: 17s;
                     }
+                    .symbol:nth-child(8) {
+                        bottom: -10%; left: 50%; font-size: clamp(16px, 4.1vw, 25px);
+                        animation-delay: -3s; animation-duration: 12s;
+                    }
+                    .symbol:nth-child(9) {
+                        bottom: -10%; left: 35%; font-size: clamp(19px, 4.5vw, 28px);
+                        animation-delay: -7s; animation-duration: 14s;
+                    }
+                    .symbol:nth-child(10) {
+                        bottom: -10%; right: 25%; font-size: clamp(17px, 4vw, 26px);
+                        animation-delay: -9s; animation-duration: 13s;
+                    }
+                    .symbol:nth-child(11) {
+                        bottom: -10%; left: 65%; font-size: clamp(20px, 4.8vw, 30px);
+                        animation-delay: -10s; animation-duration: 15s;
+                    }
+                    .symbol:nth-child(12) {
+                        bottom: -10%; right: 55%; font-size: clamp(18px, 4.3vw, 27px);
+                        animation-delay: -11s; animation-duration: 16s;
+                    }
 
-                    @keyframes float {
-                        0%, 100% {
-                            transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
-                            opacity: 0.15;
+                    @keyframes riseUp {
+                        0% {
+                            transform: translateY(0vh) translateX(0px) rotate(0deg) scale(0.8);
+                            opacity: 0;
                         }
-                        25% {
-                            transform: translateY(-30px) translateX(15px) rotate(10deg) scale(1.1);
-                            opacity: 0.35;
+                        10% {
+                            opacity: 0.3;
                         }
                         50% {
-                            transform: translateY(-15px) translateX(-10px) rotate(-5deg) scale(0.95);
-                            opacity: 0.2;
+                            transform: translateY(-50vh) translateX(20px) rotate(180deg) scale(1);
+                            opacity: 0.25;
                         }
-                        75% {
-                            transform: translateY(-40px) translateX(20px) rotate(15deg) scale(1.05);
-                            opacity: 0.3;
+                        80% {
+                            opacity: 0.15;
+                        }
+                        100% {
+                            transform: translateY(-110vh) translateX(-15px) rotate(360deg) scale(0.6);
+                            opacity: 0;
                         }
                     }
 
