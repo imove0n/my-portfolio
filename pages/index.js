@@ -480,12 +480,12 @@ export default function LoadingPage() {
                     }
 
                     .dot {
-                        width: 12px;
-                        height: 12px;
+                        width: 10px;
+                        height: 10px;
                         background: #0ea5e9;
                         border-radius: 50%;
                         animation: dotBounce 1.4s ease-in-out infinite;
-                        box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+                        box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
                     }
 
                     .dot:nth-child(1) {
@@ -502,13 +502,13 @@ export default function LoadingPage() {
 
                     @keyframes dotBounce {
                         0%, 80%, 100% {
-                            transform: scale(0.8) translateY(0);
-                            opacity: 0.5;
+                            transform: scale(0.9) translateY(0);
+                            opacity: 0.6;
                         }
                         40% {
-                            transform: scale(1.2) translateY(-15px);
+                            transform: scale(1.1) translateY(-5px);
                             opacity: 1;
-                            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8);
+                            box-shadow: 0 0 12px rgba(14, 165, 233, 0.6);
                         }
                     }
 
