@@ -812,7 +812,7 @@ export default function LoadingPage() {
                                         <span>Optimizing <span className="accent">performance</span>...</span>
                                     )}
                                     {msg.id === 'msg6' && (
-                                        <span><span className="success">✓</span> Portfolio ready!</span>
+                                        <span><span className="success"></span> Portfolio ready!</span>
                                     )}
                                     {msg.id === 'msg1' && <span>{msg.text}</span>}
                                 </div>
