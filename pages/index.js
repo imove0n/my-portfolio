@@ -46,13 +46,11 @@ export default function LoadingPage() {
 
             if (newProgress >= 100) {
                 clearInterval(progressTimer);
+                setShowComplete(true);
+                // Auto redirect immediately after completion
                 setTimeout(() => {
-                    setShowComplete(true);
-                    // Auto redirect after showing completion message
-                    setTimeout(() => {
-                        enterPortfolio();
-                    }, 500);
-                }, 500);
+                    router.push('/portfolio');
+                }, 800);
             }
 
             return newProgress;
