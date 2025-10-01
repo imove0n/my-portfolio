@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
@@ -6,54 +6,126 @@ export default function LoadingPage() {
     const router = useRouter();
     const [progress, setProgress] = useState(0);
     const [messageIndex, setMessageIndex] = useState(0);
-    const [compileStatus, setCompileStatus] = useState('Compiling JavaScript...');
+    const [compileStatus, setCompileStatus] = useState('> Initializing system...');
     const [showComplete, setShowComplete] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [hasPlayed, setHasPlayed] = useState(false);
+    const [displayedName, setDisplayedName] = useState('');
+    const [displayedTitle, setDisplayedTitle] = useState('');
+    const canvasRef = useRef(null);
 
     const messages = [
-        { id: 'msg1', text: 'Initializing development environment...', threshold: 10 },
-        { id: 'msg2', text: 'Loading React components...', threshold: 25 },
-        { id: 'msg3', text: 'Connecting to databases...', threshold: 45 },
-        { id: 'msg4', text: 'Building full-stack solutions...', threshold: 65 },
-        { id: 'msg5', text: 'Optimizing performance...', threshold: 85 },
-        { id: 'msg6', text: 'Portfolio ready!', threshold: 95 }
+        { id: 'msg1', text: '> Establishing secure connection...', threshold: 10, icon: '[●]' },
+        { id: 'msg2', text: '> Loading security protocols...', threshold: 25, icon: '[▲]' },
+        { id: 'msg3', text: '> Decrypting database credentials...', threshold: 45, icon: '[◆]' },
+        { id: 'msg4', text: '> Compiling ERP modules...', threshold: 65, icon: '[■]' },
+        { id: 'msg5', text: '> Running security audit...', threshold: 85, icon: '[◉]' },
+        { id: 'msg6', text: '> ACCESS GRANTED', threshold: 95, icon: '[✓]' }
     ];
 
     const compileTexts = [
-        'Compiling JavaScript...',
-        'Building React components...',
-        'Connecting databases...',
-        'Optimizing full-stack solutions...',
-        'Finalizing portfolio...',
-        'Ready to deploy!'
+        '> Initializing system...',
+        '> Loading security protocols...',
+        '> Establishing encrypted tunnel...',
+        '> Authenticating credentials...',
+        '> Finalizing handshake...',
+        '> SYSTEM READY'
     ];
 
-  useEffect(() => {
-    const progressTimer = setInterval(() => {
-        setProgress(prev => {
-            const increment = 1;
-            const newProgress = Math.min(prev + increment, 100);
-            
-            messages.forEach((msg, index) => {
-                if (newProgress >= msg.threshold && messageIndex === index) {
-                    setMessageIndex(index + 1);
-                    if (index < compileTexts.length) {
-                        setCompileStatus(compileTexts[index]);
-                    }
-                }
-            });
+    // Typing effect for name and title
+    useEffect(() => {
+        const name = 'LAURENCE DE GUZMAN';
+        const title = '[ CYBERSECURITY & ERP SPECIALIST ]';
+        let nameIndex = 0;
+        let titleIndex = 0;
 
-            if (newProgress >= 100) {
-                clearInterval(progressTimer);
-                setTimeout(() => {
-                    setShowComplete(true);
-                }, 500);
+        const nameTimer = setInterval(() => {
+            if (nameIndex < name.length) {
+                setDisplayedName(name.substring(0, nameIndex + 1));
+                nameIndex++;
+            } else {
+                clearInterval(nameTimer);
             }
+        }, 80);
 
-            return newProgress;
-        });
-    }, 47);
+        const titleTimer = setTimeout(() => {
+            const titleInterval = setInterval(() => {
+                if (titleIndex < title.length) {
+                    setDisplayedTitle(title.substring(0, titleIndex + 1));
+                    titleIndex++;
+                } else {
+                    clearInterval(titleInterval);
+                }
+            }, 50);
+        }, name.length * 80);
+
+        return () => {
+            clearInterval(nameTimer);
+            clearTimeout(titleTimer);
+        };
+    }, []);
+
+    // Matrix rain effect
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = '01アイウエオカキクケコサシスセソタチツテト';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        };
+
+        const interval = setInterval(draw, 33);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        const progressTimer = setInterval(() => {
+            setProgress(prev => {
+                const increment = Math.random() > 0.7 ? 2 : 1;
+                const newProgress = Math.min(prev + increment, 100);
+
+                messages.forEach((msg, index) => {
+                    if (newProgress >= msg.threshold && messageIndex === index) {
+                        setMessageIndex(index + 1);
+                        if (index < compileTexts.length) {
+                            setCompileStatus(compileTexts[index]);
+                        }
+                    }
+                });
+
+                if (newProgress >= 100) {
+                    clearInterval(progressTimer);
+                    setTimeout(() => {
+                        setShowComplete(true);
+                    }, 500);
+                }
+
+                return newProgress;
+            });
+        }, 50);
 
         setTimeout(() => {
             startAutoPlay();
@@ -125,9 +197,9 @@ export default function LoadingPage() {
                 <style>{`
                     body {
                         cursor: url('/doto.cur'), auto;
-                        font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-                        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-                        color: #f8fafc;
+                        font-family: 'Courier New', 'JetBrains Mono', monospace;
+                        background: #000000;
+                        color: #00ff00;
                         min-height: 100vh;
                         display: flex;
                         flex-direction: column;
@@ -148,338 +220,337 @@ export default function LoadingPage() {
 
                     body::before {
                         content: '';
-                        position: absolute;
-                        width: 200%;
-                        height: 200%;
-                        background: 
-                            radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
-                            radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                            radial-gradient(circle at 40% 40%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
-                        animation: backgroundMove 20s ease-in-out infinite;
-                        z-index: -1;
-                    }
-
-                    .floating-symbols {
-                        position: absolute;
+                        position: fixed;
                         top: 0;
                         left: 0;
                         width: 100%;
                         height: 100%;
+                        background:
+                            repeating-linear-gradient(
+                                0deg,
+                                rgba(0, 255, 0, 0.03) 0px,
+                                transparent 1px,
+                                transparent 2px,
+                                rgba(0, 255, 0, 0.03) 3px
+                            );
                         pointer-events: none;
-                        z-index: -1;
-                        overflow: hidden;
-                    }
-
-                    .symbol {
-                        position: absolute;
-                        color: rgba(14, 165, 233, 0.25);
-                        font-family: 'JetBrains Mono', monospace;
-                        font-weight: bold;
-                        animation: float 15s infinite ease-in-out;
                         z-index: 1;
+                        animation: scanline 8s linear infinite;
                     }
 
-                    .symbol:nth-child(1) { 
-                        top: 10%; left: 10%; font-size: clamp(16px, 4vw, 24px); 
-                        animation-delay: 0s; animation-duration: 18s;
-                    }
-                    .symbol:nth-child(2) { 
-                        top: 20%; right: 15%; font-size: clamp(20px, 5vw, 32px); 
-                        animation-delay: -3s; animation-duration: 22s;
-                    }
-                    .symbol:nth-child(3) { 
-                        top: 60%; left: 5%; font-size: clamp(18px, 4.5vw, 28px); 
-                        animation-delay: -6s; animation-duration: 20s;
-                    }
-                    .symbol:nth-child(4) { 
-                        bottom: 20%; right: 10%; font-size: clamp(17px, 4.2vw, 26px); 
-                        animation-delay: -9s; animation-duration: 16s;
-                    }
-                    .symbol:nth-child(5) { 
-                        top: 40%; left: 80%; font-size: clamp(19px, 4.8vw, 30px); 
-                        animation-delay: -12s; animation-duration: 24s;
-                    }
-                    .symbol:nth-child(6) { 
-                        bottom: 40%; left: 20%; font-size: clamp(15px, 3.8vw, 22px); 
-                        animation-delay: -2s; animation-duration: 19s;
-                    }
-                    .symbol:nth-child(7) { 
-                        top: 70%; right: 40%; font-size: clamp(21px, 5.2vw, 34px); 
-                        animation-delay: -8s; animation-duration: 21s;
-                    }
-                    .symbol:nth-child(8) { 
-                        top: 30%; left: 50%; font-size: clamp(16px, 4.1vw, 25px); 
-                        animation-delay: -5s; animation-duration: 17s;
+                    @keyframes scanline {
+                        0% { transform: translateY(0); }
+                        100% { transform: translateY(100%); }
                     }
 
-                    @keyframes float {
-                        0%, 100% { 
-                            transform: translateY(0px) rotate(0deg); 
-                            opacity: 0.1; 
-                        }
-                        25% { 
-                            transform: translateY(-20px) rotate(5deg); 
-                            opacity: 0.25; 
-                        }
-                        50% { 
-                            transform: translateY(-10px) rotate(-3deg); 
-                            opacity: 0.15; 
-                        }
-                        75% { 
-                            transform: translateY(-30px) rotate(8deg); 
-                            opacity: 0.2; 
-                        }
+                    body::after {
+                        content: '';
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 255, 0, 0.02);
+                        pointer-events: none;
+                        z-index: 1;
+                        animation: flicker 0.15s infinite;
                     }
 
-                    @keyframes backgroundMove {
-                        0%, 100% { transform: translateX(-50px) translateY(-50px) rotate(0deg); }
-                        33% { transform: translateX(50px) translateY(-100px) rotate(120deg); }
-                        66% { transform: translateX(-100px) translateY(50px) rotate(240deg); }
+                    @keyframes flicker {
+                        0% { opacity: 0.97; }
+                        50% { opacity: 1; }
+                        100% { opacity: 0.95; }
+                    }
+
+                    #matrixCanvas {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        opacity: 0.15;
+                        z-index: 0;
                     }
 
                     .intro-container {
-                        text-align: center;
-                        max-width: min(90vw, 600px);
+                        text-align: left;
+                        max-width: min(90vw, 700px);
                         width: 100%;
-                        padding: clamp(1rem, 3vw, 2rem);
+                        padding: clamp(2rem, 4vw, 3rem);
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
                         box-sizing: border-box;
+                        background: rgba(0, 20, 0, 0.8);
+                        border: 2px solid #00ff00;
+                        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+                        position: relative;
+                        z-index: 2;
                     }
 
                     .name {
-                        font-size: clamp(1.75rem, 7vw, 3rem);
+                        font-size: clamp(1.5rem, 5vw, 2.5rem);
                         font-weight: 700;
                         margin-bottom: 0.5rem;
-                        background: linear-gradient(135deg, #f8fafc, #0ea5e9);
-                        background-clip: text;
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease 0.2s forwards;
-                        line-height: 1.1;
+                        color: #00ff00;
+                        font-family: 'Courier New', monospace;
+                        letter-spacing: 2px;
+                        text-shadow: 0 0 10px #00ff00;
+                        line-height: 1.2;
+                        min-height: 3rem;
+                    }
+
+                    .name::after {
+                        content: '▌';
+                        animation: blink 1s infinite;
+                    }
+
+                    @keyframes blink {
+                        0%, 50% { opacity: 1; }
+                        51%, 100% { opacity: 0; }
                     }
 
                     .title {
-                        font-size: clamp(1rem, 3.5vw, 1.4rem);
-                        color: #94a3b8;
-                        margin-bottom: 1rem;
+                        font-size: clamp(0.9rem, 3vw, 1.2rem);
+                        color: #00cc00;
+                        margin-bottom: 2rem;
                         font-weight: 400;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease 0.4s forwards;
-                        line-height: 1.3;
+                        letter-spacing: 1px;
+                        line-height: 1.4;
+                        min-height: 1.5rem;
+                        text-shadow: 0 0 5px #00ff00;
                     }
 
                     .loading-section {
-                        margin: 0.8rem 0;
-                        opacity: 0;
-                        animation: fadeInUp 1s ease 0.6s forwards;
+                        margin: 1rem 0;
                     }
 
                     .compile-text {
-                        font-size: clamp(0.9rem, 2.8vw, 1.1rem);
-                        color: #0ea5e9;
-                        margin-bottom: 1rem;
+                        font-size: clamp(0.85rem, 2.5vw, 1rem);
+                        color: #00ff00;
+                        margin-bottom: 1.5rem;
                         display: flex;
                         align-items: center;
-                        justify-content: center;
                         gap: 0.5rem;
-                        flex-wrap: wrap;
+                        font-family: 'Courier New', monospace;
+                        text-shadow: 0 0 5px #00ff00;
                     }
 
                     .spinner {
-                        width: 16px;
-                        height: 16px;
-                        border: 2px solid transparent;
-                        border-top: 2px solid #0ea5e9;
+                        display: inline-block;
+                        width: 10px;
+                        height: 10px;
+                        border: 2px solid #00ff00;
                         border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        flex-shrink: 0;
+                        animation: pulse 1s ease-in-out infinite;
                     }
 
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
+                    @keyframes pulse {
+                        0%, 100% {
+                            box-shadow: 0 0 5px #00ff00;
+                            opacity: 1;
+                        }
+                        50% {
+                            box-shadow: 0 0 15px #00ff00;
+                            opacity: 0.5;
+                        }
                     }
 
                     .progress-container {
                         width: 100%;
-                        max-width: min(90vw, 400px);
-                        margin: 1rem auto;
-                        background: rgba(30, 41, 59, 0.5);
-                        border-radius: 10px;
+                        margin: 1rem 0;
+                        background: rgba(0, 50, 0, 0.5);
+                        border: 1px solid #00ff00;
                         overflow: hidden;
-                        border: 1px solid rgba(14, 165, 233, 0.2);
-                        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+                        position: relative;
+                        height: 30px;
+                        box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2);
                     }
 
                     .progress-bar {
-                        height: clamp(6px, 2vw, 8px);
-                        background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-                        border-radius: 10px;
-                        transition: width 0.3s ease;
+                        height: 100%;
+                        background: #00ff00;
+                        transition: width 0.2s ease;
                         position: relative;
-                        overflow: hidden;
+                        box-shadow: 0 0 10px #00ff00;
                     }
 
                     .progress-bar::before {
                         content: '';
                         position: absolute;
                         top: 0;
-                        left: -100%;
-                        width: 100%;
-                        height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-                        animation: shimmer 2s infinite;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: repeating-linear-gradient(
+                            45deg,
+                            transparent,
+                            transparent 10px,
+                            rgba(0, 0, 0, 0.2) 10px,
+                            rgba(0, 0, 0, 0.2) 20px
+                        );
+                        animation: moveStripes 1s linear infinite;
                     }
 
-                    @keyframes shimmer {
-                        0% { left: -100%; }
-                        100% { left: 100%; }
+                    @keyframes moveStripes {
+                        0% { background-position: 0 0; }
+                        100% { background-position: 28px 0; }
                     }
 
-                 .progress-text {
-                        margin-top: 1rem;
+                    .progress-text {
+                        margin-top: 0.5rem;
                         font-size: clamp(0.85rem, 2.5vw, 1rem);
-                        color: #94a3b8;
-                        font-family: 'JetBrains Mono', monospace;
-                        text-align: center;
+                        color: #00ff00;
+                        font-family: 'Courier New', monospace;
+                        text-shadow: 0 0 5px #00ff00;
                     }
 
                     .percentage {
-                        color: #10b981;
-                        font-weight: 600;
+                        color: #00ff00;
+                        font-weight: 700;
                     }
 
                     .status-messages {
-                        margin-top: 1rem;
-                        margin-bottom: 2rem;
-                        text-align: center;
-                        background: transparent;
-                        border-radius: 0;
-                        padding: 0;
+                        margin-top: 1.5rem;
+                        margin-bottom: 1.5rem;
+                        text-align: left;
+                        background: rgba(0, 10, 0, 0.5);
+                        border: 1px solid #00ff00;
+                        border-left: 4px solid #00ff00;
+                        padding: 1rem;
                         display: flex;
                         flex-direction: column;
                         gap: 0.5rem;
-                        justify-content: center;
-                        align-items: center;
                         box-sizing: border-box;
-                        min-height: 180px;
+                        min-height: 150px;
+                        box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
                     }
 
-                        .fade-message {
-                        animation: fadeInOut 3s ease-in-out;
+                    .fade-message {
+                        animation: fadeInTerminal 0.3s ease-in;
                     }
 
-                    @keyframes fadeInOut {
+                    @keyframes fadeInTerminal {
                         0% {
                             opacity: 0;
-                            transform: translateX(-20px);
-                        }
-                        15% {
-                            opacity: 1;
-                            transform: translateX(0);
-                        }
-                        85% {
-                            opacity: 1;
-                            transform: translateX(0);
+                            transform: translateX(-10px);
                         }
                         100% {
-                            opacity: 0;
-                            transform: translateX(20px);
+                            opacity: 1;
+                            transform: translateX(0);
                         }
                     }
 
-                    /* Scrollbar styles removed - no longer needed */
-
                     .status-message {
-                        font-size: clamp(0.75rem, 2.2vw, 0.9rem);
-                        color: #94a3b8;
-                        margin-bottom: 0.3rem;
+                        font-size: clamp(0.75rem, 2vw, 0.85rem);
+                        color: #00ff00;
+                        margin-bottom: 0.2rem;
                         opacity: 0;
-                        transform: translateY(10px);
-                        font-family: 'JetBrains Mono', monospace;
-                        line-height: 1.4;
-                        word-break: break-word;
+                        font-family: 'Courier New', monospace;
+                        line-height: 1.5;
                         transition: all 0.3s ease;
                         display: flex;
                         align-items: center;
-                        justify-content: center;
                         gap: 0.5rem;
+                        text-shadow: 0 0 3px #00ff00;
                     }
 
                     .status-message.show {
                         opacity: 1;
-                        transform: translateY(0);
+                        transform: translateX(0);
                     }
 
-                    .status-message .success { color: #10b981; display: inline; }
-                    .status-message .primary { color: #0ea5e9; display: inline; }
-                    .status-message .accent { color: #3b82f6; display: inline; }
+                    .status-message .success { color: #00ff00; display: inline; }
+                    .status-message .primary { color: #00ff00; display: inline; }
+                    .status-message .accent { color: #00cc00; display: inline; }
 
                     .status-icon {
-                        font-size: 1.2rem;
-                        color: #0ea5e9;
-                        animation: spin 1s linear infinite;
+                        font-size: 0.9rem;
+                        color: #00ff00;
                         flex-shrink: 0;
                         display: inline-block;
-                        font-family: 'JetBrains Mono', monospace;
+                        font-family: 'Courier New', monospace;
                         font-weight: bold;
                     }
 
-                 .complete-section {
-                    margin-top: 2.5rem;
-                    opacity: 0;
-                    transform: scale(0.8);
-                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                }
+                    .complete-section {
+                        margin-top: 2rem;
+                        opacity: 0;
+                        transform: translateY(20px);
+                        transition: all 0.5s ease;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        justify-content: center;
+                    }
 
                     .complete-section.show {
                         opacity: 1;
-                        transform: scale(1);
+                        transform: translateY(0);
                     }
 
                     .success-message {
-                        font-size: clamp(0.95rem, 2.8vw, 1.1rem);
-                        color: #10b981;
-                        margin-bottom: 0.5rem;
+                        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+                        color: #00ff00;
+                        margin-bottom: 1rem;
                         display: flex;
                         align-items: center;
-                        justify-content: center;
                         gap: 0.5rem;
-                        flex-wrap: wrap;
+                        font-family: 'Courier New', monospace;
+                        text-shadow: 0 0 10px #00ff00;
+                        animation: glowPulse 2s ease-in-out infinite;
+                    }
+
+                    @keyframes glowPulse {
+                        0%, 100% { text-shadow: 0 0 10px #00ff00; }
+                        50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
                     }
 
                     .enter-button {
-                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-                        color: white;
-                        border: none;
-                        padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 24px);
-                        border-radius: 8px;
-                        font-size: clamp(0.9rem, 2.5vw, 1rem);
-                        font-weight: 600;
+                        background: transparent;
+                        color: #00ff00;
+                        border: 2px solid #00ff00;
+                        padding: clamp(12px, 3vw, 15px) clamp(30px, 6vw, 40px);
+                        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+                        font-weight: 700;
                         cursor: pointer;
-                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                        font-family: inherit;
+                        transition: all 0.3s ease;
+                        font-family: 'Courier New', monospace;
                         display: inline-flex;
                         align-items: center;
                         gap: 0.5rem;
                         min-height: 44px;
                         touch-action: manipulation;
+                        letter-spacing: 2px;
+                        text-shadow: 0 0 5px #00ff00;
+                        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .enter-button::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 255, 0, 0.2);
+                        transition: left 0.5s ease;
+                    }
+
+                    .enter-button:hover::before {
+                        left: 100%;
                     }
 
                     .enter-button:hover {
-                        transform: translateY(-3px) scale(1.05);
-                        box-shadow: 0 15px 30px rgba(14, 165, 233, 0.3);
+                        background: rgba(0, 255, 0, 0.1);
+                        box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), inset 0 0 20px rgba(0, 255, 0, 0.2);
+                        transform: translateX(5px);
                     }
 
                     .enter-button:active {
-                        transform: translateY(-1px) scale(1.02);
+                        transform: translateX(2px);
                     }
 
                     .audio-controls {
@@ -492,12 +563,12 @@ export default function LoadingPage() {
                     }
 
                     .audio-btn {
-                        background: rgba(30, 41, 59, 0.8);
-                        border: 1px solid rgba(14, 165, 233, 0.3);
-                        color: #f8fafc;
+                        background: rgba(0, 20, 0, 0.8);
+                        border: 2px solid #00ff00;
+                        color: #00ff00;
                         width: clamp(40px, 10vw, 50px);
                         height: clamp(40px, 10vw, 50px);
-                        border-radius: 50%;
+                        border-radius: 0;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -507,12 +578,14 @@ export default function LoadingPage() {
                         min-height: 44px;
                         min-width: 44px;
                         touch-action: manipulation;
+                        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
                     }
 
                     .audio-btn:hover {
-                        background: rgba(14, 165, 233, 0.2);
-                        border-color: #0ea5e9;
+                        background: rgba(0, 255, 0, 0.1);
+                        border-color: #00ff00;
                         transform: scale(1.1);
+                        box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
                     }
 
                     .audio-btn:active {
@@ -520,60 +593,35 @@ export default function LoadingPage() {
                     }
 
                     .audio-btn.active {
-                        background: #0ea5e9;
-                        border-color: #0ea5e9;
+                        background: rgba(0, 255, 0, 0.2);
+                        border-color: #00ff00;
+                        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
                     }
-
-                    @keyframes fadeInUp {
-                        from {
-                            opacity: 0;
-                            transform: translateY(30px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-
-                    @keyframes pulse {
-                        0%, 100% { opacity: 1; }
-                        50% { opacity: 0.7; }
-                    }
-
-                    .cursor { animation: pulse 1s infinite; }
 
                     @media (max-width: 768px) {
                         body {
-                            padding: clamp(0.5rem, 2vw, 1rem);
+                            padding: 1rem;
                             overflow-x: hidden;
                         }
-                        
+
                         .intro-container {
-                            padding: clamp(0.5rem, 2vw, 1rem);
+                            padding: 1.5rem;
                             max-width: 95vw;
                         }
-                        
+
                         .status-messages {
-                            font-size: 0.75rem;
-                            padding: 0.5rem 0.75rem;
-                            max-height: 120px;
-                            line-height: 1.3;
-                        }
-                        
-                        .status-message {
-                            margin-bottom: 0.25rem;
-                            font-size: 0.75rem;
+                            padding: 0.75rem;
+                            min-height: 120px;
                         }
 
-                        .floating-symbols {
-                            transform: scale(0.8);
+                        .status-message {
+                            font-size: 0.75rem;
                         }
                     }
 
                     @media (max-width: 480px) {
                         body { padding: 0.5rem; }
-                        .intro-container { padding: 0.5rem; max-width: 100%; }
-                        .floating-symbols { transform: scale(0.6); }
+                        .intro-container { padding: 1rem; max-width: 100%; }
                     }
 
                     @media (prefers-reduced-motion: reduce) {
@@ -582,7 +630,7 @@ export default function LoadingPage() {
                             animation-iteration-count: 1 !important;
                             transition-duration: 0.01ms !important;
                         }
-                        .floating-symbols { display: none; }
+                        #matrixCanvas { display: none; }
                     }
                 `}</style>
             </Head>
@@ -592,20 +640,7 @@ export default function LoadingPage() {
                 Your browser does not support the audio element.
             </audio>
 
-            <div className="floating-symbols">
-                <div className="symbol">{'<>'}</div>
-                <div className="symbol">{'{'}</div>
-                <div className="symbol">{'}'}</div>
-                <div className="symbol">{';'}</div>
-                <div className="symbol">{'[]'}</div>
-                <div className="symbol">{'()'}</div>
-                <div className="symbol">{'\\'}</div>
-                <div className="symbol">{'/'}</div>
-                <div className="symbol">{'<'}</div>
-                <div className="symbol">{'>'}</div>
-                <div className="symbol">{'='}</div>
-                <div className="symbol">{'+'}</div>
-            </div>
+            <canvas ref={canvasRef} id="matrixCanvas"></canvas>
 
             <div className="audio-controls">
                 <button 
@@ -618,8 +653,8 @@ export default function LoadingPage() {
             </div>
 
             <div className="intro-container">
-                <h1 className="name">Laurence De Guzman</h1>
-                <p className="title">Aspiring Cybersecurity & ERP Specialist</p>
+                <h1 className="name">{displayedName}</h1>
+                <p className="title">{displayedTitle}</p>
                 
                 <div className="loading-section">
                     <div className="compile-text">
@@ -640,31 +675,13 @@ export default function LoadingPage() {
                     
                     <div className="status-messages">
                         {messages.map((msg, index) => {
-                            const symbols = ['<>', '{}', '[]', '()', ';', '//'];
-                            const randomSymbol = symbols[index % symbols.length];
-                            
                             return messageIndex === index + 1 && (
-                                <div 
+                                <div
                                     key={msg.id}
                                     className="status-message show fade-message"
                                 >
-                                    <span className="status-icon">{randomSymbol}</span>
-                                    {msg.id === 'msg2' && (
-                                        <span>Loading <span className="primary">React components</span>...</span>
-                                    )}
-                                    {msg.id === 'msg3' && (
-                                        <span>Connecting to <span className="accent">databases</span>...</span>
-                                    )}
-                                    {msg.id === 'msg4' && (
-                                        <span>Building <span className="primary">full-stack solutions</span>...</span>
-                                    )}
-                                    {msg.id === 'msg5' && (
-                                        <span>Optimizing <span className="accent">performance</span>...</span>
-                                    )}
-                                    {msg.id === 'msg6' && (
-                                        <span><span className="success">✓</span> Portfolio ready!</span>
-                                    )}
-                                    {msg.id === 'msg1' && <span>{msg.text}</span>}
+                                    <span className="status-icon">{msg.icon}</span>
+                                    <span>{msg.text}</span>
                                 </div>
                             );
                         })}
@@ -673,12 +690,12 @@ export default function LoadingPage() {
                 
                 <div className={`complete-section ${showComplete ? 'show' : ''}`}>
                     <div className="success-message">
-                        <span></span>
-                        <span>Compilation successful!</span>
+                        <span>[✓]</span>
+                        <span>SYSTEM READY - ACCESS GRANTED</span>
                     </div>
                     <button className="enter-button" onClick={enterPortfolio}>
-                        <span></span>
-                        <span>Enter Portfolio</span>
+                        <span>{'>'}</span>
+                        <span>ENTER PORTFOLIO</span>
                     </button>
                 </div>
             </div>
