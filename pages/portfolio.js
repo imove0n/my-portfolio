@@ -294,6 +294,57 @@ const playPrevious = () => {
         };
     }, []);
 
+    // Custom smooth scroll with unique easing
+useEffect(() => {
+    const handleNavClick = (e) => {
+        const href = e.target.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const startPosition = window.pageYOffset;
+                const targetPosition = targetElement.offsetTop - 80;
+                const distance = targetPosition - startPosition;
+                const duration = 1200;
+                let start = null;
+                
+                const easeInOutCubic = (t) => {
+                    return t < 0.5
+                        ? 4 * t * t * t
+                        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                };
+                
+                const animation = (currentTime) => {
+                    if (start === null) start = currentTime;
+                    const timeElapsed = currentTime - start;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const easing = easeInOutCubic(progress);
+                    
+                    window.scrollTo(0, startPosition + distance * easing);
+                    
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                    }
+                };
+                
+                requestAnimationFrame(animation);
+            }
+        }
+    };
+    
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', handleNavClick);
+    });
+    
+    return () => {
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.removeEventListener('click', handleNavClick);
+        });
+    };
+}, []);
+
     // Intersection Observer for animations
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -779,15 +830,35 @@ const playPrevious = () => {
                             color: var(--text-secondary);
                             text-decoration: none;
                             font-weight: 500;
-                            transition: all 0.3s ease;
+                            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                             padding: 1rem 2rem;
                             display: block;
                             border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .nav-menu a::before {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            height: 100%;
+                            width: 3px;
+                            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+                            transform: translateX(-100%);
+                            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                         }
 
                         .nav-menu a:hover {
                             color: var(--primary-color);
-                            background: rgba(14, 165, 233, 0.05);
+                            background: rgba(14, 165, 233, 0.03);
+                            padding-left: 2.5rem;
+                            letter-spacing: 1px;
+                        }
+
+                        .nav-menu a:hover::before {
+                            transform: translateX(0);
                         }
 
                         .mobile-menu-btn {
@@ -805,42 +876,73 @@ const playPrevious = () => {
 
                         /* Desktop Navigation */
                         @media (min-width: 769px) {
-                            .nav-container { padding: 1rem 2rem; }
-                            .logo { font-size: 1.5rem; gap: 0.5rem; }
-                            
-                            .nav-menu {
-                                display: flex !important;
-                                position: static;
-                                width: auto;
-                                background: none;
-                                backdrop-filter: none;
-                                border: none;
-                                flex-direction: row;
-                                padding: 0;
-                                gap: 2rem;
-                            }
-                            
-                            .nav-menu a {
-                                padding: 0;
-                                border: none;
-                                position: relative;
-                            }
-                            
-                            .nav-menu a::after {
-                                content: '';
-                                position: absolute;
-                                width: 0;
-                                height: 2px;
-                                bottom: -5px;
-                                left: 0;
-                                background-color: var(--primary-color);
-                                transition: width 0.3s ease;
-                            }
-                            
-                            .nav-menu a:hover::after { width: 100%; }
-                            .nav-menu a:hover { background: none; }
-                            .mobile-menu-btn { display: none; }
+                        .nav-container { padding: 1rem 2rem; }
+                        .logo { font-size: 1.5rem; gap: 0.5rem; }
+                        
+                        .nav-menu {
+                            display: flex !important;
+                            position: static;
+                            width: auto;
+                            background: none;
+                            backdrop-filter: none;
+                            border: none;
+                            flex-direction: row;
+                            padding: 0;
+                            gap: 2rem;
                         }
+                        
+                        .nav-menu a {
+                            padding: 0.5rem 0;
+                            border: none;
+                            position: relative;
+                            overflow: visible;
+                        }
+                        
+                        .nav-menu a::before {
+                            content: '';
+                            position: absolute;
+                            width: 100%;
+                            height: 2px;
+                            bottom: 0;
+                            left: 0;
+                            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+                            transform: scaleX(0);
+                            transform-origin: right;
+                            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                        }
+                        
+                        .nav-menu a::after {
+                            content: '';
+                            position: absolute;
+                            width: 6px;
+                            height: 6px;
+                            background: var(--accent-color);
+                            border-radius: 50%;
+                            bottom: -2px;
+                            left: 50%;
+                            transform: translate(-50%, 10px) scale(0);
+                            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                            box-shadow: 0 0 10px var(--accent-color);
+                        }
+                        
+                        .nav-menu a:hover {
+                            background: none;
+                            padding-left: 0;
+                            letter-spacing: 2px;
+                            transform: translateY(-2px);
+                        }
+                        
+                        .nav-menu a:hover::before {
+                            transform: scaleX(1);
+                            transform-origin: left;
+                        }
+                        
+                        .nav-menu a:hover::after {
+                            transform: translate(-50%, 0) scale(1);
+                        }
+                        
+                        .mobile-menu-btn { display: none; }
+                    }
 
                         /* Hero Section */
                         .hero {
