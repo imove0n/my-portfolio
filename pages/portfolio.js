@@ -1420,7 +1420,9 @@ useEffect(() => {
                             transition: all 0.3s ease;
                             position: relative;
                             overflow: hidden;
-                            min-height: 240px;
+                            display: flex;
+                            flex-direction: column;
+                            height: 100%;
                         }
 
                         .card::before {
@@ -1473,7 +1475,7 @@ useEffect(() => {
 
                         @media (min-width: 769px) {
                             .cards-grid {
-                                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                                grid-template-columns: repeat(2, 1fr);
                                 gap: 2rem;
                                 margin-top: 2rem;
                             }
@@ -1481,7 +1483,6 @@ useEffect(() => {
                             .card {
                                 border-radius: 16px;
                                 padding: 2rem;
-                                min-height: 280px;
                             }
                             
                             .card:hover { transform: translateY(-5px); }
