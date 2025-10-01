@@ -1047,8 +1047,8 @@ const playPrevious = () => {
 
                         .profile-image {
                             width: 300px;
-                            height: 400px;
-                            border-radius: 16px;
+                            height: 300px;
+                            border-radius: 50%;
                             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             display: flex;
                             align-items: center;
@@ -1082,8 +1082,9 @@ const playPrevious = () => {
                         .profile-image img {
                             width: calc(100% - 6px);
                             height: calc(100% - 6px);
-                            object-fit: contain;
-                            border-radius: 13px;
+                            object-fit: cover;
+                            object-position: center 20%;
+                            border-radius: 50%;
                             display: block;
                         }
 
@@ -1112,12 +1113,16 @@ const playPrevious = () => {
                             
                             .profile-image {
                                 width: 350px;
-                                height: 467px;
-                                border-radius: 20px;
+                                height: 350px;
+                                border-radius: 50%;
                                 padding: 4px;
                             }
                             
-                            .profile-image img { border-radius: 16px; }
+                            .profile-image img { 
+                                border-radius: 50%; 
+                                object-fit: cover;
+                                object-position: center 20%;
+                            }
                             .profile-image .fallback-icon { font-size: 4rem; }
                             .about-text { font-size: 1.1rem; line-height: 1.8; }
                             .about-text p { margin-bottom: 1.5rem; }
