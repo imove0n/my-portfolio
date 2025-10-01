@@ -527,64 +527,111 @@ useEffect(() => {
                             position: fixed;
                             bottom: 20px;
                             right: 20px;
-                            background: rgba(30, 41, 59, 0.95);
-                            backdrop-filter: blur(20px);
-                            border: 1px solid var(--border-color);
-                            border-radius: 50px;
-                            padding: 12px 16px;
+                            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+                            backdrop-filter: blur(30px);
+                            border: 1px solid rgba(14, 165, 233, 0.2);
+                            border-radius: 16px;
+                            padding: 16px;
                             display: flex;
-                            align-items: center;
+                            flex-direction: column;
                             gap: 12px;
                             z-index: 1001;
-                            transition: all 0.3s ease;
-                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-                            min-width: 180px;
+                            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(14, 165, 233, 0.1);
+                            min-width: 280px;
                             max-width: calc(100vw - 40px);
                         }
 
                         .audio-player:hover {
-                            background: rgba(30, 41, 59, 1);
+                            background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(15, 23, 42, 1));
                             border-color: var(--primary-color);
-                            transform: translateY(-2px);
-                            box-shadow: 0 12px 35px rgba(14, 165, 233, 0.2);
+                            transform: translateY(-4px);
+                            box-shadow: 0 15px 50px rgba(14, 165, 233, 0.3), 0 0 0 1px var(--primary-color);
                         }
 
                         .audio-player.minimized {
-                            min-width: 50px;
+                            min-width: 60px;
                             padding: 12px;
                             gap: 0;
+                            border-radius: 50%;
                         }
 
                         .audio-player.minimized .audio-info,
                         .audio-player.minimized .audio-controls,
-                        .audio-player.minimized .volume-control {
+                        .audio-player.minimized .volume-control,
+                        .audio-player.minimized .player-header {
                             display: none;
+                        }
+
+                        .player-header {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            margin-bottom: 8px;
+                        }
+
+                        .player-title {
+                            font-size: 0.75rem;
+                            color: var(--text-secondary);
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            font-weight: 600;
                         }
 
                         .play-pause-btn {
                             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             border: none;
                             border-radius: 50%;
-                            width: 36px;
-                            height: 36px;
+                            width: 48px;
+                            height: 48px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             cursor: pointer;
                             color: white;
-                            font-size: 14px;
+                            font-size: 18px;
                             transition: all 0.3s ease;
                             flex-shrink: 0;
+                            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .play-pause-btn::before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            width: 0;
+                            height: 0;
+                            border-radius: 50%;
+                            background: rgba(255, 255, 255, 0.3);
+                            transform: translate(-50%, -50%);
+                            transition: width 0.6s, height 0.6s;
+                        }
+
+                        .play-pause-btn:hover::before {
+                            width: 100%;
+                            height: 100%;
                         }
 
                         .play-pause-btn:hover {
-                            transform: scale(1.1);
-                            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+                            transform: scale(1.15);
+                            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+                        }
+
+                        .play-pause-btn:active {
+                            transform: scale(1.05);
                         }
 
                         .play-pause-btn:disabled {
                             opacity: 0.5;
                             cursor: not-allowed;
+                        }
+
+                        .play-pause-btn i {
+                            position: relative;
+                            z-index: 1;
                         }
 
                         .audio-info {
@@ -594,50 +641,86 @@ useEffect(() => {
                         }
 
                         .audio-title {
-                            font-size: 0.8rem;
+                            font-size: 0.9rem;
                             font-weight: 600;
                             color: var(--text-primary);
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
-                            margin-bottom: 2px;
+                            margin-bottom: 8px;
                         }
 
                         .audio-progress {
                             display: flex;
                             align-items: center;
-                            gap: 6px;
+                            gap: 8px;
                             font-size: 0.7rem;
                             color: var(--text-secondary);
                         }
 
                         .progress-bar {
                             flex-grow: 1;
-                            height: 3px;
-                            background: rgba(148, 163, 184, 0.2);
-                            border-radius: 2px;
+                            height: 6px;
+                            background: rgba(148, 163, 184, 0.15);
+                            border-radius: 10px;
                             overflow: hidden;
                             cursor: pointer;
-                            min-width: 40px;
+                            min-width: 60px;
+                            position: relative;
+                            transition: all 0.3s ease;
+                        }
+
+                        .progress-bar:hover {
+                            height: 8px;
+                            background: rgba(148, 163, 184, 0.25);
                         }
 
                         .progress-fill {
                             height: 100%;
                             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
                             transition: width 0.1s ease;
+                            border-radius: 10px;
+                            position: relative;
+                            box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+                        }
+
+                        .progress-fill::after {
+                            content: '';
+                            position: absolute;
+                            right: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            width: 12px;
+                            height: 12px;
+                            background: white;
+                            border-radius: 50%;
+                            box-shadow: 0 0 8px rgba(14, 165, 233, 0.8);
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                        }
+
+                        .progress-bar:hover .progress-fill::after {
+                            opacity: 1;
+                        }
+
+                        .audio-controls {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
                         }
 
                         .control-btn, .minimize-btn {
-                            background: none;
-                            border: none;
+                            background: rgba(148, 163, 184, 0.1);
+                            border: 1px solid rgba(148, 163, 184, 0.2);
                             color: var(--text-secondary);
-                            font-size: 12px;
+                            font-size: 14px;
                             cursor: pointer;
-                            padding: 4px;
-                            border-radius: 50%;
+                            padding: 8px;
+                            border-radius: 8px;
                             transition: all 0.3s ease;
-                            width: 24px;
-                            height: 24px;
+                            width: 36px;
+                            height: 36px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -646,54 +729,85 @@ useEffect(() => {
 
                         .control-btn:hover, .minimize-btn:hover {
                             color: var(--primary-color);
-                            background: rgba(14, 165, 233, 0.1);
+                            background: rgba(14, 165, 233, 0.15);
+                            border-color: var(--primary-color);
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+                        }
+
+                        .control-btn:active, .minimize-btn:active {
+                            transform: translateY(0);
+                        }
+
+                        .minimize-btn {
+                            border-radius: 50%;
                         }
 
                         .volume-control {
-                            display: none;
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            padding-top: 8px;
+                            border-top: 1px solid rgba(148, 163, 184, 0.1);
                         }
 
                         .volume-slider {
-                            width: 40px;
-                            height: 3px;
+                            width: 100%;
+                            height: 4px;
                             background: rgba(148, 163, 184, 0.2);
-                            border-radius: 2px;
+                            border-radius: 10px;
                             outline: none;
                             cursor: pointer;
                             -webkit-appearance: none;
+                            transition: all 0.3s ease;
+                        }
+
+                        .volume-slider:hover {
+                            background: rgba(148, 163, 184, 0.3);
                         }
 
                         .volume-slider::-webkit-slider-thumb {
                             -webkit-appearance: none;
-                            width: 10px;
-                            height: 10px;
-                            background: var(--primary-color);
+                            width: 14px;
+                            height: 14px;
+                            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
                             border-radius: 50%;
                             cursor: pointer;
+                            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+                            transition: all 0.3s ease;
+                        }
+
+                        .volume-slider::-webkit-slider-thumb:hover {
+                            transform: scale(1.2);
+                            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.6);
+                        }
+
+                        .volume-slider::-moz-range-thumb {
+                            width: 14px;
+                            height: 14px;
+                            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                            border-radius: 50%;
+                            cursor: pointer;
+                            border: none;
+                            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
                         }
 
                         @media (min-width: 769px) {
-                            .volume-control {
-                                display: flex;
-                                align-items: center;
-                                gap: 6px;
-                            }
-                            
                             .audio-player {
-                                min-width: 220px;
-                                padding: 15px 20px;
-                                gap: 15px;
+                                min-width: 320px;
+                                padding: 20px;
+                                gap: 16px;
                             }
-                            
+
                             .audio-player.minimized {
                                 min-width: 60px;
                                 padding: 15px;
                             }
-                            
+
                             .play-pause-btn {
-                                width: 40px;
-                                height: 40px;
-                                font-size: 16px;
+                                width: 52px;
+                                height: 52px;
+                                font-size: 20px;
                             }
                         }
 
@@ -1661,16 +1775,22 @@ Your browser does not support the audio element.
     {/* Audio Player UI */}
     {!audioError && (
     <div className={`audio-player ${isMinimized ? 'minimized' : ''}`}>
-        <button 
-        className="play-pause-btn" 
-        onClick={togglePlayPause}
-        disabled={audioError}
-        >
-        <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
-        </button>
-        
         {!isMinimized && (
         <>
+            <div className="player-header">
+                <div className="player-title">
+                    <i className="fas fa-music" style={{ marginRight: '6px' }}></i>
+                    NOW PLAYING
+                </div>
+                <button
+                    className="minimize-btn"
+                    onClick={toggleMinimize}
+                    title="Minimize Player"
+                >
+                    <i className="fas fa-minus"></i>
+                </button>
+            </div>
+
             <div className="audio-info">
             <div className="audio-title">
     {audioError ? 'Audio Unavailable' : playlist[currentTrackIndex].title}
@@ -1688,51 +1808,64 @@ Your browser does not support the audio element.
                 <span>{formatTime(duration)}</span>
             </div>
             </div>
-            
-           <div className="audio-controls">
-<button 
-    className="control-btn" 
-    onClick={playPrevious}
-    title="Previous Track"
->
-    <i className="fas fa-step-backward"></i>
-</button>
-<button 
-    className="control-btn" 
-    onClick={playNext}
-    title="Next Track"
->
-    <i className="fas fa-step-forward"></i>
-</button>
-<button 
-    className="control-btn" 
-    onClick={toggleMute}
-    title="Mute/Unmute"
->
-    <i className={getVolumeIcon()}></i>
-</button>
-</div>
-            
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button
+                    className="play-pause-btn"
+                    onClick={togglePlayPause}
+                    disabled={audioError}
+                >
+                    <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
+                </button>
+
+                <div className="audio-controls">
+                    <button
+                        className="control-btn"
+                        onClick={playPrevious}
+                        title="Previous Track"
+                    >
+                        <i className="fas fa-step-backward"></i>
+                    </button>
+                    <button
+                        className="control-btn"
+                        onClick={playNext}
+                        title="Next Track"
+                    >
+                        <i className="fas fa-step-forward"></i>
+                    </button>
+                    <button
+                        className="control-btn"
+                        onClick={toggleMute}
+                        title="Mute/Unmute"
+                    >
+                        <i className={getVolumeIcon()}></i>
+                    </button>
+                </div>
+            </div>
+
             <div className="volume-control">
-            <input 
-                type="range" 
-                className="volume-slider" 
-                min="0" 
-                max="100" 
-                value={volume}
-                onChange={handleVolumeChange}
-            />
+                <i className="fas fa-volume-up" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}></i>
+                <input
+                    type="range"
+                    className="volume-slider"
+                    min="0"
+                    max="100"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                />
             </div>
         </>
         )}
-        
-        <button 
-        className="minimize-btn" 
-        onClick={toggleMinimize}
-        title={isMinimized ? "Expand Player" : "Minimize Player"}
-        >
-        <i className={`fas ${isMinimized ? 'fa-plus' : 'fa-minus'}`}></i>
-        </button>
+
+        {isMinimized && (
+            <button
+                className="play-pause-btn"
+                onClick={toggleMinimize}
+                title="Expand Player"
+            >
+                <i className="fas fa-music"></i>
+            </button>
+        )}
     </div>
     )}
 
