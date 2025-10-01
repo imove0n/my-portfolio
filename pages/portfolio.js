@@ -1331,6 +1331,7 @@ useEffect(() => {
                             line-height: 1.7;
                             color: var(--text-secondary);
                             max-width: 100%;
+                            text-align: justify;
                         }
 
                         .about-text p { margin-bottom: 1.2rem; }
