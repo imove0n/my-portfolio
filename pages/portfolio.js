@@ -2068,7 +2068,7 @@ Your browser does not support the audio element.
                                 </div>
                                 <div className="card-content">
                                     <h3>AI Chatbot for BTVTED Students</h3>
-                                    <p>AI-powered chatbot built with Next.js to support programming students with continuous learning, 
+                                    <p>AI-powered chatbot built with Next.js to support programming students with continuous learning,
                                     addressing gaps in traditional teaching methods.</p>
                                     <div className="card-tags">
                                         <span className="tag">Next.js</span>
@@ -2079,11 +2079,28 @@ Your browser does not support the audio element.
                             </div>
                             <div className="card fade-in">
                                 <div className="card-icon">
+                                    <i className="fas fa-gamepad"></i>
+                                </div>
+                                <div className="card-content">
+                                    <h3>Enhanced Flappy Bird Mobile Game</h3>
+                                    <p>Created a challenging Flappy Bird-inspired mobile game with moving tubes that collide with each other
+                                    and enemy birds flying toward the player. Built with Python using Kivy framework and converted to APK
+                                    using Buildozer for Android deployment.</p>
+                                    <div className="card-tags">
+                                        <span className="tag">Python</span>
+                                        <span className="tag">Kivy</span>
+                                        <span className="tag">Buildozer</span>
+                                        <span className="tag">Game Development</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card fade-in">
+                                <div className="card-icon">
                                     <i className="fas fa-car"></i>
                                 </div>
                                 <div className="card-content">
                                     <h3>Arduino Smart Car</h3>
-                                    <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming 
+                                    <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming
                                     with electronics, expanding skills into IoT and embedded systems.</p>
                                     <div className="card-tags">
                                         <span className="tag">Arduino</span>
@@ -2098,7 +2115,7 @@ Your browser does not support the audio element.
                                 </div>
                                 <div className="card-content">
                                     <h3>Automated Department Database System</h3>
-                                    <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic 
+                                    <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic
                                     pass/fail checking and real-time score recording, eliminating manual grading processes for the department.</p>
                                     <div className="card-tags">
                                         <span className="tag">MySQL</span>
