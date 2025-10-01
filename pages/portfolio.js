@@ -1960,7 +1960,7 @@ Your browser does not support the audio element.
                                 </div>
                                 <div className="card-content">
                                     <h3>IT Support Specialist</h3>
-                                    <p><strong>Local Supply & Equipment Company | August 2024 - Present</strong></p>
+                                    <p><strong>Local Supply & Equipment Company | August 2025 - Present</strong></p>
                                     <p>Sole IT personnel managing end-to-end technology operations for a company specializing in school supplies,
                                     office equipment, and furniture. Responsibilities include hardware support (building/repairing computers,
                                     antivirus installation, password recovery), Odoo ERP customization and configuration, email hosting management,
