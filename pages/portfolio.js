@@ -1436,15 +1436,15 @@ useEffect(() => {
 
                         /* Flip card container */
                         .flip-card {
-                            perspective: 1000px;
-                            min-height: 300px;
+                            perspective: 1500px;
+                            min-height: 350px;
+                            background: transparent;
                         }
 
                         .flip-card-inner {
                             position: relative;
                             width: 100%;
-                            height: 100%;
-                            min-height: 300px;
+                            min-height: 350px;
                             transition: transform 0.6s;
                             transform-style: preserve-3d;
                         }
@@ -1456,21 +1456,17 @@ useEffect(() => {
                         .flip-card-front, .flip-card-back {
                             position: absolute;
                             width: 100%;
-                            height: 100%;
+                            min-height: 350px;
                             -webkit-backface-visibility: hidden;
                             backface-visibility: hidden;
                             border-radius: 12px;
-                            top: 0;
-                            left: 0;
                         }
 
                         .flip-card-front {
                             background: var(--bg-card);
                             border: 1px solid var(--border-color);
                             padding: 1.5rem;
-                            display: flex;
-                            flex-direction: column;
-                            z-index: 2;
+                            transform: rotateY(0deg);
                             overflow: hidden;
                         }
 
@@ -1485,24 +1481,21 @@ useEffect(() => {
                         }
 
                         .flip-card-back {
-                            background: #1e293b;
-                            border: 1px solid var(--primary-color);
+                            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                            border: 2px solid var(--primary-color);
                             transform: rotateY(180deg);
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            padding: 1.5rem;
-                            z-index: 1;
+                            padding: 2rem;
                         }
 
                         .flip-card-back img {
-                            max-width: 100%;
-                            max-height: 100%;
-                            width: auto;
-                            height: auto;
+                            max-width: 90%;
+                            max-height: 280px;
                             object-fit: contain;
                             border-radius: 8px;
-                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
                         }
 
                         .card::before {
