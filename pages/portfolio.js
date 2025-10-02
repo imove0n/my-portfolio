@@ -487,23 +487,6 @@ useEffect(() => {
                         box-sizing: border-box;
                     }
 
-                        /* Prevent flash of unstyled content */
-                        html {
-                            visibility: hidden;
-                            opacity: 0;
-                        }
-
-                        html.loaded {
-                            visibility: visible;
-                            opacity: 1;
-                            animation: fadeIn 0.4s ease;
-                        }
-
-                        @keyframes fadeIn {
-                            from { opacity: 0; }
-                            to { opacity: 1; }
-                        }
-
                         :root {
                         --primary-color: #0ea5e9;
                         --secondary-color: #1e293b;
