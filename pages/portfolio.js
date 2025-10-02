@@ -1473,7 +1473,7 @@ useEffect(() => {
 
                         @media (min-width: 769px) {
                             .cards-grid {
-                                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                                grid-template-columns: repeat(2, 1fr);
                                 gap: 2rem;
                                 margin-top: 2rem;
                             }
