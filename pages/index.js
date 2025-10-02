@@ -473,18 +473,48 @@ export default function LoadingPage() {
                         justify-content: center;
                         gap: 0.5rem;
                         flex-wrap: wrap;
-                        animation: textPulse 3s ease-in-out infinite;
+                        animation: compileGlitchPulse 2s ease-in-out infinite;
+                        text-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+                        position: relative;
                     }
 
-                    @keyframes textPulse {
+                    .compile-text::before {
+                        content: '>';
+                        color: #10b981;
+                        margin-right: 8px;
+                        animation: cursorBlink 1s infinite;
+                    }
+
+                    @keyframes compileGlitchPulse {
                         0%, 100% {
                             opacity: 0.9;
                             filter: brightness(1);
+                            transform: translateX(0);
+                            text-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+                        }
+                        25% {
+                            opacity: 1;
+                            filter: brightness(1.3);
+                            transform: translateX(1px);
+                            text-shadow: -1px 0 5px rgba(14, 165, 233, 0.6), 1px 0 5px rgba(255, 0, 255, 0.3);
                         }
                         50% {
                             opacity: 1;
                             filter: brightness(1.2);
+                            transform: translateX(0);
+                            text-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
                         }
+                        75% {
+                            opacity: 1;
+                            filter: brightness(1.3);
+                            transform: translateX(-1px);
+                            text-shadow: 1px 0 5px rgba(14, 165, 233, 0.6), -1px 0 5px rgba(255, 0, 255, 0.3);
+                        }
+                    }
+
+                    @keyframes cursorBlink {
+                        0%, 100% { opacity: 1; }
+                        50% { opacity: 0.3; }
                     }
 
 
@@ -628,20 +658,41 @@ export default function LoadingPage() {
                     @keyframes fadeInOut {
                         0% {
                             opacity: 0;
-                            transform: translateX(20px);
+                            transform: translateX(30px) scale(0.95);
+                            text-shadow: none;
+                        }
+                        10% {
+                            opacity: 0.5;
+                            transform: translateX(5px) scale(1);
+                            text-shadow: 2px 0 0 rgba(14, 165, 233, 0.5), -2px 0 0 rgba(255, 0, 255, 0.3);
                         }
                         15% {
                             opacity: 1;
+                            transform: translateX(0) scale(1);
+                            text-shadow: none;
+                        }
+                        20% {
+                            transform: translateX(2px);
+                            text-shadow: -1px 0 0 rgba(14, 165, 233, 0.3);
+                        }
+                        25% {
                             transform: translateX(0);
+                            text-shadow: none;
                         }
                         70% {
                             opacity: 1;
-                            transform: translateX(0);
+                            transform: translateX(0) scale(1);
+                            text-shadow: none;
+                        }
+                        85% {
+                            opacity: 0.8;
+                            transform: translateX(-5px) scale(0.98);
+                            text-shadow: -2px 0 0 rgba(14, 165, 233, 0.5), 2px 0 0 rgba(255, 0, 255, 0.3);
                         }
                         100% {
                             opacity: 0;
-                            transform: translateX(-20px);
-                            display: none;
+                            transform: translateX(-30px) scale(0.95);
+                            text-shadow: none;
                         }
                     }
 
