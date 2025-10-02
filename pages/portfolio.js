@@ -1956,12 +1956,26 @@ Your browser does not support the audio element.
                         <div className="cards-grid">
                             <div className="card fade-in">
                                 <div className="card-icon">
+                                    <i className="fas fa-briefcase"></i>
+                                </div>
+                                <div className="card-content">
+                                    <h3>IT Support Specialist</h3>
+                                    <p><strong>Local Supply & Equipment Company | August 2025 - Present</strong></p>
+                                    <p>Sole IT personnel managing end-to-end technology operations for a company specializing in school supplies,
+                                    office equipment, and furniture. Responsibilities include hardware support (building/repairing computers,
+                                    antivirus installation, password recovery), Odoo ERP customization and configuration, email hosting management,
+                                    automated cloud backup systems, website theme development, and marketing support. Built a 24/7 Facebook AI
+                                    chatbot agent using Ollama model with Cloudflare hosting in one week for automated customer service.</p>
+                                </div>
+                            </div>
+                            <div className="card fade-in">
+                                <div className="card-icon">
                                     <i className="fas fa-users-cog"></i>
                                 </div>
                                 <div className="card-content">
                                     <h3>Chief Operations Officer</h3>
                                     <p><strong>Google Developer Student Clubs - TUP Manila | 2024-2025</strong></p>
-                                    <p>Directed organizational strategies and execution across events. Coordinated multiple teams for event readiness, 
+                                    <p>Directed organizational strategies and execution across events. Coordinated multiple teams for event readiness,
                                     participant engagement, and served as emcee for UI/UX workshops and AI events.</p>
                                 </div>
                             </div>
@@ -1972,7 +1986,7 @@ Your browser does not support the audio element.
                                 <div className="card-content">
                                     <h3>IT Consultant (OJT)</h3>
                                     <p><strong>Elyon Solutions | 2024</strong></p>
-                                    <p>Participated in live client demos and business meetings. Gained hands-on experience with Odoo ERP system, 
+                                    <p>Participated in live client demos and business meetings. Gained hands-on experience with Odoo ERP system,
                                     XML data handling, PostgreSQL databases, and advised clients on implementation strategies.</p>
                                 </div>
                             </div>
@@ -1983,8 +1997,8 @@ Your browser does not support the audio element.
                                 <div className="card-content">
                                     <h3>Technical Support & Software Developer</h3>
                                     <p><strong>Freelance | 2022-Present</strong></p>
-                                    <p>Self-started multi-service tech business serving clients through social media. Services include hardware diagnostics 
-                                    and repairs for phones/laptops/desktops, custom software development, and academic thesis assistance for students. 
+                                    <p>Self-started multi-service tech business serving clients through social media. Services include hardware diagnostics
+                                    and repairs for phones/laptops/desktops, custom software development, and academic thesis assistance for students.
                                     Providing comprehensive tech solutions with competitive pricing.</p>
                                 </div>
                             </div>
@@ -2053,7 +2067,7 @@ Your browser does not support the audio element.
                                 </div>
                                 <div className="card-content">
                                     <h3>AI Chatbot for BTVTED Students</h3>
-                                    <p>AI-powered chatbot built with Next.js to support programming students with continuous learning, 
+                                    <p>AI-powered chatbot built with Next.js to support programming students with continuous learning,
                                     addressing gaps in traditional teaching methods.</p>
                                     <div className="card-tags">
                                         <span className="tag">Next.js</span>
@@ -2064,11 +2078,28 @@ Your browser does not support the audio element.
                             </div>
                             <div className="card fade-in">
                                 <div className="card-icon">
+                                    <i className="fas fa-gamepad"></i>
+                                </div>
+                                <div className="card-content">
+                                    <h3>Enhanced Flappy Bird Mobile Game</h3>
+                                    <p>Created a challenging Flappy Bird-inspired mobile game with moving tubes that collide with each other
+                                    and enemy birds flying toward the player. Built with Python using Kivy framework and converted to APK
+                                    using Buildozer for Android deployment.</p>
+                                    <div className="card-tags">
+                                        <span className="tag">Python</span>
+                                        <span className="tag">Kivy</span>
+                                        <span className="tag">Buildozer</span>
+                                        <span className="tag">Game Development</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card fade-in">
+                                <div className="card-icon">
                                     <i className="fas fa-car"></i>
                                 </div>
                                 <div className="card-content">
                                     <h3>Arduino Smart Car</h3>
-                                    <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming 
+                                    <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming
                                     with electronics, expanding skills into IoT and embedded systems.</p>
                                     <div className="card-tags">
                                         <span className="tag">Arduino</span>
@@ -2083,7 +2114,7 @@ Your browser does not support the audio element.
                                 </div>
                                 <div className="card-content">
                                     <h3>Automated Department Database System</h3>
-                                    <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic 
+                                    <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic
                                     pass/fail checking and real-time score recording, eliminating manual grading processes for the department.</p>
                                     <div className="card-tags">
                                         <span className="tag">MySQL</span>
