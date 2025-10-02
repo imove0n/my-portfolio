@@ -2138,7 +2138,7 @@ Your browser does not support the audio element.
                         <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Click on a card to see the project image</p>
                         <div className="cards-grid">
                             {/* AI Chatbot Card */}
-                            <div className={`flip-card fade-in ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
+                            <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -2162,7 +2162,7 @@ Your browser does not support the audio element.
                             </div>
 
                             {/* Flappy Bird Card */}
-                            <div className={`flip-card fade-in ${flippedCards['flappy'] ? 'flipped' : ''}`} onClick={() => toggleFlip('flappy')}>
+                            <div className={`flip-card ${flippedCards['flappy'] ? 'flipped' : ''}`} onClick={() => toggleFlip('flappy')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -2188,7 +2188,7 @@ Your browser does not support the audio element.
                             </div>
 
                             {/* Arduino Card */}
-                            <div className={`flip-card fade-in ${flippedCards['arduino'] ? 'flipped' : ''}`} onClick={() => toggleFlip('arduino')}>
+                            <div className={`flip-card ${flippedCards['arduino'] ? 'flipped' : ''}`} onClick={() => toggleFlip('arduino')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -2212,7 +2212,7 @@ Your browser does not support the audio element.
                             </div>
 
                             {/* Database Card */}
-                            <div className={`flip-card fade-in ${flippedCards['database'] ? 'flipped' : ''}`} onClick={() => toggleFlip('database')}>
+                            <div className={`flip-card ${flippedCards['database'] ? 'flipped' : ''}`} onClick={() => toggleFlip('database')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
