@@ -10,6 +10,7 @@ export default function LoadingPage() {
     const [showComplete, setShowComplete] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [hasPlayed, setHasPlayed] = useState(false);
+    const [typedTitle, setTypedTitle] = useState('');
 
     const messages = [
         { id: 'msg1', text: 'Initializing development environment...', threshold: 10 },
@@ -99,6 +100,58 @@ export default function LoadingPage() {
             }
         }
     };
+
+    // Typing animation with errors
+    useEffect(() => {
+        const typingSequence = [
+            { text: 'Aspiring Cyb', delay: 500 },
+            { text: 'Aspiring Cybee', delay: 100 },
+            { text: 'Aspiring Cyb', delay: 150 },  // backspace
+            { text: 'Aspiring Cyber', delay: 100 },
+            { text: 'Aspiring Cyberr', delay: 100 },
+            { text: 'Aspiring Cyber', delay: 150 },  // backspace
+            { text: 'Aspiring Cybers', delay: 100 },
+            { text: 'Aspiring Cyberse', delay: 100 },
+            { text: 'Aspiring Cybersec', delay: 100 },
+            { text: 'Aspiring Cybersecurt', delay: 100 },
+            { text: 'Aspiring Cybersec', delay: 150 },  // backspace
+            { text: 'Aspiring Cybersecu', delay: 100 },
+            { text: 'Aspiring Cybersecur', delay: 100 },
+            { text: 'Aspiring Cybersecuri', delay: 100 },
+            { text: 'Aspiring Cybersecurit', delay: 100 },
+            { text: 'Aspiring Cybersecurity', delay: 200 },
+            { text: 'Aspiring Cybersecurity ', delay: 100 },
+            { text: 'Aspiring Cybersecurity &', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ', delay: 100 },
+            { text: 'Aspiring Cybersecurity & E', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ER', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP ', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP S', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Sp', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Spe', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Speci', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Specia', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Special', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Speciali', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Specialis', delay: 100 },
+            { text: 'Aspiring Cybersecurity & ERP Specialist', delay: 100 }
+        ];
+
+        let currentStep = 0;
+
+        const typeNextStep = () => {
+            if (currentStep < typingSequence.length) {
+                setTypedTitle(typingSequence[currentStep].text);
+                currentStep++;
+                setTimeout(typeNextStep, typingSequence[currentStep - 1]?.delay || 100);
+            }
+        };
+
+        const startTyping = setTimeout(typeNextStep, 1500);  // Start after 1.5s
+
+        return () => clearTimeout(startTyping);
+    }, []);
 
     const enterPortfolio = () => {
         const audio = document.getElementById('backgroundMusic');
@@ -295,9 +348,10 @@ export default function LoadingPage() {
                         -webkit-text-fill-color: transparent;
                         animation: spiralEntrance 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
                                    gradientShift 5s ease infinite 1.5s,
-                                   wiggle 2s ease-in-out infinite 1.5s;
+                                   wiggleGlitch 3s ease-in-out infinite 1.5s;
                         line-height: 1.1;
                         transform-origin: center;
+                        position: relative;
                     }
 
                     @keyframes spiralEntrance {
@@ -327,18 +381,38 @@ export default function LoadingPage() {
                         50% { background-position: 100% 50%; }
                     }
 
-                    @keyframes wiggle {
+                    @keyframes wiggleGlitch {
                         0%, 100% {
                             transform: rotate(0deg) scale(1);
+                            filter: drop-shadow(0 0 0 transparent);
                         }
-                        25% {
-                            transform: rotate(2deg) scale(1.02);
+                        10% {
+                            transform: rotate(1deg) scale(1.01) translateX(1px);
+                            filter: drop-shadow(-2px 0 0 rgba(14, 165, 233, 0.5));
+                        }
+                        20% {
+                            transform: rotate(-1deg) scale(1.01) translateX(-1px);
+                            filter: drop-shadow(2px 0 0 rgba(255, 0, 255, 0.5));
+                        }
+                        30% {
+                            transform: rotate(0deg) scale(1);
+                            filter: drop-shadow(0 0 0 transparent);
                         }
                         50% {
-                            transform: rotate(0deg) scale(1);
+                            transform: rotate(1.5deg) scale(1.02);
+                            filter: drop-shadow(0 0 0 transparent);
+                        }
+                        70% {
+                            transform: rotate(-1.5deg) scale(1.02) translateX(2px);
+                            filter: drop-shadow(-3px 0 0 rgba(14, 165, 233, 0.6));
                         }
                         75% {
-                            transform: rotate(-2deg) scale(1.02);
+                            transform: rotate(0deg) scale(1) translateX(-2px);
+                            filter: drop-shadow(3px 0 0 rgba(255, 0, 255, 0.6));
+                        }
+                        80% {
+                            transform: rotate(0deg) scale(1);
+                            filter: drop-shadow(0 0 0 transparent);
                         }
                     }
 
@@ -347,55 +421,39 @@ export default function LoadingPage() {
                         color: #94a3b8;
                         margin-bottom: 1rem;
                         font-weight: 400;
-                        opacity: 0;
-                        animation: glitchIn 1.5s ease 0.4s forwards, textGlitch 3s infinite 2s;
+                        opacity: 1;
                         line-height: 1.3;
                         position: relative;
+                        min-height: 1.8rem;
+                        animation: titleGlitch 4s infinite 5s;
                     }
 
-                    @keyframes glitchIn {
-                        0% {
-                            opacity: 0;
-                            transform: translateX(-10px);
-                            text-shadow: none;
-                        }
-                        20% {
-                            opacity: 0.3;
-                            transform: translateX(5px);
-                            text-shadow: -2px 0 #0ea5e9, 2px 0 #ff00ff;
-                        }
-                        40% {
-                            opacity: 0.6;
-                            transform: translateX(-3px);
-                            text-shadow: 2px 0 #0ea5e9, -2px 0 #ff00ff;
-                        }
-                        60% {
-                            opacity: 0.8;
-                            transform: translateX(2px);
-                            text-shadow: -1px 0 #0ea5e9, 1px 0 #ff00ff;
-                        }
-                        80%, 100% {
-                            opacity: 1;
-                            transform: translateX(0);
-                            text-shadow: none;
-                        }
+                    .typing-cursor {
+                        color: #0ea5e9;
+                        animation: blink 0.7s infinite;
+                        margin-left: 2px;
                     }
 
-                    @keyframes textGlitch {
-                        0%, 90%, 100% {
+                    @keyframes blink {
+                        0%, 50% { opacity: 1; }
+                        51%, 100% { opacity: 0; }
+                    }
+
+                    @keyframes titleGlitch {
+                        0%, 96%, 100% {
                             text-shadow: none;
                             transform: translateX(0);
                         }
-                        91% {
+                        97% {
                             text-shadow: -2px 0 #0ea5e9, 2px 0 #ff00ff;
                             transform: translateX(-2px);
                         }
-                        92% {
+                        98% {
                             text-shadow: 2px 0 #0ea5e9, -2px 0 #ff00ff;
                             transform: translateX(2px);
                         }
-                        93% {
-                            text-shadow: -1px 0 #0ea5e9, 1px 0 #ff00ff;
+                        99% {
+                            text-shadow: none;
                             transform: translateX(0);
                         }
                     }
@@ -897,7 +955,10 @@ export default function LoadingPage() {
 
             <div className="intro-container">
                 <h1 className="name">Laurence De Guzman</h1>
-                <p className="title">Aspiring Cybersecurity & ERP Specialist</p>
+                <p className="title">
+                    {typedTitle}
+                    <span className="typing-cursor">|</span>
+                </p>
 
                 <div className="loading-section">
                     <div className="compile-text">
