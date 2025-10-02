@@ -514,16 +514,16 @@ useEffect(() => {
                         --bg-card: #1e293b;
                         --border-color: #334155;
                         ` : theme === 'dark' ? `
-                        /* Dark Mode (Black/Gray) */
-                        --primary-color: #10b981;
+                        /* Dark Mode (Black/White) */
+                        --primary-color: #ffffff;
                         --secondary-color: #111827;
-                        --accent-color: #059669;
-                        --text-primary: #f9fafb;
-                        --text-secondary: #9ca3af;
+                        --accent-color: #e5e7eb;
+                        --text-primary: #ffffff;
+                        --text-secondary: #d1d5db;
                         --bg-primary: #000000;
-                        --bg-secondary: #111827;
-                        --bg-card: #1f2937;
-                        --border-color: #374151;
+                        --bg-secondary: #0a0a0a;
+                        --bg-card: #171717;
+                        --border-color: #262626;
                         ` : `
                         /* Light Mode */
                         --primary-color: #0284c7;
