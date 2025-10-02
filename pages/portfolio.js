@@ -22,6 +22,8 @@
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const profileImages = ['Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
     const [glitchText, setGlitchText] = useState('Guzman');
+    // Flip card state for projects
+    const [flippedCards, setFlippedCards] = useState({});
 
 // Playlist state
     const [playlist] = useState([
@@ -444,7 +446,7 @@ useEffect(() => {
     const glitchSequence = [
         'Guzman',
         'Gxrman',
-        'Gktman', 
+        'Gktman',
         'Glpdan',
         'Gnqman',
         'Gwtsan',
@@ -454,7 +456,7 @@ useEffect(() => {
         'Gufman',
         'Gudman'
     ];
-    
+
     let index = 0;
     const interval = setInterval(() => {
         if (index < glitchSequence.length) {
@@ -466,6 +468,14 @@ useEffect(() => {
         }
     }, 80);
 };
+
+    // Toggle flip card
+    const toggleFlip = (cardId) => {
+        setFlippedCards(prev => ({
+            ...prev,
+            [cardId]: !prev[cardId]
+        }));
+    };
 
     return (
         <>
@@ -1421,6 +1431,57 @@ useEffect(() => {
                             position: relative;
                             overflow: hidden;
                             min-height: 240px;
+                            cursor: pointer;
+                        }
+
+                        /* Flip card container */
+                        .flip-card {
+                            perspective: 1000px;
+                            min-height: 300px;
+                        }
+
+                        .flip-card-inner {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            min-height: 300px;
+                            transition: transform 0.6s;
+                            transform-style: preserve-3d;
+                        }
+
+                        .flip-card.flipped .flip-card-inner {
+                            transform: rotateY(180deg);
+                        }
+
+                        .flip-card-front, .flip-card-back {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            -webkit-backface-visibility: hidden;
+                            backface-visibility: hidden;
+                            border-radius: 12px;
+                        }
+
+                        .flip-card-front {
+                            background: var(--bg-card);
+                            border: 1px solid var(--border-color);
+                        }
+
+                        .flip-card-back {
+                            background: var(--bg-card);
+                            border: 1px solid var(--border-color);
+                            transform: rotateY(180deg);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 1.5rem;
+                        }
+
+                        .flip-card-back img {
+                            max-width: 100%;
+                            max-height: 100%;
+                            object-fit: contain;
+                            border-radius: 8px;
                         }
 
                         .card::before {
@@ -2060,66 +2121,102 @@ Your browser does not support the audio element.
                 <section id="projects" className="section">
                     <div className="container">
                         <h2 className="section-title">School Projects</h2>
+                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Click on a card to see the project image</p>
                         <div className="cards-grid">
-                            <div className="card fade-in">
-                                <div className="card-icon">
-                                    <i className="fas fa-robot"></i>
-                                </div>
-                                <div className="card-content">
-                                    <h3>AI Chatbot for BTVTED Students</h3>
-                                    <p>AI-powered chatbot built with Next.js to support programming students with continuous learning,
-                                    addressing gaps in traditional teaching methods.</p>
-                                    <div className="card-tags">
-                                        <span className="tag">Next.js</span>
-                                        <span className="tag">AI/ML</span>
-                                        <span className="tag">Educational Tech</span>
+                            {/* AI Chatbot Card */}
+                            <div className={`flip-card fade-in ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
+                                <div className="flip-card-inner">
+                                    <div className="flip-card-front">
+                                        <div className="card-icon">
+                                            <i className="fas fa-robot"></i>
+                                        </div>
+                                        <div className="card-content">
+                                            <h3>AI Chatbot for BTVTED Students</h3>
+                                            <p>AI-powered chatbot built with Next.js to support programming students with continuous learning,
+                                            addressing gaps in traditional teaching methods.</p>
+                                            <div className="card-tags">
+                                                <span className="tag">Next.js</span>
+                                                <span className="tag">AI/ML</span>
+                                                <span className="tag">Educational Tech</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flip-card-back">
+                                        <img src="/chatbot.png" alt="AI Chatbot Project" />
                                     </div>
                                 </div>
                             </div>
-                            <div className="card fade-in">
-                                <div className="card-icon">
-                                    <i className="fas fa-gamepad"></i>
-                                </div>
-                                <div className="card-content">
-                                    <h3>Enhanced Flappy Bird Mobile Game</h3>
-                                    <p>Created a challenging Flappy Bird-inspired mobile game with moving tubes that collide with each other
-                                    and enemy birds flying toward the player. Built with Python using Kivy framework and converted to APK
-                                    using Buildozer for Android deployment.</p>
-                                    <div className="card-tags">
-                                        <span className="tag">Python</span>
-                                        <span className="tag">Kivy</span>
-                                        <span className="tag">Buildozer</span>
-                                        <span className="tag">Game Development</span>
+
+                            {/* Flappy Bird Card */}
+                            <div className={`flip-card fade-in ${flippedCards['flappy'] ? 'flipped' : ''}`} onClick={() => toggleFlip('flappy')}>
+                                <div className="flip-card-inner">
+                                    <div className="flip-card-front">
+                                        <div className="card-icon">
+                                            <i className="fas fa-gamepad"></i>
+                                        </div>
+                                        <div className="card-content">
+                                            <h3>Enhanced Flappy Bird Mobile Game</h3>
+                                            <p>Created a challenging Flappy Bird-inspired mobile game with moving tubes that collide with each other
+                                            and enemy birds flying toward the player. Built with Python using Kivy framework and converted to APK
+                                            using Buildozer for Android deployment.</p>
+                                            <div className="card-tags">
+                                                <span className="tag">Python</span>
+                                                <span className="tag">Kivy</span>
+                                                <span className="tag">Buildozer</span>
+                                                <span className="tag">Game Development</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flip-card-back">
+                                        <img src="/flappy.jpg" alt="Flappy Bird Game Project" />
                                     </div>
                                 </div>
                             </div>
-                            <div className="card fade-in">
-                                <div className="card-icon">
-                                    <i className="fas fa-car"></i>
-                                </div>
-                                <div className="card-content">
-                                    <h3>Arduino Smart Car</h3>
-                                    <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming
-                                    with electronics, expanding skills into IoT and embedded systems.</p>
-                                    <div className="card-tags">
-                                        <span className="tag">Arduino</span>
-                                        <span className="tag">C++</span>
-                                        <span className="tag">IoT</span>
+
+                            {/* Arduino Card */}
+                            <div className={`flip-card fade-in ${flippedCards['arduino'] ? 'flipped' : ''}`} onClick={() => toggleFlip('arduino')}>
+                                <div className="flip-card-inner">
+                                    <div className="flip-card-front">
+                                        <div className="card-icon">
+                                            <i className="fas fa-car"></i>
+                                        </div>
+                                        <div className="card-content">
+                                            <h3>Arduino Smart Car</h3>
+                                            <p>Built an Arduino-based car equipped with sensors and running lights. Combined programming
+                                            with electronics, expanding skills into IoT and embedded systems.</p>
+                                            <div className="card-tags">
+                                                <span className="tag">Arduino</span>
+                                                <span className="tag">C++</span>
+                                                <span className="tag">IoT</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flip-card-back">
+                                        <img src="/arduino.png" alt="Arduino Smart Car Project" />
                                     </div>
                                 </div>
                             </div>
-                            <div className="card fade-in">
-                                <div className="card-icon">
-                                    <i className="fas fa-graduation-cap"></i>
-                                </div>
-                                <div className="card-content">
-                                    <h3>Automated Department Database System</h3>
-                                    <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic
-                                    pass/fail checking and real-time score recording, eliminating manual grading processes for the department.</p>
-                                    <div className="card-tags">
-                                        <span className="tag">MySQL</span>
-                                        <span className="tag">Automation</span>
-                                        <span className="tag">Online Testing</span>
+
+                            {/* Database Card */}
+                            <div className={`flip-card fade-in ${flippedCards['database'] ? 'flipped' : ''}`} onClick={() => toggleFlip('database')}>
+                                <div className="flip-card-inner">
+                                    <div className="flip-card-front">
+                                        <div className="card-icon">
+                                            <i className="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <div className="card-content">
+                                            <h3>Automated Department Database System</h3>
+                                            <p>Built an automated online examination system with pre-loaded questions and answers. Features automatic
+                                            pass/fail checking and real-time score recording, eliminating manual grading processes for the department.</p>
+                                            <div className="card-tags">
+                                                <span className="tag">MySQL</span>
+                                                <span className="tag">Automation</span>
+                                                <span className="tag">Online Testing</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flip-card-back">
+                                        <img src="/database.png" alt="Database System Project" />
                                     </div>
                                 </div>
                             </div>
