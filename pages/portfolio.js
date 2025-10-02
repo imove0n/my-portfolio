@@ -5,7 +5,6 @@
 
 
     export default function Portfolio() {
-    const [isMounted, setIsMounted] = useState(false);
     const [floatingChars, setFloatingChars] = useState([]);
     const [isNavMenuActive, setIsNavMenuActive] = useState(false);
     const [currentText, setCurrentText] = useState("");
@@ -23,12 +22,6 @@
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const profileImages = ['Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
     const [glitchText, setGlitchText] = useState('Guzman');
-
-    // Prevent flash of unstyled content
-    useEffect(() => {
-        setIsMounted(true);
-        document.documentElement.classList.add('loaded');
-    }, []);
 
 // Playlist state
     const [playlist] = useState([
