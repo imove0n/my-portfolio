@@ -1460,7 +1460,8 @@ useEffect(() => {
                             -webkit-backface-visibility: hidden;
                             backface-visibility: hidden;
                             border-radius: 12px;
-                            overflow: hidden;
+                            top: 0;
+                            left: 0;
                         }
 
                         .flip-card-front {
@@ -1469,6 +1470,8 @@ useEffect(() => {
                             padding: 1.5rem;
                             display: flex;
                             flex-direction: column;
+                            z-index: 2;
+                            overflow: hidden;
                         }
 
                         .flip-card-front::before {
@@ -1482,20 +1485,24 @@ useEffect(() => {
                         }
 
                         .flip-card-back {
-                            background: var(--bg-card);
-                            border: 1px solid var(--border-color);
+                            background: #1e293b;
+                            border: 1px solid var(--primary-color);
                             transform: rotateY(180deg);
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            padding: 2rem;
+                            padding: 1.5rem;
+                            z-index: 1;
                         }
 
                         .flip-card-back img {
-                            width: 100%;
-                            height: 100%;
-                            object-fit: cover;
+                            max-width: 100%;
+                            max-height: 100%;
+                            width: auto;
+                            height: auto;
+                            object-fit: contain;
                             border-radius: 8px;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                         }
 
                         .card::before {
