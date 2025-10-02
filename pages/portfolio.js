@@ -24,6 +24,8 @@
     const [glitchText, setGlitchText] = useState('Guzman');
     // Flip card state for projects
     const [flippedCards, setFlippedCards] = useState({});
+    // Theme state: 'original' | 'dark' | 'light'
+    const [theme, setTheme] = useState('original');
 
 // Playlist state
     const [playlist] = useState([
@@ -477,6 +479,15 @@ useEffect(() => {
         }));
     };
 
+    // Toggle theme (cycles through original -> dark -> light -> original)
+    const toggleTheme = () => {
+        setTheme(prev => {
+            if (prev === 'original') return 'dark';
+            if (prev === 'dark') return 'light';
+            return 'original';
+        });
+    };
+
     return (
         <>
             <Head>
@@ -491,6 +502,8 @@ useEffect(() => {
                     }
 
                         :root {
+                        ${theme === 'original' ? `
+                        /* Original Blue Theme */
                         --primary-color: #0ea5e9;
                         --secondary-color: #1e293b;
                         --accent-color: #3b82f6;
@@ -500,6 +513,29 @@ useEffect(() => {
                         --bg-secondary: #1e293b;
                         --bg-card: #1e293b;
                         --border-color: #334155;
+                        ` : theme === 'dark' ? `
+                        /* Dark Mode (Black/Gray) */
+                        --primary-color: #10b981;
+                        --secondary-color: #111827;
+                        --accent-color: #059669;
+                        --text-primary: #f9fafb;
+                        --text-secondary: #9ca3af;
+                        --bg-primary: #000000;
+                        --bg-secondary: #111827;
+                        --bg-card: #1f2937;
+                        --border-color: #374151;
+                        ` : `
+                        /* Light Mode */
+                        --primary-color: #0284c7;
+                        --secondary-color: #e2e8f0;
+                        --accent-color: #0369a1;
+                        --text-primary: #0f172a;
+                        --text-secondary: #475569;
+                        --bg-primary: #ffffff;
+                        --bg-secondary: #f8fafc;
+                        --bg-card: #ffffff;
+                        --border-color: #cbd5e1;
+                        `}
                     }
 
                         body {
@@ -845,11 +881,11 @@ useEffect(() => {
                             border-radius: 50%;
                             pointer-events: none;
                             z-index: 9999;
-                            background: rgba(14, 165, 233, 0.3);
+                            background: ${theme === 'light' ? 'rgba(2, 132, 199, 0.2)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(14, 165, 233, 0.3)'};
                             transform: translate(-50%, -50%);
                             transition: all 0.15s ease-out;
-                            border: 2px solid rgba(14, 165, 233, 0.5);
-                            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+                            border: 2px solid ${theme === 'light' ? 'rgba(2, 132, 199, 0.4)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.5)' : 'rgba(14, 165, 233, 0.5)'};
+                            box-shadow: 0 0 20px ${theme === 'light' ? 'rgba(2, 132, 199, 0.3)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(14, 165, 233, 0.4)'};
                             display: none;
                         }
 
@@ -868,6 +904,7 @@ useEffect(() => {
                             height: 100%;
                             pointer-events: none;
                             z-index: 1;
+                            ${theme === 'light' ? 'opacity: 0.4;' : ''}
                         }
 
                         .floating-char {
@@ -1013,6 +1050,33 @@ useEffect(() => {
                         }
 
                         .mobile-menu-btn:hover { color: var(--primary-color); }
+
+                        /* Theme Toggle Button */
+                        .theme-toggle-btn {
+                            background: rgba(14, 165, 233, 0.1);
+                            border: 1px solid var(--border-color);
+                            color: var(--text-secondary);
+                            font-size: 1.2rem;
+                            cursor: pointer;
+                            padding: 8px 12px;
+                            border-radius: 8px;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-left: 0.5rem;
+                        }
+
+                        .theme-toggle-btn:hover {
+                            color: var(--primary-color);
+                            background: rgba(14, 165, 233, 0.2);
+                            border-color: var(--primary-color);
+                            transform: scale(1.05);
+                        }
+
+                        .theme-toggle-btn:active {
+                            transform: scale(0.95);
+                        }
 
                         /* Desktop Navigation */
                         @media (min-width: 769px) {
@@ -1511,8 +1575,17 @@ useEffect(() => {
                         .card:hover {
                             transform: translateY(-3px);
                             border-color: var(--primary-color);
-                            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.1);
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
                         }
+
+                        ${theme === 'light' ? `
+                        .card {
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                        }
+                        .flip-card-front {
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                        }
+                        ` : ''}
 
                         .card-icon {
                             font-size: 1.8rem;
@@ -1932,9 +2005,14 @@ Your browser does not support the audio element.
                             <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
                             <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
                         </ul>
-                        <button className="mobile-menu-btn" onClick={toggleMenu}>
-                            <i className={`fas ${isNavMenuActive ? 'fa-times' : 'fa-bars'}`}></i>
-                        </button>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <button className="theme-toggle-btn" onClick={toggleTheme} title={theme === 'original' ? 'Switch to Dark Mode' : theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Original Theme'}>
+                                <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'}`}></i>
+                            </button>
+                            <button className="mobile-menu-btn" onClick={toggleMenu}>
+                                <i className={`fas ${isNavMenuActive ? 'fa-times' : 'fa-bars'}`}></i>
+                            </button>
+                        </div>
                     </div>
                 </nav>
 
