@@ -348,8 +348,56 @@ export default function LoadingPage() {
                         margin-bottom: 1rem;
                         font-weight: 400;
                         opacity: 0;
-                        animation: fadeInUp 1s ease 0.4s forwards;
+                        animation: glitchIn 1.5s ease 0.4s forwards, textGlitch 3s infinite 2s;
                         line-height: 1.3;
+                        position: relative;
+                    }
+
+                    @keyframes glitchIn {
+                        0% {
+                            opacity: 0;
+                            transform: translateX(-10px);
+                            text-shadow: none;
+                        }
+                        20% {
+                            opacity: 0.3;
+                            transform: translateX(5px);
+                            text-shadow: -2px 0 #0ea5e9, 2px 0 #ff00ff;
+                        }
+                        40% {
+                            opacity: 0.6;
+                            transform: translateX(-3px);
+                            text-shadow: 2px 0 #0ea5e9, -2px 0 #ff00ff;
+                        }
+                        60% {
+                            opacity: 0.8;
+                            transform: translateX(2px);
+                            text-shadow: -1px 0 #0ea5e9, 1px 0 #ff00ff;
+                        }
+                        80%, 100% {
+                            opacity: 1;
+                            transform: translateX(0);
+                            text-shadow: none;
+                        }
+                    }
+
+                    @keyframes textGlitch {
+                        0%, 90%, 100% {
+                            text-shadow: none;
+                            transform: translateX(0);
+                        }
+                        91% {
+                            text-shadow: -2px 0 #0ea5e9, 2px 0 #ff00ff;
+                            transform: translateX(-2px);
+                        }
+                        92% {
+                            text-shadow: 2px 0 #0ea5e9, -2px 0 #ff00ff;
+                            transform: translateX(2px);
+                        }
+                        93% {
+                            text-shadow: -1px 0 #0ea5e9, 1px 0 #ff00ff;
+                            transform: translateX(0);
+                        }
                     }
 
                     .loading-section {
