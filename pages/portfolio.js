@@ -27,6 +27,7 @@
     // Prevent flash of unstyled content
     useEffect(() => {
         setIsMounted(true);
+        document.documentElement.classList.add('loaded');
     }, []);
 
 // Playlist state
@@ -487,12 +488,19 @@ useEffect(() => {
                     }
 
                         /* Prevent flash of unstyled content */
-                        body {
+                        html {
+                            visibility: hidden;
                             opacity: 0;
-                            animation: fadeIn 0.3s ease forwards;
+                        }
+
+                        html.loaded {
+                            visibility: visible;
+                            opacity: 1;
+                            animation: fadeIn 0.4s ease;
                         }
 
                         @keyframes fadeIn {
+                            from { opacity: 0; }
                             to { opacity: 1; }
                         }
 
