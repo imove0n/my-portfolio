@@ -1460,11 +1460,25 @@ useEffect(() => {
                             -webkit-backface-visibility: hidden;
                             backface-visibility: hidden;
                             border-radius: 12px;
+                            overflow: hidden;
                         }
 
                         .flip-card-front {
                             background: var(--bg-card);
                             border: 1px solid var(--border-color);
+                            padding: 1.5rem;
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .flip-card-front::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 3px;
+                            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
                         }
 
                         .flip-card-back {
@@ -1474,13 +1488,13 @@ useEffect(() => {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            padding: 1.5rem;
+                            padding: 2rem;
                         }
 
                         .flip-card-back img {
-                            max-width: 100%;
-                            max-height: 100%;
-                            object-fit: contain;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
                             border-radius: 8px;
                         }
 
