@@ -2230,7 +2230,7 @@ Your browser does not support the audio element.
                                         </div>
                                     </div>
                                     <div className="flip-card-back">
-                                        <img src="/database.png" alt="Database System Project" />
+                                        <img src="/autodatabase.png" alt="Database System Project" />
                                     </div>
                                 </div>
                             </div>
