@@ -100,7 +100,12 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         const createFloatingChar = () => {
             const chars = ['{', '}', '<', '>', '(', ')', '[', ']', ';', ':', '=', '+', '-', '*', '/', '%', '&', '|', '!', '?'];
             const sizes = ['small', 'medium', 'large'];
-            const colors = [
+            const colors = theme === 'light' ? [
+                'rgba(2, 132, 199, 0.3)',
+                'rgba(245, 158, 11, 0.3)',
+                'rgba(16, 185, 129, 0.3)',
+                'rgba(139, 92, 246, 0.3)'
+            ] : [
                 'rgba(14, 165, 233, 0.1)',
                 'rgba(245, 158, 11, 0.1)',
                 'rgba(16, 185, 129, 0.1)',
@@ -128,14 +133,14 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         };
 
         const interval = setInterval(createFloatingChar, window.innerWidth <= 768 ? 1200 : 800);
-        
+
         const initialCount = window.innerWidth <= 768 ? 8 : 15;
         for (let i = 0; i < initialCount; i++) {
             setTimeout(createFloatingChar, i * 300);
         }
 
         return () => clearInterval(interval);
-    }, []);
+    }, [theme]);
 
     // Audio Player Effects
     useEffect(() => {
@@ -904,7 +909,6 @@ useEffect(() => {
                             height: 100%;
                             pointer-events: none;
                             z-index: 1;
-                            ${theme === 'light' ? 'opacity: 0.4;' : ''}
                         }
 
                         .floating-char {
