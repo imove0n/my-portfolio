@@ -97,32 +97,94 @@ function RoboticHandModel({ position, rotation, modelPath }) {
 }
 */
 
-// Floating Laptop Component (Placeholder)
-function FloatingLaptop() {
+// Realistic Laptop Component
+function RealisticLaptop() {
     const laptopRef = useRef();
-    const energyRef = useRef();
+    const screenRef = useRef();
 
     useFrame((state) => {
-        // Rotate laptop slowly
-        laptopRef.current.rotation.y += 0.003;
+        // Smooth rotation
+        laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
 
-        // Pulse energy effect
-        if (energyRef.current) {
-            energyRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.05);
-            energyRef.current.material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+        // Subtle screen glow pulse
+        if (screenRef.current) {
+            screenRef.current.material.emissiveIntensity = 0.8 + Math.sin(state.clock.elapsedTime) * 0.2;
         }
     });
 
     return (
-        <Float
-            speed={1.5}
-            rotationIntensity={0.2}
-            floatIntensity={0.5}
-        >
+        <Float speed={1} rotationIntensity={0.1} floatIntensity={0.3}>
             <group ref={laptopRef}>
-                {/* Laptop Base */}
+                {/* ==== LAPTOP BASE ==== */}
+
+                {/* Bottom case */}
                 <mesh position={[0, -0.05, 0]}>
-                    <boxGeometry args={[2, 0.1, 1.5]} />
+                    <boxGeometry args={[2.4, 0.08, 1.6]} />
+                    <meshStandardMaterial
+                        color="#2c2c2e"
+                        metalness={0.8}
+                        roughness={0.3}
+                    />
+                </mesh>
+
+                {/* Rounded edges - front */}
+                <mesh position={[0, -0.05, 0.8]}>
+                    <cylinderGeometry args={[0.04, 0.04, 2.4, 16]} />
+                    <meshStandardMaterial
+                        color="#2c2c2e"
+                        metalness={0.8}
+                        roughness={0.3}
+                    />
+                </mesh>
+
+                {/* Keyboard area */}
+                <mesh position={[0, 0.01, 0.1]}>
+                    <boxGeometry args={[2.1, 0.01, 1.3]} />
+                    <meshStandardMaterial
+                        color="#1a1a1a"
+                        metalness={0.2}
+                        roughness={0.8}
+                    />
+                </mesh>
+
+                {/* Individual keys */}
+                {Array.from({ length: 60 }).map((_, i) => {
+                    const row = Math.floor(i / 15);
+                    const col = i % 15;
+                    return (
+                        <mesh
+                            key={i}
+                            position={[
+                                -1.0 + col * 0.14,
+                                0.015,
+                                -0.35 + row * 0.14
+                            ]}
+                        >
+                            <boxGeometry args={[0.12, 0.01, 0.12]} />
+                            <meshStandardMaterial
+                                color="#3a3a3c"
+                                metalness={0.1}
+                                roughness={0.9}
+                            />
+                        </mesh>
+                    );
+                })}
+
+                {/* Trackpad */}
+                <mesh position={[0, 0.01, 0.6]}>
+                    <boxGeometry args={[0.8, 0.005, 0.5]} />
+                    <meshStandardMaterial
+                        color="#1a1a1a"
+                        metalness={0.4}
+                        roughness={0.6}
+                    />
+                </mesh>
+
+                {/* ==== LAPTOP SCREEN ==== */}
+
+                {/* Screen back (lid) */}
+                <mesh position={[0, 0.7, -0.75]} rotation={[-0.3, 0, 0]}>
+                    <boxGeometry args={[2.4, 1.5, 0.04]} />
                     <meshStandardMaterial
                         color="#1a1a1a"
                         metalness={0.9}
@@ -130,51 +192,78 @@ function FloatingLaptop() {
                     />
                 </mesh>
 
-                {/* Laptop Screen */}
-                <mesh position={[0, 0.6, -0.7]} rotation={[-0.2, 0, 0]}>
-                    <boxGeometry args={[2, 1.2, 0.05]} />
+                {/* Screen bezel */}
+                <mesh position={[0, 0.7, -0.73]} rotation={[-0.3, 0, 0]}>
+                    <boxGeometry args={[2.3, 1.4, 0.01]} />
                     <meshStandardMaterial
                         color="#0a0a0a"
-                        metalness={0.7}
-                        roughness={0.3}
+                        metalness={0.6}
+                        roughness={0.4}
                     />
                 </mesh>
 
-                {/* Screen Display (glowing) */}
-                <mesh position={[0, 0.6, -0.675]} rotation={[-0.2, 0, 0]}>
-                    <boxGeometry args={[1.8, 1.0, 0.01]} />
+                {/* Active screen display */}
+                <mesh ref={screenRef} position={[0, 0.7, -0.725]} rotation={[-0.3, 0, 0]}>
+                    <boxGeometry args={[2.2, 1.3, 0.001]} />
                     <meshStandardMaterial
                         color="#0ea5e9"
                         emissive="#0ea5e9"
-                        emissiveIntensity={1.5}
+                        emissiveIntensity={0.8}
                         toneMapped={false}
                     />
                 </mesh>
 
-                {/* Keyboard detail */}
-                <mesh position={[0, 0.05, 0.2]}>
-                    <boxGeometry args={[1.6, 0.02, 1.0]} />
+                {/* Screen content simulation - code lines */}
+                {[0, 1, 2, 3, 4].map((i) => (
+                    <mesh
+                        key={`line-${i}`}
+                        position={[-0.8, 0.9 - i * 0.15, -0.72]}
+                        rotation={[-0.3, 0, 0]}
+                    >
+                        <boxGeometry args={[1.5, 0.02, 0.001]} />
+                        <meshStandardMaterial
+                            color="#ffffff"
+                            emissive="#ffffff"
+                            emissiveIntensity={0.5}
+                        />
+                    </mesh>
+                ))}
+
+                {/* Webcam */}
+                <mesh position={[0, 1.4, -0.73]} rotation={[-0.3, 0, 0]}>
+                    <cylinderGeometry args={[0.02, 0.02, 0.01, 16]} />
                     <meshStandardMaterial
-                        color="#0f0f0f"
+                        color="#000000"
                         metalness={0.5}
                         roughness={0.5}
                     />
                 </mesh>
 
-                {/* Energy Ring Effect */}
-                <mesh ref={energyRef} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[1.5, 0.02, 16, 100]} />
+                {/* Logo on lid (Apple-style) */}
+                <mesh position={[0, 0.7, -0.77]} rotation={[-0.3, 0, 0]}>
+                    <circleGeometry args={[0.08, 32]} />
                     <meshStandardMaterial
-                        color="#0ea5e9"
-                        emissive="#0ea5e9"
-                        emissiveIntensity={2}
-                        transparent
-                        opacity={0.4}
+                        color="#ffffff"
+                        emissive="#ffffff"
+                        emissiveIntensity={0.2}
+                        metalness={0.9}
+                        roughness={0.1}
                     />
                 </mesh>
 
-                {/* Particle glow */}
-                <pointLight position={[0, 0, 0]} intensity={2} color="#0ea5e9" distance={3} />
+                {/* Hinge */}
+                <mesh position={[0, 0, -0.8]} rotation={[0, 0, Math.PI / 2]}>
+                    <cylinderGeometry args={[0.03, 0.03, 2.4, 16]} />
+                    <meshStandardMaterial
+                        color="#1a1a1a"
+                        metalness={0.9}
+                        roughness={0.2}
+                    />
+                </mesh>
+
+                {/* Ambient lighting from screen */}
+                <pointLight position={[0, 0.7, -0.5]} intensity={1.5} color="#0ea5e9" distance={2} />
+                <pointLight position={[0, 0, 0]} intensity={0.5} color="#ffffff" distance={3} />
             </group>
         </Float>
     );
@@ -204,25 +293,13 @@ function Scene() {
     return (
         <>
             {/* Lighting */}
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[5, 5, 5]} intensity={1} color="#ffffff" />
-            <directionalLight position={[-5, 3, -5]} intensity={0.5} color="#0ea5e9" />
-            <pointLight position={[0, 2, 0]} intensity={0.5} color="#0ea5e9" />
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
+            <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#0ea5e9" />
+            <spotLight position={[0, 3, 2]} intensity={0.8} angle={0.5} penumbra={1} color="#ffffff" />
 
-            {/* Left Robotic Hand */}
-            <RoboticHand
-                position={[-4, 0, 0]}
-                rotation={[0, 0.3, 0]}
-            />
-
-            {/* Right Robotic Hand */}
-            <RoboticHand
-                position={[4, 0, 0]}
-                rotation={[0, -0.3, 0]}
-            />
-
-            {/* Floating Laptop in Center */}
-            <FloatingLaptop />
+            {/* Realistic Floating Laptop */}
+            <RealisticLaptop />
         </>
     );
 }
