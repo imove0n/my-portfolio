@@ -49,7 +49,7 @@ export default function LoadingPage() {
             if (newProgress >= 100) {
                 clearInterval(progressTimer);
                 setShowComplete(true);
-                // Smooth fade out before redirect
+                // Smooth fade out before redirect (added 2 extra seconds)
                 setTimeout(() => {
                     const container = document.querySelector('.intro-container');
                     if (container) {
@@ -60,7 +60,7 @@ export default function LoadingPage() {
                     setTimeout(() => {
                         router.push('/portfolio');
                     }, 1200);
-                }, 500);
+                }, 2500); // Changed from 500ms to 2500ms (added 2 seconds)
             }
 
             return newProgress;
