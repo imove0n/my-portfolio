@@ -2236,7 +2236,7 @@ Your browser does not support the audio element.
                 <section id="projects" className="section">
                     <div className="container">
                         <h2 className="section-title">School Projects</h2>
-                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1rem'}}>Click on a card to see the project image</p>
+                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1rem'}}></p>
                         <div className="cards-grid">
                             {/* AI Chatbot Card */}
                             <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
