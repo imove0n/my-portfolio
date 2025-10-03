@@ -213,22 +213,6 @@ function RealisticLaptop() {
                     />
                 </mesh>
 
-                {/* Screen content simulation - code lines */}
-                {[0, 1, 2, 3, 4].map((i) => (
-                    <mesh
-                        key={`line-${i}`}
-                        position={[-0.8, 0.9 - i * 0.15, -0.72]}
-                        rotation={[-0.3, 0, 0]}
-                    >
-                        <boxGeometry args={[1.5, 0.02, 0.001]} />
-                        <meshStandardMaterial
-                            color="#ffffff"
-                            emissive="#ffffff"
-                            emissiveIntensity={0.5}
-                        />
-                    </mesh>
-                ))}
-
                 {/* Webcam */}
                 <mesh position={[0, 1.4, -0.73]} rotation={[-0.3, 0, 0]}>
                     <cylinderGeometry args={[0.02, 0.02, 0.01, 16]} />
@@ -248,16 +232,6 @@ function RealisticLaptop() {
                         emissiveIntensity={0.2}
                         metalness={0.9}
                         roughness={0.1}
-                    />
-                </mesh>
-
-                {/* Hinge */}
-                <mesh position={[0, 0, -0.8]} rotation={[0, 0, Math.PI / 2]}>
-                    <cylinderGeometry args={[0.03, 0.03, 2.4, 16]} />
-                    <meshStandardMaterial
-                        color="#1a1a1a"
-                        metalness={0.9}
-                        roughness={0.2}
                     />
                 </mesh>
 
