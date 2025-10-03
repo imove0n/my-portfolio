@@ -1,6 +1,6 @@
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, Suspense } from 'react';
-import { OrbitControls, Environment, useGLTF, Float } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Robotic Hand Component (Placeholder - replace with actual model)
@@ -209,9 +209,6 @@ function Scene() {
 
             {/* Floating Laptop in Center */}
             <FloatingLaptop />
-
-            {/* Environment for reflections */}
-            <Environment preset="city" />
         </>
     );
 }
