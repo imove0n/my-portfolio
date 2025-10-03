@@ -641,7 +641,7 @@ useEffect(() => {
                         }
 
                         .play-pause-btn {
-                            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                            background: ${theme === 'dark' ? 'linear-gradient(135deg, #ffffff, #e5e7eb)' : 'linear-gradient(135deg, var(--primary-color), var(--accent-color))'};
                             border: none;
                             border-radius: 50%;
                             width: 48px;
@@ -650,11 +650,11 @@ useEffect(() => {
                             align-items: center;
                             justify-content: center;
                             cursor: pointer;
-                            color: white;
+                            color: ${theme === 'dark' ? '#000000' : 'white'};
                             font-size: 18px;
                             transition: all 0.3s ease;
                             flex-shrink: 0;
-                            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+                            box-shadow: ${theme === 'dark' ? '0 4px 15px rgba(255, 255, 255, 0.3)' : '0 4px 15px rgba(14, 165, 233, 0.3)'};
                             position: relative;
                             overflow: hidden;
                         }
@@ -679,7 +679,7 @@ useEffect(() => {
 
                         .play-pause-btn:hover {
                             transform: scale(1.15);
-                            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+                            box-shadow: ${theme === 'dark' ? '0 6px 20px rgba(255, 255, 255, 0.5)' : '0 6px 20px rgba(14, 165, 233, 0.5)'};
                         }
 
                         .play-pause-btn:active {
@@ -1271,12 +1271,12 @@ useEffect(() => {
                         }
 
                         .btn-primary {
-                            background: var(--primary-color);
-                            color: white;
+                            background: ${theme === 'dark' ? '#ffffff' : 'var(--primary-color)'};
+                            color: ${theme === 'dark' ? '#000000' : 'white'};
                         }
 
                         .btn-primary:hover {
-                            background: #0284c7;
+                            background: ${theme === 'dark' ? '#e5e7eb' : '#0284c7'};
                             transform: translateY(-2px);
                         }
 
