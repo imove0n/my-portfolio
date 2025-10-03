@@ -11,6 +11,7 @@ export default function LoadingPage() {
     const [isMuted, setIsMuted] = useState(false);
     const [hasPlayed, setHasPlayed] = useState(false);
     const [typedTitle, setTypedTitle] = useState('');
+    const [typedCompile, setTypedCompile] = useState('');
 
     const messages = [
         { id: 'msg1', text: 'Initializing development environment...', threshold: 10 },
@@ -100,6 +101,41 @@ export default function LoadingPage() {
             }
         }
     };
+
+    // Typewriter effect for compile status
+    useEffect(() => {
+        let currentIndex = 0;
+        let isDeleting = false;
+        let currentTextIndex = 0;
+
+        const typeCompileText = () => {
+            const fullText = compileTexts[currentTextIndex];
+
+            if (!isDeleting && currentIndex <= fullText.length) {
+                setTypedCompile(fullText.substring(0, currentIndex));
+                currentIndex++;
+                setTimeout(typeCompileText, Math.random() * 50 + 30); // Random speed for realistic typing
+            } else if (isDeleting && currentIndex >= 0) {
+                setTypedCompile(fullText.substring(0, currentIndex));
+                currentIndex--;
+                setTimeout(typeCompileText, 20); // Faster deletion
+            } else if (!isDeleting && currentIndex > fullText.length) {
+                // Wait before deleting
+                setTimeout(() => {
+                    isDeleting = true;
+                    typeCompileText();
+                }, 1500);
+            } else if (isDeleting && currentIndex < 0) {
+                // Move to next text
+                isDeleting = false;
+                currentIndex = 0;
+                currentTextIndex = (currentTextIndex + 1) % compileTexts.length;
+                setTimeout(typeCompileText, 300);
+            }
+        };
+
+        typeCompileText();
+    }, []);
 
     // Typing animation with errors
     useEffect(() => {
@@ -482,39 +518,60 @@ export default function LoadingPage() {
                         content: '>';
                         color: #10b981;
                         margin-right: 8px;
-                        animation: cursorBlink 1s infinite;
+                        animation: terminalCursor 1.2s ease-in-out infinite;
+                        display: inline-block;
+                        text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+                    }
+
+                    .compile-cursor {
+                        color: #0ea5e9;
+                        animation: blockCursorBlink 0.8s ease-in-out infinite;
+                        margin-left: 2px;
+                        text-shadow: 0 0 8px rgba(14, 165, 233, 0.8);
+                    }
+
+                    @keyframes terminalCursor {
+                        0%, 100% {
+                            opacity: 1;
+                            transform: scale(1);
+                            text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+                        }
+                        50% {
+                            opacity: 0.4;
+                            transform: scale(0.95);
+                            text-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
+                        }
+                    }
+
+                    @keyframes blockCursorBlink {
+                        0%, 49% {
+                            opacity: 1;
+                            transform: scaleY(1);
+                            text-shadow: 0 0 8px rgba(14, 165, 233, 0.8);
+                        }
+                        50%, 100% {
+                            opacity: 0.2;
+                            transform: scaleY(0.9);
+                            text-shadow: 0 0 3px rgba(14, 165, 233, 0.3);
+                        }
                     }
 
                     @keyframes compileGlitchPulse {
                         0%, 100% {
-                            opacity: 0.9;
+                            opacity: 1;
                             filter: brightness(1);
                             transform: translateX(0);
-                            text-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
                         }
-                        25% {
-                            opacity: 1;
-                            filter: brightness(1.3);
-                            transform: translateX(1px);
-                            text-shadow: -1px 0 5px rgba(14, 165, 233, 0.6), 1px 0 5px rgba(255, 0, 255, 0.3);
+                        33% {
+                            opacity: 0.95;
+                            transform: translateX(1px) skewX(2deg);
+                            text-shadow: -2px 0 3px rgba(14, 165, 233, 0.5), 2px 0 3px rgba(255, 0, 255, 0.3);
                         }
-                        50% {
-                            opacity: 1;
-                            filter: brightness(1.2);
-                            transform: translateX(0);
-                            text-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+                        66% {
+                            opacity: 0.95;
+                            transform: translateX(-1px) skewX(-2deg);
+                            text-shadow: 2px 0 3px rgba(14, 165, 233, 0.5), -2px 0 3px rgba(255, 0, 255, 0.3);
                         }
-                        75% {
-                            opacity: 1;
-                            filter: brightness(1.3);
-                            transform: translateX(-1px);
-                            text-shadow: 1px 0 5px rgba(14, 165, 233, 0.6), -1px 0 5px rgba(255, 0, 255, 0.3);
-                        }
-                    }
-
-                    @keyframes cursorBlink {
-                        0%, 100% { opacity: 1; }
-                        50% { opacity: 0.3; }
                     }
 
 
@@ -1013,7 +1070,7 @@ export default function LoadingPage() {
 
                 <div className="loading-section">
                     <div className="compile-text">
-                        <span>{compileStatus}</span>
+                        <span>{typedCompile}<span className="compile-cursor">█</span></span>
                     </div>
 
                     <div className="progress-container">
