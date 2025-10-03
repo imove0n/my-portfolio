@@ -253,20 +253,33 @@ function FloatingLaptopModel({ modelPath }) {
 */
 
 // Floating Code Symbol Component
-function FloatingSymbol({ position, shape, speed, scale, offset }) {
+function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
     const symbolRef = useRef();
+    const startTime = useRef(Date.now() / 1000 + offset);
 
     useFrame((state) => {
-        const t = state.clock.getElapsedTime();
-        // Slow, smooth floating in space - each symbol has unique movement
-        symbolRef.current.position.x = position[0] + Math.sin(t * 0.2 + offset.x) * 0.3;
-        symbolRef.current.position.y = position[1] + Math.sin(t * 0.15 + offset.y) * 0.4;
-        symbolRef.current.position.z = position[2] + Math.sin(t * 0.1 + offset.z) * 0.2;
+        const elapsed = state.clock.getElapsedTime() - startTime.current;
+        const progress = (elapsed % duration) / duration; // 0 to 1, loops
 
-        // Very slow rotation like drifting in space
-        symbolRef.current.rotation.y += 0.002 * speed;
-        symbolRef.current.rotation.x += 0.001 * speed;
-        symbolRef.current.rotation.z += 0.0015 * speed;
+        // Move from bottom to top smoothly
+        symbolRef.current.position.y = -3 + progress * 8; // Start at -3, end at 5
+
+        // Slight horizontal drift
+        symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.5) * 0.3;
+        symbolRef.current.position.z = position[2] + Math.cos(elapsed * 0.3) * 0.2;
+
+        // Slow rotation
+        symbolRef.current.rotation.y = elapsed * 0.3 * speed;
+        symbolRef.current.rotation.x = elapsed * 0.15 * speed;
+
+        // Fade in and out at start/end
+        if (progress < 0.1) {
+            symbolRef.current.material.opacity = progress * 4; // Fade in
+        } else if (progress > 0.9) {
+            symbolRef.current.material.opacity = (1 - progress) * 4; // Fade out
+        } else {
+            symbolRef.current.material.opacity = 0.4;
+        }
     });
 
     return (
@@ -282,7 +295,6 @@ function FloatingSymbol({ position, shape, speed, scale, offset }) {
                 emissiveIntensity={0.5}
                 transparent
                 opacity={0.4}
-                wireframe={Math.random() > 0.5}
             />
         </mesh>
     );
@@ -297,16 +309,13 @@ function FloatingSymbols() {
         shape: shapes[Math.floor(Math.random() * shapes.length)],
         position: [
             (Math.random() - 0.5) * 10,  // x: left to right
-            Math.random() * 4 - 1,        // y: vertical spread
+            0,                             // y: will be controlled by animation
             (Math.random() - 0.5) * 8     // z: depth (some close, some far)
         ],
         speed: 0.5 + Math.random() * 0.5,
         scale: 0.5 + Math.random() * 1,
-        offset: {
-            x: Math.random() * Math.PI * 2,
-            y: Math.random() * Math.PI * 2,
-            z: Math.random() * Math.PI * 2
-        }
+        offset: Math.random() * 20,       // Start time offset (0-20 seconds)
+        duration: 15 + Math.random() * 10  // How long to rise (15-25 seconds)
     }));
 
     return (
