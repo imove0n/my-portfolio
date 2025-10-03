@@ -232,7 +232,7 @@ export default function Hero3DBackground() {
 
             <style jsx>{`
                 .canvas-container {
-                    position: fixed;
+                    position: absolute;
                     top: 0;
                     left: 0;
                     width: 100%;
