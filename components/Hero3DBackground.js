@@ -253,18 +253,20 @@ function FloatingLaptopModel({ modelPath }) {
 */
 
 // Floating Code Symbol Component
-function FloatingSymbol({ position, shape, speed, scale }) {
+function FloatingSymbol({ position, shape, speed, scale, offset }) {
     const symbolRef = useRef();
 
     useFrame((state) => {
         const t = state.clock.getElapsedTime();
-        // Float up and down
-        symbolRef.current.position.y = position[1] + Math.sin(t * speed + position[0]) * 0.5;
-        // Gentle rotation
-        symbolRef.current.rotation.y += 0.01 * speed;
-        symbolRef.current.rotation.x += 0.005 * speed;
-        // Pulse opacity
-        symbolRef.current.material.opacity = 0.3 + Math.sin(t * speed * 2) * 0.2;
+        // Slow, smooth floating in space - each symbol has unique movement
+        symbolRef.current.position.x = position[0] + Math.sin(t * 0.2 + offset.x) * 0.3;
+        symbolRef.current.position.y = position[1] + Math.sin(t * 0.15 + offset.y) * 0.4;
+        symbolRef.current.position.z = position[2] + Math.sin(t * 0.1 + offset.z) * 0.2;
+
+        // Very slow rotation like drifting in space
+        symbolRef.current.rotation.y += 0.002 * speed;
+        symbolRef.current.rotation.x += 0.001 * speed;
+        symbolRef.current.rotation.z += 0.0015 * speed;
     });
 
     return (
@@ -298,8 +300,13 @@ function FloatingSymbols() {
             Math.random() * 4 - 1,        // y: vertical spread
             (Math.random() - 0.5) * 8     // z: depth (some close, some far)
         ],
-        speed: 0.3 + Math.random() * 0.7,
-        scale: 0.5 + Math.random() * 1
+        speed: 0.5 + Math.random() * 0.5,
+        scale: 0.5 + Math.random() * 1,
+        offset: {
+            x: Math.random() * Math.PI * 2,
+            y: Math.random() * Math.PI * 2,
+            z: Math.random() * Math.PI * 2
+        }
     }));
 
     return (
