@@ -262,7 +262,7 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
         const progress = (elapsed % duration) / duration; // 0 to 1, loops
 
         // Move from bottom to top smoothly
-        symbolRef.current.position.y = -3 + progress * 8; // Start at -3, end at 5
+        symbolRef.current.position.y = -2 + progress * 6; // Start at -2, end at 4
 
         // Slight horizontal drift
         symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.5) * 0.3;
@@ -274,11 +274,11 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
 
         // Fade in and out at start/end
         if (progress < 0.1) {
-            symbolRef.current.material.opacity = progress * 4; // Fade in
+            symbolRef.current.material.opacity = progress * 8; // Fade in
         } else if (progress > 0.9) {
-            symbolRef.current.material.opacity = (1 - progress) * 4; // Fade out
+            symbolRef.current.material.opacity = (1 - progress) * 8; // Fade out
         } else {
-            symbolRef.current.material.opacity = 0.4;
+            symbolRef.current.material.opacity = 0.8; // More visible
         }
     });
 
@@ -292,9 +292,9 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
             <meshStandardMaterial
                 color="#0ea5e9"
                 emissive="#0ea5e9"
-                emissiveIntensity={0.5}
+                emissiveIntensity={1.2}
                 transparent
-                opacity={0.4}
+                opacity={0.8}
             />
         </mesh>
     );
@@ -308,12 +308,12 @@ function FloatingSymbols() {
     const symbolPositions = Array.from({ length: 30 }).map(() => ({
         shape: shapes[Math.floor(Math.random() * shapes.length)],
         position: [
-            (Math.random() - 0.5) * 10,  // x: left to right
-            0,                             // y: will be controlled by animation
-            (Math.random() - 0.5) * 8     // z: depth (some close, some far)
+            (Math.random() - 0.5) * 8,   // x: left to right (narrower)
+            0,                            // y: will be controlled by animation
+            (Math.random() - 0.5) * 6    // z: depth (some close, some far)
         ],
         speed: 0.5 + Math.random() * 0.5,
-        scale: 0.5 + Math.random() * 1,
+        scale: 1 + Math.random() * 1.5, // Larger symbols
         offset: Math.random() * 20,       // Start time offset (0-20 seconds)
         duration: 15 + Math.random() * 10  // How long to rise (15-25 seconds)
     }));
