@@ -1,7 +1,21 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, Suspense } from 'react';
-import { Float } from '@react-three/drei';
-import * as THREE from 'three';
+
+// Custom Float component (replaces @react-three/drei Float to avoid dependencies)
+function Float({ children, speed = 1, rotationIntensity = 0, floatIntensity = 1 }) {
+    const ref = useRef();
+
+    useFrame((state) => {
+        const t = state.clock.getElapsedTime();
+        ref.current.position.y = Math.sin(t * speed) * floatIntensity * 0.5;
+        if (rotationIntensity) {
+            ref.current.rotation.x = Math.sin(t * speed) * rotationIntensity * 0.1;
+            ref.current.rotation.z = Math.cos(t * speed) * rotationIntensity * 0.1;
+        }
+    });
+
+    return <group ref={ref}>{children}</group>;
+}
 
 // Robotic Hand Component (Placeholder - replace with actual model)
 function RoboticHand({ position, rotation }) {
