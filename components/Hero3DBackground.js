@@ -252,6 +252,65 @@ function FloatingLaptopModel({ modelPath }) {
 }
 */
 
+// Floating Code Symbol Component
+function FloatingSymbol({ position, shape, speed, scale }) {
+    const symbolRef = useRef();
+
+    useFrame((state) => {
+        const t = state.clock.getElapsedTime();
+        // Float up and down
+        symbolRef.current.position.y = position[1] + Math.sin(t * speed + position[0]) * 0.5;
+        // Gentle rotation
+        symbolRef.current.rotation.y += 0.01 * speed;
+        symbolRef.current.rotation.x += 0.005 * speed;
+        // Pulse opacity
+        symbolRef.current.material.opacity = 0.3 + Math.sin(t * speed * 2) * 0.2;
+    });
+
+    return (
+        <mesh ref={symbolRef} position={position} scale={scale}>
+            {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
+            {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
+            {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
+            {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
+            {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
+            <meshStandardMaterial
+                color="#0ea5e9"
+                emissive="#0ea5e9"
+                emissiveIntensity={0.5}
+                transparent
+                opacity={0.4}
+                wireframe={Math.random() > 0.5}
+            />
+        </mesh>
+    );
+}
+
+// Floating Symbols Field
+function FloatingSymbols() {
+    const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
+
+    // Generate random positions - some close, some far
+    const symbolPositions = Array.from({ length: 30 }).map(() => ({
+        shape: shapes[Math.floor(Math.random() * shapes.length)],
+        position: [
+            (Math.random() - 0.5) * 10,  // x: left to right
+            Math.random() * 4 - 1,        // y: vertical spread
+            (Math.random() - 0.5) * 8     // z: depth (some close, some far)
+        ],
+        speed: 0.3 + Math.random() * 0.7,
+        scale: 0.5 + Math.random() * 1
+    }));
+
+    return (
+        <>
+            {symbolPositions.map((props, i) => (
+                <FloatingSymbol key={i} {...props} />
+            ))}
+        </>
+    );
+}
+
 // Main Scene Component
 function Scene() {
     return (
@@ -261,6 +320,9 @@ function Scene() {
             <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
             <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#0ea5e9" />
             <spotLight position={[0, 3, 2]} intensity={0.8} angle={0.5} penumbra={1} color="#ffffff" />
+
+            {/* Floating Code Symbols */}
+            <FloatingSymbols />
 
             {/* Realistic Floating Laptop */}
             <RealisticLaptop />
