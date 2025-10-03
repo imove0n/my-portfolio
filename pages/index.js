@@ -462,6 +462,41 @@ export default function LoadingPage() {
                         position: relative;
                         min-height: 1.8rem;
                         animation: titleGlitch 4s infinite 5s;
+                        display: inline-block;
+                    }
+
+                    .bounce-letter {
+                        display: inline-block;
+                        animation: pixarBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+                        opacity: 0;
+                        transform: translateY(-50px) scale(0);
+                    }
+
+                    @keyframes pixarBounce {
+                        0% {
+                            opacity: 0;
+                            transform: translateY(-80px) scale(0.3) rotate(-10deg);
+                        }
+                        40% {
+                            opacity: 1;
+                            transform: translateY(10px) scale(1.15) rotate(5deg);
+                        }
+                        60% {
+                            transform: translateY(-8px) scale(0.95) rotate(-3deg);
+                        }
+                        75% {
+                            transform: translateY(4px) scale(1.05) rotate(2deg);
+                        }
+                        85% {
+                            transform: translateY(-2px) scale(0.98) rotate(-1deg);
+                        }
+                        95% {
+                            transform: translateY(1px) scale(1.02) rotate(0.5deg);
+                        }
+                        100% {
+                            opacity: 1;
+                            transform: translateY(0) scale(1) rotate(0deg);
+                        }
                     }
 
                     .typing-cursor {
@@ -1064,7 +1099,15 @@ export default function LoadingPage() {
             <div className="intro-container">
                 <h1 className="name">Laurence De Guzman</h1>
                 <p className="title">
-                    {typedTitle}
+                    {typedTitle.split('').map((char, index) => (
+                        <span
+                            key={index}
+                            className="bounce-letter"
+                            style={{ animationDelay: `${index * 0.03}s` }}
+                        >
+                            {char === ' ' ? '\u00A0' : char}
+                        </span>
+                    ))}
                     <span className="typing-cursor">|</span>
                 </p>
 
