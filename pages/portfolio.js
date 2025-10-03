@@ -1507,14 +1507,14 @@ useEffect(() => {
                         /* Flip card container */
                         .flip-card {
                             perspective: 1500px;
-                            min-height: 350px;
+                            min-height: 450px;
                             background: transparent;
                         }
 
                         .flip-card-inner {
                             position: relative;
                             width: 100%;
-                            min-height: 350px;
+                            min-height: 450px;
                             transition: transform 0.6s;
                             transform-style: preserve-3d;
                         }
@@ -1526,10 +1526,12 @@ useEffect(() => {
                         .flip-card-front, .flip-card-back {
                             position: absolute;
                             width: 100%;
-                            min-height: 350px;
+                            min-height: 450px;
                             -webkit-backface-visibility: hidden;
                             backface-visibility: hidden;
                             border-radius: 12px;
+                            top: 0;
+                            left: 0;
                         }
 
                         .flip-card-front {
@@ -1632,13 +1634,25 @@ useEffect(() => {
                                 gap: 2rem;
                                 margin-top: 2rem;
                             }
-                            
+
                             .card {
                                 border-radius: 16px;
                                 padding: 2rem;
                                 min-height: 280px;
                             }
-                            
+
+                            .flip-card {
+                                min-height: 380px;
+                            }
+
+                            .flip-card-inner {
+                                min-height: 380px;
+                            }
+
+                            .flip-card-front, .flip-card-back {
+                                min-height: 380px;
+                            }
+
                             .card:hover { transform: translateY(-5px); }
                             .card-icon { font-size: 2rem; margin-bottom: 1rem; }
                             .card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
