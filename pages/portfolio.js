@@ -1437,7 +1437,8 @@ useEffect(() => {
 
                         /* Current Learning Section */
                         .current-learning {
-                            background: var(--bg-card);
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
+                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
                             padding: 1.5rem;
                             border-radius: 12px;
                             border: 1px solid var(--border-color);
@@ -1487,7 +1488,8 @@ useEffect(() => {
                         }
 
                         .card {
-                            background: var(--bg-card);
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
+                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
                             border: 1px solid var(--border-color);
                             border-radius: 12px;
                             padding: 1.5rem;
@@ -1527,7 +1529,8 @@ useEffect(() => {
                         }
 
                         .flip-card-front {
-                            background: var(--bg-card);
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
+                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
                             border: 1px solid var(--border-color);
                             padding: 1.5rem;
                             transform: rotateY(0deg);
@@ -1648,7 +1651,8 @@ useEffect(() => {
                         }
 
                         .skill-item {
-                            background: var(--bg-card);
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
+                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
                             border: 1px solid var(--border-color);
                             border-radius: 10px;
                             padding: 1.2rem;
@@ -1693,7 +1697,8 @@ useEffect(() => {
 
                         .contact-info {
                             text-align: center;
-                            background: var(--bg-card);
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
+                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
                             border: 1px solid var(--border-color);
                             border-radius: 12px;
                             padding: 1.5rem;
