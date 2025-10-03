@@ -127,16 +127,6 @@ function RealisticLaptop() {
                     />
                 </mesh>
 
-                {/* Rounded edges - front */}
-                <mesh position={[0, -0.05, 0.8]}>
-                    <cylinderGeometry args={[0.04, 0.04, 2.4, 16]} />
-                    <meshStandardMaterial
-                        color="#2c2c2e"
-                        metalness={0.8}
-                        roughness={0.3}
-                    />
-                </mesh>
-
                 {/* Keyboard area */}
                 <mesh position={[0, 0.01, 0.1]}>
                     <boxGeometry args={[2.1, 0.01, 1.3]} />
