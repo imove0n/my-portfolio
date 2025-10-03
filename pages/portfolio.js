@@ -496,7 +496,7 @@ useEffect(() => {
     return (
         <>
             <Head>
-                <title>Laurence De Guzman - IT Consultant & Tech Leader</title>
+                <title>Laurence De Guzman-Portfolio</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
                 <style>{`
