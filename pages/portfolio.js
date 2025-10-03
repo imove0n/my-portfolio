@@ -1,6 +1,13 @@
     import React, { useEffect, useRef, useState } from "react";
     import Head from "next/head";
     import emailjs from '@emailjs/browser';
+    import dynamic from 'next/dynamic';
+
+    // Dynamically import 3D component (client-side only)
+    const Hero3DBackground = dynamic(() => import('../components/Hero3DBackground'), {
+        ssr: false,
+        loading: () => null
+    });
     
 
 
@@ -1163,13 +1170,15 @@ useEffect(() => {
                             background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
                             z-index: 2;
                             padding: 4rem 1rem 2rem;
+                            overflow: hidden;
                         }
 
                         .hero-content {
                             max-width: 100%;
                             width: 100%;
                             position: relative;
-                            z-index: 3;
+                            z-index: 10;
+                            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
                         }
 
                         .hero-subtitle {
@@ -2041,6 +2050,9 @@ Your browser does not support the audio element.
 
                 {/* Hero Section */}
                 <section id="home" className="hero">
+                    {/* 3D Background */}
+                    <Hero3DBackground />
+
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
                         <h1 className="hero-title">

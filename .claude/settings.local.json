@@ -9,7 +9,8 @@
       "Bash(copy:*)",
       "Bash(cp:*)",
       "Read(//c/Users/IT-Laurence/**)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
