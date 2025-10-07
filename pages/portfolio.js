@@ -1167,7 +1167,7 @@ useEffect(() => {
                             justify-content: center;
                             text-align: center;
                             position: relative;
-                            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+                            background: transparent;
                             z-index: 2;
                             padding: 4rem 1rem 2rem;
                             overflow: hidden;
@@ -1323,6 +1323,8 @@ useEffect(() => {
                             padding: 60px 0;
                             position: relative;
                             z-index: 2;
+                            background: rgba(15, 23, 42, 0.85);
+                            backdrop-filter: blur(10px);
                         }
 
                         .container {
@@ -2051,11 +2053,11 @@ Your browser does not support the audio element.
                     </div>
                 </nav>
 
+                {/* 3D Background - Fixed behind all content */}
+                <Hero3DBackground />
+
                 {/* Hero Section */}
                 <section id="home" className="hero">
-                    {/* 3D Background */}
-                    <Hero3DBackground />
-
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>
                         <h1 className="hero-title">
