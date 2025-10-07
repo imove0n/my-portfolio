@@ -1178,10 +1178,6 @@ useEffect(() => {
                             width: 100%;
                             position: relative;
                             z-index: 10;
-                            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.8);
-                            background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%);
-                            padding: 3rem 2rem;
-                            border-radius: 20px;
                         }
 
                         .hero-subtitle {
