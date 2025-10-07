@@ -271,12 +271,14 @@ function FloatingLaptopModel({ modelPath }) {
 
 // Floating Code Symbol Component
 function FloatingSymbol({ position, shape, speed, scale, offset, duration, color }) {
-    const symbolRef = useRef();
+    const groupRef = useRef();
+    const meshRef = useRef();
+    const lineRef = useRef();
     const startY = useRef(-2);
     const startTimeRef = useRef(null);
 
     useFrame((state, delta) => {
-        if (!symbolRef.current) return;
+        if (!groupRef.current) return;
 
         // Initialize start time once on first frame
         if (startTimeRef.current === null) {
@@ -289,30 +291,38 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
         // Move from bottom to top smoothly
         const yPosition = startY.current + progress * 6; // Start at -2, end at 4
-        symbolRef.current.position.y = yPosition;
+        groupRef.current.position.y = yPosition;
 
         // Very subtle horizontal drift (more relaxed)
-        symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.2) * 0.2;
-        symbolRef.current.position.z = position[2] + Math.cos(elapsed * 0.15) * 0.15;
+        groupRef.current.position.x = position[0] + Math.sin(elapsed * 0.2) * 0.2;
+        groupRef.current.position.z = position[2] + Math.cos(elapsed * 0.15) * 0.15;
 
         // Very slow rotation (relaxed)
-        symbolRef.current.rotation.y = elapsed * 0.1 * speed;
-        symbolRef.current.rotation.x = elapsed * 0.05 * speed;
+        groupRef.current.rotation.y = elapsed * 0.1 * speed;
+        groupRef.current.rotation.x = elapsed * 0.05 * speed;
 
-        // Fade in and out at start/end
+        // Fade in and out at start/end - apply to both mesh and line
+        let opacity;
         if (progress < 0.1) {
-            symbolRef.current.material.opacity = progress * 8; // Fade in
+            opacity = progress * 8; // Fade in
         } else if (progress > 0.9) {
-            symbolRef.current.material.opacity = (1 - progress) * 8; // Fade out
+            opacity = (1 - progress) * 8; // Fade out
         } else {
-            symbolRef.current.material.opacity = 0.8; // More visible
+            opacity = 0.7; // More visible
+        }
+
+        if (meshRef.current) {
+            meshRef.current.material.opacity = opacity;
+        }
+        if (lineRef.current) {
+            lineRef.current.material.opacity = opacity * 1.2;
         }
     });
 
     return (
-        <group ref={symbolRef} position={position} scale={scale}>
+        <group ref={groupRef} position={position} scale={scale}>
             {/* Main filled mesh */}
-            <mesh>
+            <mesh ref={meshRef}>
                 {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
                 {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
                 {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
@@ -328,7 +338,7 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
             </mesh>
 
             {/* Edge lines for 3D effect */}
-            <lineSegments>
+            <lineSegments ref={lineRef}>
                 {shape === 'box' && <edgesGeometry args={[new THREE.BoxGeometry(0.15, 0.15, 0.15)]} />}
                 {shape === 'sphere' && <edgesGeometry args={[new THREE.SphereGeometry(0.1, 16, 16)]} />}
                 {shape === 'torus' && <edgesGeometry args={[new THREE.TorusGeometry(0.08, 0.03, 8, 16)]} />}
