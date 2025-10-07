@@ -253,7 +253,7 @@ function FloatingLaptopModel({ modelPath }) {
 */
 
 // Floating Code Symbol Component
-function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
+function FloatingSymbol({ position, shape, speed, scale, offset, duration, color }) {
     const symbolRef = useRef();
     const startY = useRef(-2);
     const startTimeRef = useRef(null);
@@ -300,23 +300,66 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
             {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
             {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
             <meshStandardMaterial
-                color="#0ea5e9"
-                emissive="#0ea5e9"
-                emissiveIntensity={1.2}
+                color={color || "#0ea5e9"}
+                emissive={color || "#0ea5e9"}
+                emissiveIntensity={1.5}
                 transparent
-                opacity={0.8}
+                opacity={0.7}
             />
         </mesh>
+    );
+}
+
+// Starfield Background Component
+function Starfield() {
+    const starsRef = useRef();
+    const starCount = 1000;
+
+    // Generate random star positions
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount * 3; i += 3) {
+        starPositions[i] = (Math.random() - 0.5) * 50;     // x
+        starPositions[i + 1] = (Math.random() - 0.5) * 50; // y
+        starPositions[i + 2] = (Math.random() - 0.5) * 50; // z
+    }
+
+    return (
+        <points ref={starsRef}>
+            <bufferGeometry>
+                <bufferAttribute
+                    attach="attributes-position"
+                    count={starCount}
+                    array={starPositions}
+                    itemSize={3}
+                />
+            </bufferGeometry>
+            <pointsMaterial
+                size={0.05}
+                color="#ffffff"
+                transparent
+                opacity={0.8}
+                sizeAttenuation={true}
+            />
+        </points>
     );
 }
 
 // Floating Symbols Field
 function FloatingSymbols() {
     const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
+    const spaceColors = [
+        '#0ea5e9', // Cyan
+        '#8b5cf6', // Purple
+        '#ec4899', // Pink
+        '#06b6d4', // Light cyan
+        '#a855f7', // Light purple
+        '#f472b6'  // Light pink
+    ];
 
     // Generate random positions - some close, some far
     const symbolPositions = Array.from({ length: 30 }).map(() => ({
         shape: shapes[Math.floor(Math.random() * shapes.length)],
+        color: spaceColors[Math.floor(Math.random() * spaceColors.length)],
         position: [
             (Math.random() - 0.5) * 8,   // x: left to right (narrower)
             0,                            // y: will be controlled by animation
@@ -341,11 +384,14 @@ function FloatingSymbols() {
 function Scene() {
     return (
         <>
-            {/* Lighting */}
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
-            <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#0ea5e9" />
-            <spotLight position={[0, 3, 2]} intensity={0.8} angle={0.5} penumbra={1} color="#ffffff" />
+            {/* Lighting - adjusted for space theme */}
+            <ambientLight intensity={0.3} />
+            <directionalLight position={[5, 5, 5]} intensity={0.4} color="#ffffff" />
+            <directionalLight position={[-5, 3, -5]} intensity={0.3} color="#8b5cf6" />
+            <pointLight position={[0, 0, 0]} intensity={0.5} color="#0ea5e9" distance={20} />
+
+            {/* Starfield Background */}
+            <Starfield />
 
             {/* Floating Code Symbols */}
             <FloatingSymbols />
