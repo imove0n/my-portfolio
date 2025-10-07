@@ -1325,6 +1325,43 @@ useEffect(() => {
                             z-index: 2;
                         }
 
+                        /* Add gradient blending overlays between sections */
+                        .section::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 150px;
+                            background: linear-gradient(to bottom, var(--bg-secondary), transparent);
+                            pointer-events: none;
+                            z-index: 1;
+                        }
+
+                        .section::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 150px;
+                            background: linear-gradient(to top, var(--bg-secondary), transparent);
+                            pointer-events: none;
+                            z-index: 1;
+                        }
+
+                        .hero::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 200px;
+                            background: linear-gradient(to top, var(--bg-primary), transparent);
+                            pointer-events: none;
+                            z-index: 5;
+                        }
+
                         .container {
                             max-width: 1200px;
                             margin: 0 auto;
