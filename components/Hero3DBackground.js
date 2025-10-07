@@ -255,23 +255,27 @@ function FloatingLaptopModel({ modelPath }) {
 // Floating Code Symbol Component
 function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
     const symbolRef = useRef();
+    const startY = useRef(-2);
+    const timeRef = useRef(offset);
 
-    useFrame((state) => {
+    useFrame((state, delta) => {
         if (!symbolRef.current) return;
 
-        const elapsed = state.clock.getElapsedTime() + offset;
-        const progress = (elapsed % duration) / duration; // 0 to 1, loops
+        // Use delta time for frame-rate independent animation
+        timeRef.current += delta;
+        const progress = ((timeRef.current % duration) / duration); // 0 to 1, loops
 
         // Move from bottom to top smoothly
-        symbolRef.current.position.y = -2 + progress * 6; // Start at -2, end at 4
+        const yPosition = startY.current + progress * 6; // Start at -2, end at 4
+        symbolRef.current.position.y = yPosition;
 
         // Very subtle horizontal drift (more relaxed)
-        symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.2) * 0.2;
-        symbolRef.current.position.z = position[2] + Math.cos(elapsed * 0.15) * 0.15;
+        symbolRef.current.position.x = position[0] + Math.sin(timeRef.current * 0.2) * 0.2;
+        symbolRef.current.position.z = position[2] + Math.cos(timeRef.current * 0.15) * 0.15;
 
         // Very slow rotation (relaxed)
-        symbolRef.current.rotation.y = elapsed * 0.1 * speed;
-        symbolRef.current.rotation.x = elapsed * 0.05 * speed;
+        symbolRef.current.rotation.y += delta * 0.1 * speed;
+        symbolRef.current.rotation.x += delta * 0.05 * speed;
 
         // Fade in and out at start/end
         if (progress < 0.1) {
