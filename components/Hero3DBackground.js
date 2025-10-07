@@ -106,9 +106,25 @@ function RealisticLaptop() {
         // Smooth rotation
         laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
 
-        // Subtle screen glow pulse
+        // Animated color shift through space colors + glow pulse
         if (screenRef.current) {
-            screenRef.current.material.emissiveIntensity = 0.8 + Math.sin(state.clock.elapsedTime) * 0.2;
+            const time = state.clock.elapsedTime * 0.3; // Slow cycle
+
+            // Cycle through space colors: cyan -> purple -> pink -> cyan
+            const r = Math.sin(time) * 0.5 + 0.5; // 0 to 1
+            const g = Math.sin(time + 2) * 0.5 + 0.5;
+            const b = Math.sin(time + 4) * 0.5 + 0.5;
+
+            // Create color that shifts between cyan, purple, pink
+            const color = {
+                r: 0.05 + r * 0.9,
+                g: 0.4 + g * 0.4,
+                b: 0.7 + b * 0.3
+            };
+
+            screenRef.current.material.color.setRGB(color.r, color.g, color.b);
+            screenRef.current.material.emissive.setRGB(color.r, color.g, color.b);
+            screenRef.current.material.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
         }
     });
 
