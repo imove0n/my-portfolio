@@ -337,6 +337,16 @@ function Scene() {
             <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#0ea5e9" />
             <spotLight position={[0, 3, 2]} intensity={0.8} angle={0.5} penumbra={1} color="#ffffff" />
 
+            {/* Test Symbol - always visible */}
+            <mesh position={[3, 1, 2]}>
+                <boxGeometry args={[0.5, 0.5, 0.5]} />
+                <meshStandardMaterial
+                    color="#ff0000"
+                    emissive="#ff0000"
+                    emissiveIntensity={2}
+                />
+            </mesh>
+
             {/* Floating Code Symbols */}
             <FloatingSymbols />
 
