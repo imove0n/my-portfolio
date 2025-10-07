@@ -255,10 +255,11 @@ function FloatingLaptopModel({ modelPath }) {
 // Floating Code Symbol Component
 function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
     const symbolRef = useRef();
-    const startTime = useRef(Date.now() / 1000 + offset);
 
     useFrame((state) => {
-        const elapsed = state.clock.getElapsedTime() - startTime.current;
+        if (!symbolRef.current) return;
+
+        const elapsed = state.clock.getElapsedTime() + offset;
         const progress = (elapsed % duration) / duration; // 0 to 1, loops
 
         // Move from bottom to top smoothly
