@@ -659,27 +659,6 @@ function Scene() {
     );
 }
 
-// Parallax Scroll Handler
-function ParallaxCamera() {
-    const { camera } = useThree();
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const parallaxSpeed = 0.0005; // Slower = more dramatic parallax
-
-            // Move camera slightly based on scroll
-            camera.position.y = 1 + scrollY * parallaxSpeed;
-            camera.rotation.x = scrollY * parallaxSpeed * 0.0001;
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [camera]);
-
-    return null;
-}
-
 // Main Canvas Component
 function Hero3DBackground() {
     return (
@@ -690,7 +669,6 @@ function Hero3DBackground() {
                 dpr={[1, 2]}
             >
                 <Suspense fallback={null}>
-                    <ParallaxCamera />
                     <Scene />
                 </Suspense>
             </Canvas>
