@@ -527,8 +527,9 @@ function SpaceDust() {
     const dustRef = useRef();
     const particleCount = 200;
 
-    // Generate random particle positions
+    // Generate random particle positions and sizes (some bigger like meteors)
     const particlePositions = new Float32Array(particleCount * 3);
+    const particleSizes = new Float32Array(particleCount);
     const velocities = [];
 
     for (let i = 0; i < particleCount * 3; i += 3) {
@@ -536,11 +537,17 @@ function SpaceDust() {
         particlePositions[i + 1] = (Math.random() - 0.5) * 20; // y
         particlePositions[i + 2] = (Math.random() - 0.5) * 20; // z
 
-        // Store velocity for each particle
+        // Random size - some particles are bigger (meteors)
+        const isMeteor = Math.random() > 0.85; // 15% chance to be a meteor
+        particleSizes[i / 3] = isMeteor ? 0.08 + Math.random() * 0.12 : 0.02 + Math.random() * 0.03;
+
+        // Store velocity for each particle (meteors move faster)
+        const speed = isMeteor ? 0.04 : 0.02;
         velocities.push({
-            x: (Math.random() - 0.5) * 0.02,
-            y: (Math.random() - 0.5) * 0.02,
-            z: (Math.random() - 0.5) * 0.02
+            x: (Math.random() - 0.5) * speed,
+            y: (Math.random() - 0.5) * speed,
+            z: (Math.random() - 0.5) * speed,
+            isMeteor: isMeteor
         });
     }
 
@@ -575,13 +582,20 @@ function SpaceDust() {
                     array={particlePositions}
                     itemSize={3}
                 />
+                <bufferAttribute
+                    attach="attributes-size"
+                    count={particleCount}
+                    array={particleSizes}
+                    itemSize={1}
+                />
             </bufferGeometry>
             <pointsMaterial
-                size={0.02}
+                size={0.05}
                 color="#8b5cf6"
                 transparent
-                opacity={0.4}
+                opacity={0.7}
                 sizeAttenuation={true}
+                vertexColors={false}
             />
         </points>
     );
