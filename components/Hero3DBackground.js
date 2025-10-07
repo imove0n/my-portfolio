@@ -356,20 +356,30 @@ function FloatingSymbols() {
         '#f472b6'  // Light pink
     ];
 
-    // Generate random positions - some close, some far
-    const symbolPositions = Array.from({ length: 30 }).map(() => ({
-        shape: shapes[Math.floor(Math.random() * shapes.length)],
-        color: spaceColors[Math.floor(Math.random() * spaceColors.length)],
-        position: [
-            (Math.random() - 0.5) * 8,   // x: left to right (narrower)
-            0,                            // y: will be controlled by animation
-            (Math.random() - 0.5) * 6    // z: depth (some close, some far)
-        ],
-        speed: 0.5 + Math.random() * 0.5,
-        scale: 1 + Math.random() * 1.5, // Larger symbols
-        offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
-        duration: 30 + Math.random() * 20  // How long to rise (30-50 seconds, slower and relaxed)
-    }));
+    // Generate random positions - avoid the center laptop area
+    const symbolPositions = Array.from({ length: 30 }).map(() => {
+        // Randomly choose left or right side
+        const isLeftSide = Math.random() > 0.5;
+
+        // Position on left side (-8 to -2.5) or right side (2.5 to 8)
+        const xPosition = isLeftSide
+            ? -8 + Math.random() * 5.5   // Left: -8 to -2.5
+            : 2.5 + Math.random() * 5.5; // Right: 2.5 to 8
+
+        return {
+            shape: shapes[Math.floor(Math.random() * shapes.length)],
+            color: spaceColors[Math.floor(Math.random() * spaceColors.length)],
+            position: [
+                xPosition,                    // x: left or right sides only
+                0,                            // y: will be controlled by animation
+                (Math.random() - 0.5) * 6    // z: depth (some close, some far)
+            ],
+            speed: 0.5 + Math.random() * 0.5,
+            scale: 1 + Math.random() * 1.5, // Larger symbols
+            offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
+            duration: 30 + Math.random() * 20  // How long to rise (30-50 seconds, slower and relaxed)
+        };
+    });
 
     return (
         <>
