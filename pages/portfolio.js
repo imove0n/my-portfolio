@@ -15,7 +15,6 @@
     const [floatingChars, setFloatingChars] = useState([]);
     const [isNavMenuActive, setIsNavMenuActive] = useState(false);
     const [currentText, setCurrentText] = useState("");
-    const mouseSpotlightRef = useRef(null);
     const cursorRef = useRef(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [isClicking, setIsClicking] = useState(false);
@@ -302,32 +301,6 @@ const playPrevious = () => {
         return 'fas fa-volume-up';
     };
 
-    // Mouse spotlight effect
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (window.innerWidth <= 768) return;
-            
-            if (mouseSpotlightRef.current) {
-                mouseSpotlightRef.current.style.left = e.clientX + 'px';
-                mouseSpotlightRef.current.style.top = e.clientY + 'px';
-                mouseSpotlightRef.current.classList.remove('hidden');
-            }
-        };
-
-        const handleMouseLeave = () => {
-            if (mouseSpotlightRef.current && window.innerWidth > 768) {
-                mouseSpotlightRef.current.classList.add('hidden');
-            }
-        };
-
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseleave', handleMouseLeave);
-
-        return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseleave', handleMouseLeave);
-        };
-    }, []);
 
     // Custom smooth scroll with unique easing
 useEffect(() => {
@@ -967,26 +940,6 @@ useEffect(() => {
                         }
 
                         /* Mouse Spotlight Effect - Desktop Only */
-                        .mouse-spotlight {
-                            position: fixed;
-                            width: 30px;
-                            height: 30px;
-                            border-radius: 50%;
-                            pointer-events: none;
-                            z-index: 9999;
-                            background: ${theme === 'light' ? 'rgba(2, 132, 199, 0.2)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(14, 165, 233, 0.3)'};
-                            transform: translate(-50%, -50%);
-                            transition: all 0.15s ease-out;
-                            border: 2px solid ${theme === 'light' ? 'rgba(2, 132, 199, 0.4)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.5)' : 'rgba(14, 165, 233, 0.5)'};
-                            box-shadow: 0 0 20px ${theme === 'light' ? 'rgba(2, 132, 199, 0.3)' : theme === 'dark' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(14, 165, 233, 0.4)'};
-                            display: none;
-                        }
-
-                        @media (min-width: 769px) {
-                            .mouse-spotlight { display: block; }
-                        }
-
-                        .mouse-spotlight.hidden { opacity: 0; }
 
                         /* Floating Characters Background */
                         .floating-chars {
@@ -2100,9 +2053,6 @@ Your browser does not support the audio element.
 
                 {/* Custom Cursor */}
                 <div className={`custom-cursor ${isClicking ? 'clicking' : ''}`} ref={cursorRef}></div>
-
-                {/* Mouse Spotlight Effect */}
-                <div className="mouse-spotlight" ref={mouseSpotlightRef}></div>
 
                 {/* Floating Characters Background */}
                 <div className="floating-chars">
