@@ -1,5 +1,6 @@
 import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
 // Custom Float component (replaces @react-three/drei Float to avoid dependencies)
 function Float({ children, speed = 1, rotationIntensity = 0, floatIntensity = 1 }) {
@@ -309,20 +310,38 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     });
 
     return (
-        <mesh ref={symbolRef} position={position} scale={scale}>
-            {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
-            {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
-            {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
-            {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
-            {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
-            <meshStandardMaterial
-                color={color || "#0ea5e9"}
-                emissive={color || "#0ea5e9"}
-                emissiveIntensity={1.5}
-                transparent
-                opacity={0.7}
-            />
-        </mesh>
+        <group ref={symbolRef} position={position} scale={scale}>
+            {/* Main filled mesh */}
+            <mesh>
+                {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
+                {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
+                {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
+                {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
+                {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
+                <meshStandardMaterial
+                    color={color || "#0ea5e9"}
+                    emissive={color || "#0ea5e9"}
+                    emissiveIntensity={1.5}
+                    transparent
+                    opacity={0.7}
+                />
+            </mesh>
+
+            {/* Edge lines for 3D effect */}
+            <lineSegments>
+                {shape === 'box' && <edgesGeometry args={[new THREE.BoxGeometry(0.15, 0.15, 0.15)]} />}
+                {shape === 'sphere' && <edgesGeometry args={[new THREE.SphereGeometry(0.1, 16, 16)]} />}
+                {shape === 'torus' && <edgesGeometry args={[new THREE.TorusGeometry(0.08, 0.03, 8, 16)]} />}
+                {shape === 'octahedron' && <edgesGeometry args={[new THREE.OctahedronGeometry(0.1)]} />}
+                {shape === 'tetrahedron' && <edgesGeometry args={[new THREE.TetrahedronGeometry(0.12)]} />}
+                <lineBasicMaterial
+                    color={color || "#0ea5e9"}
+                    transparent
+                    opacity={0.9}
+                    linewidth={2}
+                />
+            </lineSegments>
+        </group>
     );
 }
 
