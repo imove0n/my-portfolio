@@ -1,5 +1,5 @@
+import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useRef, Suspense } from 'react';
 
 // Custom Float component (replaces @react-three/drei Float to avoid dependencies)
 function Float({ children, speed = 1, rotationIntensity = 0, floatIntensity = 1 }) {
@@ -357,7 +357,7 @@ function Scene() {
 }
 
 // Main Canvas Component
-export default function Hero3DBackground() {
+function Hero3DBackground() {
     return (
         <div className="canvas-container">
             <Canvas
@@ -384,6 +384,9 @@ export default function Hero3DBackground() {
         </div>
     );
 }
+
+// Wrap with React.memo to prevent re-renders from parent
+export default React.memo(Hero3DBackground);
 
 // Preload models (uncomment when using actual models)
 // useGLTF.preload('/models/robotic-hand.glb');
