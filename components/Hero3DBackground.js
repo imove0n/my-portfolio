@@ -106,25 +106,31 @@ function RealisticLaptop() {
         // Smooth rotation
         laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
 
-        // Animated color shift through space colors + glow pulse
-        if (screenRef.current) {
-            const time = state.clock.elapsedTime * 0.3; // Slow cycle
+        // Animate hacking terminal lines scrolling up
+        if (screenRef.current && screenRef.current.lines) {
+            const time = state.clock.elapsedTime;
+            screenRef.current.lines.forEach((line, i) => {
+                if (line) {
+                    // Each line scrolls up at different speeds
+                    const scrollSpeed = 0.15 + (i % 3) * 0.05;
+                    const yOffset = (time * scrollSpeed) % 1.5; // Loop every 1.5 units
 
-            // Cycle through space colors: cyan -> purple -> pink -> cyan
-            const r = Math.sin(time) * 0.5 + 0.5; // 0 to 1
-            const g = Math.sin(time + 2) * 0.5 + 0.5;
-            const b = Math.sin(time + 4) * 0.5 + 0.5;
+                    line.position.y = 0.7 + 0.6 - yOffset;
 
-            // Create color that shifts between cyan, purple, pink
-            const color = {
-                r: 0.05 + r * 0.9,
-                g: 0.4 + g * 0.4,
-                b: 0.7 + b * 0.3
-            };
+                    // Fade out at top, fade in at bottom
+                    const fadePosition = line.position.y - 0.7;
+                    if (fadePosition > 0.5) {
+                        line.material.opacity = 1 - (fadePosition - 0.5) * 2;
+                    } else if (fadePosition < -0.5) {
+                        line.material.opacity = (fadePosition + 0.65) * 2;
+                    } else {
+                        line.material.opacity = 0.7;
+                    }
 
-            screenRef.current.material.color.setRGB(color.r, color.g, color.b);
-            screenRef.current.material.emissive.setRGB(color.r, color.g, color.b);
-            screenRef.current.material.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
+                    // Random flicker effect
+                    line.material.emissiveIntensity = 1.2 + Math.sin(time * 10 + i) * 0.3;
+                }
+            });
         }
     });
 
@@ -208,16 +214,43 @@ function RealisticLaptop() {
                     />
                 </mesh>
 
-                {/* Active screen display */}
-                <mesh ref={screenRef} position={[0, 0.7, -0.725]} rotation={[-0.3, 0, 0]}>
+                {/* Active screen display - dark background */}
+                <mesh position={[0, 0.7, -0.725]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.2, 1.3, 0.001]} />
                     <meshStandardMaterial
-                        color="#0ea5e9"
-                        emissive="#0ea5e9"
-                        emissiveIntensity={0.8}
-                        toneMapped={false}
+                        color="#000000"
+                        emissive="#001a00"
+                        emissiveIntensity={0.5}
                     />
                 </mesh>
+
+                {/* Hacking terminal lines - scrolling effect */}
+                {Array.from({ length: 15 }).map((_, i) => (
+                    <mesh
+                        key={i}
+                        ref={(el) => {
+                            if (el && screenRef.current) {
+                                if (!screenRef.current.lines) screenRef.current.lines = [];
+                                screenRef.current.lines[i] = el;
+                            }
+                        }}
+                        position={[
+                            -0.9 + Math.random() * 0.2, // Slightly random x offset
+                            0.7 + 0.5 - (i * 0.08), // Stacked vertically
+                            -0.72
+                        ]}
+                        rotation={[-0.3, 0, 0]}
+                    >
+                        <boxGeometry args={[1.5 + Math.random() * 0.5, 0.02, 0.001]} />
+                        <meshStandardMaterial
+                            color="#00ff00"
+                            emissive="#00ff00"
+                            emissiveIntensity={1.5}
+                            transparent
+                            opacity={0.7}
+                        />
+                    </mesh>
+                ))}
 
                 {/* Webcam */}
                 <mesh position={[0, 1.4, -0.73]} rotation={[-0.3, 0, 0]}>
