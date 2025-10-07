@@ -270,15 +270,38 @@ function FloatingLaptopModel({ modelPath }) {
 */
 
 // Floating Code Symbol Component
-function FloatingSymbol({ position, shape, speed, scale, offset, duration, color }) {
+function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health }) {
     const groupRef = useRef();
     const meshRef = useRef();
     const lineRef = useRef();
     const startY = useRef(-2);
     const startTimeRef = useRef(null);
+    const [currentHealth, setCurrentHealth] = React.useState(health);
+    const [isExploding, setIsExploding] = React.useState(false);
+    const [hitAnimation, setHitAnimation] = React.useState(0);
+
+    const handleClick = (e) => {
+        e.stopPropagation();
+
+        if (currentHealth <= 1) {
+            // Shatter/explode
+            setIsExploding(true);
+            setTimeout(() => {
+                // Hide the symbol
+                if (groupRef.current) {
+                    groupRef.current.visible = false;
+                }
+            }, 300);
+        } else {
+            // Take damage
+            setCurrentHealth(currentHealth - 1);
+            setHitAnimation(1);
+            setTimeout(() => setHitAnimation(0), 200);
+        }
+    };
 
     useFrame((state, delta) => {
-        if (!groupRef.current) return;
+        if (!groupRef.current || !groupRef.current.visible) return;
 
         // Initialize start time once on first frame
         if (startTimeRef.current === null) {
@@ -301,9 +324,29 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
         groupRef.current.rotation.y = elapsed * 0.1 * speed;
         groupRef.current.rotation.x = elapsed * 0.05 * speed;
 
+        // Explosion animation
+        if (isExploding) {
+            groupRef.current.scale.set(
+                scale * (1 + hitAnimation * 3),
+                scale * (1 + hitAnimation * 3),
+                scale * (1 + hitAnimation * 3)
+            );
+            groupRef.current.rotation.y += delta * 20;
+            groupRef.current.rotation.x += delta * 15;
+        } else if (hitAnimation > 0) {
+            // Hit flash animation
+            const flashScale = 1 + hitAnimation * 0.3;
+            groupRef.current.scale.set(scale * flashScale, scale * flashScale, scale * flashScale);
+            setHitAnimation(Math.max(0, hitAnimation - delta * 5));
+        } else {
+            groupRef.current.scale.set(scale, scale, scale);
+        }
+
         // Fade in and out at start/end - apply to both mesh and line
         let opacity;
-        if (progress < 0.1) {
+        if (isExploding) {
+            opacity = Math.max(0, 1 - hitAnimation * 3);
+        } else if (progress < 0.1) {
             opacity = progress * 8; // Fade in
         } else if (progress > 0.9) {
             opacity = (1 - progress) * 8; // Fade out
@@ -313,6 +356,8 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
         if (meshRef.current) {
             meshRef.current.material.opacity = opacity;
+            // Flash effect when hit
+            meshRef.current.material.emissiveIntensity = 1.5 + hitAnimation * 2;
         }
         if (lineRef.current) {
             lineRef.current.material.opacity = opacity * 1.2;
@@ -321,8 +366,8 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
     return (
         <group ref={groupRef} position={position} scale={scale}>
-            {/* Main filled mesh */}
-            <mesh ref={meshRef}>
+            {/* Main filled mesh - clickable */}
+            <mesh ref={meshRef} onClick={handleClick} onPointerOver={(e) => (document.body.style.cursor = 'pointer')} onPointerOut={(e) => (document.body.style.cursor = 'auto')}>
                 {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
                 {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
                 {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
@@ -337,7 +382,7 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
                 />
             </mesh>
 
-            {/* Edge lines for 3D effect */}
+            {/* Edge lines for 3D effect - thicker */}
             <lineSegments ref={lineRef}>
                 {shape === 'box' && <edgesGeometry args={[new THREE.BoxGeometry(0.15, 0.15, 0.15)]} />}
                 {shape === 'sphere' && <edgesGeometry args={[new THREE.SphereGeometry(0.1, 16, 16)]} />}
@@ -345,10 +390,10 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
                 {shape === 'octahedron' && <edgesGeometry args={[new THREE.OctahedronGeometry(0.1)]} />}
                 {shape === 'tetrahedron' && <edgesGeometry args={[new THREE.TetrahedronGeometry(0.12)]} />}
                 <lineBasicMaterial
-                    color={color || "#0ea5e9"}
+                    color="#ffffff"
                     transparent
-                    opacity={0.9}
-                    linewidth={2}
+                    opacity={1}
+                    linewidth={3}
                 />
             </lineSegments>
         </group>
@@ -422,7 +467,8 @@ function FloatingSymbols() {
             speed: 0.5 + Math.random() * 0.5,
             scale: 1 + Math.random() * 1.5, // Larger symbols
             offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
-            duration: 30 + Math.random() * 20  // How long to rise (30-50 seconds, slower and relaxed)
+            duration: 30 + Math.random() * 20,  // How long to rise (30-50 seconds, slower and relaxed)
+            health: Math.floor(Math.random() * 4) + 1  // Random health: 1 to 4 hits
         };
     });
 
