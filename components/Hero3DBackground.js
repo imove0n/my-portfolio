@@ -265,13 +265,13 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration }) {
         // Move from bottom to top smoothly
         symbolRef.current.position.y = -2 + progress * 6; // Start at -2, end at 4
 
-        // Slight horizontal drift
-        symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.5) * 0.3;
-        symbolRef.current.position.z = position[2] + Math.cos(elapsed * 0.3) * 0.2;
+        // Very subtle horizontal drift (more relaxed)
+        symbolRef.current.position.x = position[0] + Math.sin(elapsed * 0.2) * 0.2;
+        symbolRef.current.position.z = position[2] + Math.cos(elapsed * 0.15) * 0.15;
 
-        // Slow rotation
-        symbolRef.current.rotation.y = elapsed * 0.3 * speed;
-        symbolRef.current.rotation.x = elapsed * 0.15 * speed;
+        // Very slow rotation (relaxed)
+        symbolRef.current.rotation.y = elapsed * 0.1 * speed;
+        symbolRef.current.rotation.x = elapsed * 0.05 * speed;
 
         // Fade in and out at start/end
         if (progress < 0.1) {
@@ -315,8 +315,8 @@ function FloatingSymbols() {
         ],
         speed: 0.5 + Math.random() * 0.5,
         scale: 1 + Math.random() * 1.5, // Larger symbols
-        offset: Math.random() * 20,       // Start time offset (0-20 seconds)
-        duration: 15 + Math.random() * 10  // How long to rise (15-25 seconds)
+        offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
+        duration: 30 + Math.random() * 20  // How long to rise (30-50 seconds, slower and relaxed)
     }));
 
     return (
@@ -337,16 +337,6 @@ function Scene() {
             <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
             <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#0ea5e9" />
             <spotLight position={[0, 3, 2]} intensity={0.8} angle={0.5} penumbra={1} color="#ffffff" />
-
-            {/* Test Symbol - always visible */}
-            <mesh position={[3, 1, 2]}>
-                <boxGeometry args={[0.5, 0.5, 0.5]} />
-                <meshStandardMaterial
-                    color="#ff0000"
-                    emissive="#ff0000"
-                    emissiveIntensity={2}
-                />
-            </mesh>
 
             {/* Floating Code Symbols */}
             <FloatingSymbols />
