@@ -506,6 +506,71 @@ function Starfield() {
     );
 }
 
+// Space Dust/Particles Component
+function SpaceDust() {
+    const dustRef = useRef();
+    const particleCount = 200;
+
+    // Generate random particle positions
+    const particlePositions = new Float32Array(particleCount * 3);
+    const velocities = [];
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        particlePositions[i] = (Math.random() - 0.5) * 20;     // x
+        particlePositions[i + 1] = (Math.random() - 0.5) * 20; // y
+        particlePositions[i + 2] = (Math.random() - 0.5) * 20; // z
+
+        // Store velocity for each particle
+        velocities.push({
+            x: (Math.random() - 0.5) * 0.02,
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02
+        });
+    }
+
+    useFrame((state, delta) => {
+        if (!dustRef.current) return;
+
+        const positions = dustRef.current.geometry.attributes.position.array;
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+
+            // Move particles
+            positions[i3] += velocities[i].x;
+            positions[i3 + 1] += velocities[i].y;
+            positions[i3 + 2] += velocities[i].z;
+
+            // Wrap around if particle goes too far
+            if (Math.abs(positions[i3]) > 10) positions[i3] *= -1;
+            if (Math.abs(positions[i3 + 1]) > 10) positions[i3 + 1] *= -1;
+            if (Math.abs(positions[i3 + 2]) > 10) positions[i3 + 2] *= -1;
+        }
+
+        dustRef.current.geometry.attributes.position.needsUpdate = true;
+    });
+
+    return (
+        <points ref={dustRef}>
+            <bufferGeometry>
+                <bufferAttribute
+                    attach="attributes-position"
+                    count={particleCount}
+                    array={particlePositions}
+                    itemSize={3}
+                />
+            </bufferGeometry>
+            <pointsMaterial
+                size={0.02}
+                color="#8b5cf6"
+                transparent
+                opacity={0.4}
+                sizeAttenuation={true}
+            />
+        </points>
+    );
+}
+
 // Floating Symbols Field
 function FloatingSymbols() {
     const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
@@ -565,6 +630,9 @@ function Scene() {
 
             {/* Starfield Background */}
             <Starfield />
+
+            {/* Space Dust Particles */}
+            <SpaceDust />
 
             {/* Floating Code Symbols */}
             <FloatingSymbols />
