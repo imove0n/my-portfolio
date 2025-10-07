@@ -1178,29 +1178,34 @@ useEffect(() => {
                             width: 100%;
                             position: relative;
                             z-index: 10;
-                            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+                            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.8);
+                            background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%);
+                            padding: 3rem 2rem;
+                            border-radius: 20px;
                         }
 
                         .hero-subtitle {
-                            color: var(--primary-color);
+                            color: #0ea5e9;
                             font-size: 1rem;
                             font-weight: 500;
                             margin-bottom: 0.8rem;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.2s forwards;
+                            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(14, 165, 233, 0.5);
                         }
 
                         .hero-title {
                             font-size: 2.2rem;
                             font-weight: 700;
                             margin-bottom: 1rem;
-                            background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+                            background: linear-gradient(135deg, #ffffff, #0ea5e9, #8b5cf6);
                             background-clip: text;
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.4s forwards;
                             line-height: 1.2;
+                            filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.5));
                         }
 
                        .glitch-text {
@@ -1214,11 +1219,12 @@ useEffect(() => {
                         }
                         .typing-container {
                             font-size: 1.2rem;
-                            color: var(--text-secondary);
+                            color: #e0e7ff;
                             margin-bottom: 1.5rem;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.6s forwards;
                             min-height: 1.5rem;
+                            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.3);
                         }
 
                         .typing-text {
@@ -1238,12 +1244,13 @@ useEffect(() => {
 
                         .hero-description {
                             font-size: 1rem;
-                            color: var(--text-secondary);
+                            color: #cbd5e1;
                             margin-bottom: 2rem;
                             line-height: 1.6;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.8s forwards;
                             padding: 0 1rem;
+                            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
                         }
 
                         .hero-buttons {
