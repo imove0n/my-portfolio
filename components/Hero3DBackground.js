@@ -109,26 +109,32 @@ function RealisticLaptop() {
         // Animate hacking terminal lines scrolling up
         if (screenRef.current && screenRef.current.lines) {
             const time = state.clock.elapsedTime;
-            screenRef.current.lines.forEach((line, i) => {
-                if (line) {
-                    // Each line scrolls up at different speeds
-                    const scrollSpeed = 0.15 + (i % 3) * 0.05;
-                    const yOffset = (time * scrollSpeed) % 1.5; // Loop every 1.5 units
+            screenRef.current.lines.forEach((lineData, i) => {
+                if (lineData && lineData.mesh) {
+                    const line = lineData.mesh;
 
-                    line.position.y = 0.7 + 0.6 - yOffset;
+                    // Scroll speed for smooth upward movement
+                    const scrollSpeed = 0.2;
+                    const totalCycle = 8; // Total cycle time
+                    const adjustedTime = time + lineData.offset;
+                    const progress = (adjustedTime * scrollSpeed) % totalCycle;
 
-                    // Fade out at top, fade in at bottom
-                    const fadePosition = line.position.y - 0.7;
-                    if (fadePosition > 0.5) {
-                        line.material.opacity = 1 - (fadePosition - 0.5) * 2;
-                    } else if (fadePosition < -0.5) {
-                        line.material.opacity = (fadePosition + 0.65) * 2;
+                    // Map progress to Y position (bottom to top of screen)
+                    // Screen ranges roughly from y=0.1 to y=1.3
+                    const yPos = 0.05 + (progress / totalCycle) * 1.4;
+                    line.position.y = yPos;
+
+                    // Fade in at bottom, fade out at top
+                    if (progress < 1) {
+                        line.material.opacity = progress * 0.8; // Fade in
+                    } else if (progress > totalCycle - 1) {
+                        line.material.opacity = (totalCycle - progress) * 0.8; // Fade out
                     } else {
-                        line.material.opacity = 0.7;
+                        line.material.opacity = 0.8;
                     }
 
-                    // Random flicker effect
-                    line.material.emissiveIntensity = 1.2 + Math.sin(time * 10 + i) * 0.3;
+                    // Slight flicker
+                    line.material.emissiveIntensity = 1.8 + Math.sin(time * 5 + i * 0.5) * 0.4;
                 }
             });
         }
@@ -225,32 +231,38 @@ function RealisticLaptop() {
                 </mesh>
 
                 {/* Hacking terminal lines - scrolling effect */}
-                {Array.from({ length: 15 }).map((_, i) => (
-                    <mesh
-                        key={i}
-                        ref={(el) => {
-                            if (el && screenRef.current) {
-                                if (!screenRef.current.lines) screenRef.current.lines = [];
-                                screenRef.current.lines[i] = el;
-                            }
-                        }}
-                        position={[
-                            -0.9 + Math.random() * 0.2, // Slightly random x offset
-                            0.7 + 0.5 - (i * 0.08), // Stacked vertically
-                            -0.72
-                        ]}
-                        rotation={[-0.3, 0, 0]}
-                    >
-                        <boxGeometry args={[1.5 + Math.random() * 0.5, 0.02, 0.001]} />
-                        <meshStandardMaterial
-                            color="#00ff00"
-                            emissive="#00ff00"
-                            emissiveIntensity={1.5}
-                            transparent
-                            opacity={0.7}
-                        />
-                    </mesh>
-                ))}
+                {Array.from({ length: 12 }).map((_, i) => {
+                    const lineLength = 1.2 + (i % 5) * 0.2; // Varied lengths
+                    const xOffset = -0.5; // Align left on screen
+
+                    return (
+                        <mesh
+                            key={`line-${i}`}
+                            ref={(el) => {
+                                if (el) {
+                                    if (!screenRef.current) return;
+                                    if (!screenRef.current.lines) screenRef.current.lines = [];
+                                    screenRef.current.lines[i] = {
+                                        mesh: el,
+                                        offset: i * 0.5, // Time offset for staggered start
+                                        length: lineLength
+                                    };
+                                }
+                            }}
+                            position={[xOffset, 0.7, -0.72]}
+                            rotation={[-0.3, 0, 0]}
+                        >
+                            <boxGeometry args={[lineLength, 0.025, 0.001]} />
+                            <meshStandardMaterial
+                                color="#00ff00"
+                                emissive="#00ff00"
+                                emissiveIntensity={2}
+                                transparent
+                                opacity={0}
+                            />
+                        </mesh>
+                    );
+                })}
 
                 {/* Webcam */}
                 <mesh position={[0, 1.4, -0.73]} rotation={[-0.3, 0, 0]}>
