@@ -107,25 +107,66 @@ function RealisticLaptop() {
         // Smooth rotation
         laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
 
-        // Animated color shift through space colors + glow pulse
+        // Animated color shift with glitch effect
         if (screenRef.current) {
-            const time = state.clock.elapsedTime * 0.3; // Slow cycle
+            const time = state.clock.elapsedTime * 0.2; // Slow cycle
+            const cycleProgress = (time % 10) / 10; // 0 to 1 over 10 seconds
 
-            // Cycle through space colors: cyan -> purple -> pink -> cyan
-            const r = Math.sin(time) * 0.5 + 0.5; // 0 to 1
-            const g = Math.sin(time + 2) * 0.5 + 0.5;
-            const b = Math.sin(time + 4) * 0.5 + 0.5;
+            let color;
 
-            // Create color that shifts between cyan, purple, pink
-            const color = {
-                r: 0.05 + r * 0.9,
-                g: 0.4 + g * 0.4,
-                b: 0.7 + b * 0.3
-            };
+            // Color cycle: light colors -> dark green -> dark black (glitch) -> reset
+            if (cycleProgress < 0.6) {
+                // Phase 1: Light space colors (cyan -> purple -> pink)
+                const lightTime = cycleProgress / 0.6;
+                const r = Math.sin(lightTime * Math.PI * 2) * 0.5 + 0.5;
+                const g = Math.sin(lightTime * Math.PI * 2 + 2) * 0.5 + 0.5;
+                const b = Math.sin(lightTime * Math.PI * 2 + 4) * 0.5 + 0.5;
+
+                color = {
+                    r: 0.05 + r * 0.9,
+                    g: 0.4 + g * 0.4,
+                    b: 0.7 + b * 0.3
+                };
+            } else if (cycleProgress < 0.75) {
+                // Phase 2: Dark green (glitching)
+                const glitchProgress = (cycleProgress - 0.6) / 0.15;
+                const flicker = Math.sin(state.clock.elapsedTime * 30) * 0.1 + 0.9; // Fast flicker
+                color = {
+                    r: 0.05 * flicker,
+                    g: (0.2 + glitchProgress * 0.2) * flicker,
+                    b: 0.05 * flicker
+                };
+            } else if (cycleProgress < 0.9) {
+                // Phase 3: Almost black (broken screen)
+                const flicker = Math.sin(state.clock.elapsedTime * 50) * 0.05 + 0.05; // Very dark flicker
+                color = {
+                    r: 0.02 * flicker,
+                    g: 0.02 * flicker,
+                    b: 0.02 * flicker
+                };
+            } else {
+                // Phase 4: Quick flash back to bright (reset)
+                const resetProgress = (cycleProgress - 0.9) / 0.1;
+                color = {
+                    r: resetProgress * 0.5,
+                    g: resetProgress * 0.7,
+                    b: resetProgress
+                };
+            }
 
             screenRef.current.material.color.setRGB(color.r, color.g, color.b);
             screenRef.current.material.emissive.setRGB(color.r, color.g, color.b);
-            screenRef.current.material.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
+
+            // Intensity varies based on phase
+            if (cycleProgress < 0.6) {
+                screenRef.current.material.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
+            } else if (cycleProgress < 0.75) {
+                screenRef.current.material.emissiveIntensity = 0.5 + Math.sin(state.clock.elapsedTime * 30) * 0.3;
+            } else if (cycleProgress < 0.9) {
+                screenRef.current.material.emissiveIntensity = 0.1 + Math.sin(state.clock.elapsedTime * 50) * 0.1;
+            } else {
+                screenRef.current.material.emissiveIntensity = 2; // Bright flash on reset
+            }
         }
     });
 
@@ -280,20 +321,32 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const [isExploding, setIsExploding] = React.useState(false);
     const [hitAnimation, setHitAnimation] = React.useState(0);
 
+    const slipDirection = useRef({ x: 0, z: 0 });
+    const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
+
     const handleClick = (e) => {
         e.stopPropagation();
 
+        // Apply slip away force in random direction
+        const angle = Math.random() * Math.PI * 2;
+        const force = 0.5 + Math.random() * 0.5; // Random slip strength
+
+        slipVelocity.current = {
+            x: Math.cos(angle) * force,
+            y: 0.3 + Math.random() * 0.3, // Pop up a bit
+            z: Math.sin(angle) * force
+        };
+
+        // Reduce health
         if (currentHealth <= 1) {
-            // Shatter/explode
+            // On last hit, slip away and disappear
             setIsExploding(true);
             setTimeout(() => {
-                // Hide the symbol
                 if (groupRef.current) {
                     groupRef.current.visible = false;
                 }
-            }, 300);
+            }, 800);
         } else {
-            // Take damage
             setCurrentHealth(currentHealth - 1);
             setHitAnimation(1);
             setTimeout(() => setHitAnimation(0), 200);
@@ -316,23 +369,42 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
         const yPosition = startY.current + progress * 6; // Start at -2, end at 4
         groupRef.current.position.y = yPosition;
 
-        // Very subtle horizontal drift (more relaxed)
+        // Apply slip velocity (physics-like)
+        if (slipVelocity.current.x !== 0 || slipVelocity.current.y !== 0 || slipVelocity.current.z !== 0) {
+            position[0] += slipVelocity.current.x * delta * 10;
+            position[2] += slipVelocity.current.z * delta * 10;
+
+            // Damping (friction)
+            slipVelocity.current.x *= 0.95;
+            slipVelocity.current.y -= delta * 2; // Gravity
+            slipVelocity.current.z *= 0.95;
+
+            // Stop when velocity is very low
+            if (Math.abs(slipVelocity.current.x) < 0.01 && Math.abs(slipVelocity.current.z) < 0.01) {
+                slipVelocity.current.x = 0;
+                slipVelocity.current.z = 0;
+                slipVelocity.current.y = 0;
+            }
+        }
+
+        // Very subtle horizontal drift (more relaxed) + slip offset
         groupRef.current.position.x = position[0] + Math.sin(elapsed * 0.2) * 0.2;
         groupRef.current.position.z = position[2] + Math.cos(elapsed * 0.15) * 0.15;
 
-        // Very slow rotation (relaxed)
-        groupRef.current.rotation.y = elapsed * 0.1 * speed;
+        // Very slow rotation (relaxed) + wobble when slipping
+        const wobble = (slipVelocity.current.x !== 0) ? Math.sin(elapsed * 20) * 0.5 : 0;
+        groupRef.current.rotation.y = elapsed * 0.1 * speed + wobble;
         groupRef.current.rotation.x = elapsed * 0.05 * speed;
 
-        // Explosion animation
+        // Scale animation
         if (isExploding) {
+            // Slip away and fade out
+            const fadeProgress = hitAnimation / 0.8;
             groupRef.current.scale.set(
-                scale * (1 + hitAnimation * 3),
-                scale * (1 + hitAnimation * 3),
-                scale * (1 + hitAnimation * 3)
+                scale * (1 - fadeProgress * 0.5),
+                scale * (1 - fadeProgress * 0.5),
+                scale * (1 - fadeProgress * 0.5)
             );
-            groupRef.current.rotation.y += delta * 20;
-            groupRef.current.rotation.x += delta * 15;
         } else if (hitAnimation > 0) {
             // Hit flash animation
             const flashScale = 1 + hitAnimation * 0.3;
