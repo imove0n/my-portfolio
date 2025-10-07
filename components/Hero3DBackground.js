@@ -1,5 +1,5 @@
 import React, { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // Custom Float component (replaces @react-three/drei Float to avoid dependencies)
@@ -102,10 +102,16 @@ function RoboticHandModel({ position, rotation, modelPath }) {
 function RealisticLaptop() {
     const laptopRef = useRef();
     const screenRef = useRef();
+    const [isHovered, setIsHovered] = React.useState(false);
 
     useFrame((state) => {
-        // Smooth rotation
-        laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
+        // Smooth rotation (faster when hovered)
+        const rotationSpeed = isHovered ? 0.6 : 0.3;
+        laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * rotationSpeed) * 0.3;
+
+        // Scale up when hovered
+        const targetScale = isHovered ? 1.1 : 1;
+        laptopRef.current.scale.lerp({ x: targetScale, y: targetScale, z: targetScale }, 0.1);
 
         // Animated color shift with glitch effect
         if (screenRef.current) {
@@ -172,7 +178,17 @@ function RealisticLaptop() {
 
     return (
         <Float speed={1} rotationIntensity={0.1} floatIntensity={0.3}>
-            <group ref={laptopRef}>
+            <group
+                ref={laptopRef}
+                onPointerOver={() => {
+                    setIsHovered(true);
+                    document.body.style.cursor = 'pointer';
+                }}
+                onPointerOut={() => {
+                    setIsHovered(false);
+                    document.body.style.cursor = 'auto';
+                }}
+            >
                 {/* ==== LAPTOP BASE ==== */}
 
                 {/* Bottom case */}
@@ -643,6 +659,27 @@ function Scene() {
     );
 }
 
+// Parallax Scroll Handler
+function ParallaxCamera() {
+    const { camera } = useThree();
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const parallaxSpeed = 0.0005; // Slower = more dramatic parallax
+
+            // Move camera slightly based on scroll
+            camera.position.y = 1 + scrollY * parallaxSpeed;
+            camera.rotation.x = scrollY * parallaxSpeed * 0.0001;
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [camera]);
+
+    return null;
+}
+
 // Main Canvas Component
 function Hero3DBackground() {
     return (
@@ -653,6 +690,7 @@ function Hero3DBackground() {
                 dpr={[1, 2]}
             >
                 <Suspense fallback={null}>
+                    <ParallaxCamera />
                     <Scene />
                 </Suspense>
             </Canvas>
