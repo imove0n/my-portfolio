@@ -525,7 +525,10 @@ function Hero3DBackground() {
                     width: 100%;
                     height: 100%;
                     z-index: 0;
-                    pointer-events: none;
+                    pointer-events: auto;
+                }
+                .canvas-container canvas {
+                    pointer-events: auto !important;
                 }
             `}</style>
         </div>
