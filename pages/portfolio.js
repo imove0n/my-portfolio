@@ -1173,6 +1173,19 @@ useEffect(() => {
                             overflow: hidden;
                         }
 
+                        /* Blend the bottom edge of hero into about section */
+                        .hero::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            height: 100px;
+                            background: linear-gradient(to bottom, transparent, var(--bg-primary));
+                            pointer-events: none;
+                            z-index: 3;
+                        }
+
                         .hero-content {
                             max-width: 100%;
                             width: 100%;
