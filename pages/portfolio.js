@@ -47,7 +47,9 @@
     { id: 3, src: '/3-01. Hateno Village.mp3', title: 'Track 3' },
     { id: 4, src: '/4.mp3', title: 'Track 4' },
     { id: 5, src: '/5.mp3', title: 'Track 5' },
-    { id: 6, src: '/6.mp3', title: 'Track 6' }
+    { id: 6, src: '/6.mp3', title: 'Track 6' },
+    { id: 7, src: '/Track 7.mp3', title: 'Track 7' },
+    { id: 8, src: '/Track 8.mp3', title: 'Track 8' }
 ]);
 const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hateno Village (index 2)   
     
