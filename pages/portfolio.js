@@ -1238,6 +1238,8 @@ useEffect(() => {
                             position: relative;
                             min-width: 220px;
                             width: 220px;
+                            white-space: nowrap;
+                            overflow: hidden;
                         }
 
                         .logo-base {
@@ -1397,7 +1399,7 @@ useEffect(() => {
                         /* Desktop Navigation */
                         @media (min-width: 769px) {
                         .nav-container { padding: 1rem 2rem; }
-                        .logo { font-size: 1.5rem; gap: 0.5rem; min-width: 280px; width: 280px; }
+                        .logo { font-size: 1.5rem; gap: 0.5rem; min-width: 280px; width: 280px; white-space: nowrap; overflow: hidden; }
                         
                         .nav-menu {
                             display: flex !important;
