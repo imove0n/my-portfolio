@@ -1166,7 +1166,7 @@ useEffect(() => {
                             transform: translateX(0);
                         }
 
-                        /* Dropdown Menu Styles */
+                        /* Dropdown Menu Styles - Mobile */
                         .nav-dropdown {
                             position: relative;
                         }
