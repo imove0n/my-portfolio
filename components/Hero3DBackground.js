@@ -383,14 +383,30 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
     const [isDragging, setIsDragging] = React.useState(false);
     const dragStartPos = useRef({ x: 0, y: 0, z: 0 });
-    const dragOffset = useRef({ x: 0, y: 0, z: 0 });
     const isDraggingRef = useRef(false);
+    const { camera } = useThree();
+    const raycaster = useRef(new THREE.Raycaster());
+    const mouse = useRef(new THREE.Vector2());
+    const plane = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), 0));
+    const intersectionPoint = useRef(new THREE.Vector3());
 
     // Preload sound
     React.useEffect(() => {
         audioRef.current = new Audio('/sound click.mp3');
         audioRef.current.volume = 0.5;
         audioRef.current.load();
+
+        // Mouse move listener for perfect tracking
+        const handleMouseMove = (event) => {
+            if (isDraggingRef.current) {
+                // Convert mouse position to normalized device coordinates
+                mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            }
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
     const handlePointerDown = (e) => {
@@ -398,33 +414,20 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
         setIsDragging(true);
         isDraggingRef.current = true;
 
-        // Store initial positions
+        // Store initial position
         dragStartPos.current = {
             x: groupRef.current.position.x,
             y: groupRef.current.position.y,
             z: groupRef.current.position.z
         };
 
-        // Calculate offset between click point and object center
-        dragOffset.current = {
-            x: groupRef.current.position.x - e.point.x,
-            y: groupRef.current.position.y - e.point.y,
-            z: groupRef.current.position.z - e.point.z
-        };
+        // Set plane at object's z position for consistent dragging
+        plane.current.constant = -groupRef.current.position.z;
 
         // Play sound effect
         if (audioRef.current) {
             audioRef.current.currentTime = 0;
             audioRef.current.play().catch(err => console.log('Audio play failed:', err));
-        }
-    };
-
-    const handlePointerMove = (e) => {
-        if (isDraggingRef.current && groupRef.current) {
-            e.stopPropagation();
-            // Update position smoothly following cursor
-            position[0] = e.point.x + dragOffset.current.x;
-            position[2] = e.point.z + dragOffset.current.z;
         }
     };
 
@@ -499,6 +502,22 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
     useFrame((state, delta) => {
         if (!groupRef.current || !groupRef.current.visible) return;
+
+        // If dragging, follow mouse perfectly
+        if (isDraggingRef.current) {
+            // Update raycaster with mouse position
+            raycaster.current.setFromCamera(mouse.current, camera);
+
+            // Intersect with invisible plane at object's z position
+            raycaster.current.ray.intersectPlane(plane.current, intersectionPoint.current);
+
+            // Update position directly - perfect tracking
+            position[0] = intersectionPoint.current.x;
+            groupRef.current.position.x = intersectionPoint.current.x;
+            groupRef.current.position.y = intersectionPoint.current.y;
+
+            return; // Skip normal animation when dragging
+        }
 
         // Initialize start time once on first frame
         if (startTimeRef.current === null) {
@@ -587,7 +606,6 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
                 <mesh
                     ref={meshRef}
                     onPointerDown={handlePointerDown}
-                    onPointerMove={handlePointerMove}
                     onPointerUp={handlePointerUp}
                     onPointerOver={(e) => (document.body.style.cursor = 'grab')}
                     onPointerOut={(e) => (document.body.style.cursor = 'auto')}
