@@ -4,18 +4,95 @@ import Head from 'next/head';
 
 export default function SelfMadeProjects() {
     const router = useRouter();
-    const [flippedCards, setFlippedCards] = useState({});
-
-    const toggleFlip = (cardId) => {
-        setFlippedCards(prev => ({
-            ...prev,
-            [cardId]: !prev[cardId]
-        }));
-    };
 
     const goBack = () => {
         router.push('/portfolio#projects');
     };
+
+    // Projects data - Replace URLs with your actual Vercel deployments
+    const projects = [
+        {
+            id: 1,
+            title: '3D Interactive Portfolio',
+            description: 'A modern portfolio featuring 3D animations, draggable geometries, theme switching, and music player.',
+            image: '/portfolio-preview.png',
+            icon: 'fas fa-laptop-code',
+            tags: ['Next.js', 'Three.js', 'React'],
+            url: 'https://your-project-1.vercel.app'
+        },
+        {
+            id: 2,
+            title: 'E-Commerce Platform',
+            description: 'Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.',
+            image: '/project2-preview.png',
+            icon: 'fas fa-shopping-cart',
+            tags: ['React', 'Node.js', 'MongoDB'],
+            url: 'https://your-project-2.vercel.app'
+        },
+        {
+            id: 3,
+            title: 'Weather Dashboard',
+            description: 'Real-time weather application with interactive maps, forecasts, and location-based alerts.',
+            image: '/project3-preview.png',
+            icon: 'fas fa-cloud-sun',
+            tags: ['Vue.js', 'API', 'Charts'],
+            url: 'https://your-project-3.vercel.app'
+        },
+        {
+            id: 4,
+            title: 'Task Management App',
+            description: 'Collaborative task tracker with real-time updates, kanban boards, and team analytics.',
+            image: '/project4-preview.png',
+            icon: 'fas fa-tasks',
+            tags: ['React', 'Firebase', 'Tailwind'],
+            url: 'https://your-project-4.vercel.app'
+        },
+        {
+            id: 5,
+            title: 'AI Chat Assistant',
+            description: 'Intelligent chatbot powered by AI with natural language processing and context awareness.',
+            image: '/project5-preview.png',
+            icon: 'fas fa-robot',
+            tags: ['Python', 'AI/ML', 'Flask'],
+            url: 'https://your-project-5.vercel.app'
+        },
+        {
+            id: 6,
+            title: 'Fitness Tracker',
+            description: 'Track workouts, nutrition, and progress with detailed analytics and personalized recommendations.',
+            image: '/project6-preview.png',
+            icon: 'fas fa-dumbbell',
+            tags: ['React Native', 'GraphQL', 'PostgreSQL'],
+            url: 'https://your-project-6.vercel.app'
+        },
+        {
+            id: 7,
+            title: 'Social Media Dashboard',
+            description: 'Unified dashboard to manage multiple social media accounts with analytics and scheduling.',
+            image: '/project7-preview.png',
+            icon: 'fas fa-chart-line',
+            tags: ['Angular', 'TypeScript', 'D3.js'],
+            url: 'https://your-project-7.vercel.app'
+        },
+        {
+            id: 8,
+            title: 'Recipe Finder',
+            description: 'Discover and save recipes with smart search, meal planning, and grocery list generation.',
+            image: '/project8-preview.png',
+            icon: 'fas fa-utensils',
+            tags: ['React', 'API', 'Redux'],
+            url: 'https://your-project-8.vercel.app'
+        },
+        {
+            id: 9,
+            title: 'Portfolio Builder',
+            description: 'Create stunning portfolios with drag-and-drop interface, templates, and instant deployment.',
+            image: '/project9-preview.png',
+            icon: 'fas fa-palette',
+            tags: ['Next.js', 'Vercel', 'Drag & Drop'],
+            url: 'https://your-project-9.vercel.app'
+        }
+    ];
 
     return (
         <>
@@ -84,84 +161,124 @@ export default function SelfMadeProjects() {
                         color: #94a3b8;
                     }
 
-                    .flip-card {
-                        perspective: 1500px;
-                        min-height: 450px;
-                        background: transparent;
+                    .project-card {
+                        background: rgba(30, 41, 59, 0.6);
+                        border: 1px solid rgba(148, 163, 184, 0.1);
+                        border-radius: 12px;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                        display: flex;
+                        flex-direction: column;
                         cursor: pointer;
                     }
 
-                    .flip-card-inner {
+                    .project-card:hover {
+                        transform: translateY(-8px);
+                        border-color: rgba(14, 165, 233, 0.4);
+                        box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+                    }
+
+                    .card-image {
                         position: relative;
                         width: 100%;
-                        height: 100%;
-                        transition: transform 0.8s;
-                        transform-style: preserve-3d;
+                        height: 220px;
+                        overflow: hidden;
+                        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
                     }
 
-                    .flip-card.flipped .flip-card-inner {
-                        transform: rotateY(180deg);
-                    }
-
-                    .flip-card-front, .flip-card-back {
-                        position: absolute;
+                    .card-image img {
                         width: 100%;
                         height: 100%;
-                        backface-visibility: hidden;
-                        border-radius: 12px;
-                        overflow: hidden;
+                        object-fit: cover;
+                        transition: transform 0.3s ease;
                     }
 
-                    .flip-card-front {
-                        background: rgba(30, 41, 59, 0.6);
-                        border: 1px solid rgba(148, 163, 184, 0.1);
-                        padding: 2rem;
+                    .project-card:hover .card-image img {
+                        transform: scale(1.1);
+                    }
+
+                    .card-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(to bottom, transparent 0%, rgba(15, 23, 42, 0.9) 100%);
+                        display: flex;
+                        align-items: flex-end;
+                        padding: 1rem;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    }
+
+                    .project-card:hover .card-overlay {
+                        opacity: 1;
+                    }
+
+                    .card-body {
+                        padding: 1.5rem;
                         display: flex;
                         flex-direction: column;
-                    }
-
-                    .flip-card-back {
-                        background: rgba(15, 23, 42, 0.95);
-                        transform: rotateY(180deg);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        padding: 1rem;
-                    }
-
-                    .flip-card-back img {
-                        max-width: 100%;
-                        max-height: 100%;
-                        object-fit: contain;
-                        border-radius: 8px;
+                        flex: 1;
                     }
 
                     .card-icon {
-                        width: 70px;
-                        height: 70px;
-                        background: linear-gradient(135deg, #8b5cf6, #ec4899);
-                        border-radius: 12px;
+                        width: 50px;
+                        height: 50px;
+                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                        border-radius: 10px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin-bottom: 1.5rem;
-                    }
-
-                    .card-icon i {
-                        font-size: 2rem;
-                        color: white;
-                    }
-
-                    .card-content h3 {
-                        font-size: 1.5rem;
-                        color: #f8fafc;
                         margin-bottom: 1rem;
                     }
 
-                    .card-content p {
+                    .card-icon i {
+                        font-size: 1.5rem;
+                        color: white;
+                    }
+
+                    .card-body h3 {
+                        font-size: 1.3rem;
+                        color: #f8fafc;
+                        margin-bottom: 0.75rem;
+                        font-weight: 600;
+                    }
+
+                    .card-body p {
                         color: #94a3b8;
                         line-height: 1.6;
                         margin-bottom: 1.5rem;
+                        flex: 1;
+                        font-size: 0.95rem;
+                    }
+
+                    .view-btn {
+                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 8px;
+                        font-size: 0.95rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        text-decoration: none;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        justify-content: center;
+                        margin-top: auto;
+                    }
+
+                    .view-btn:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+                        background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+                    }
+
+                    .view-btn i {
+                        font-size: 0.85rem;
                     }
 
                     .card-tags {
@@ -171,18 +288,20 @@ export default function SelfMadeProjects() {
                     }
 
                     .tag {
-                        background: rgba(139, 92, 246, 0.1);
-                        border: 1px solid rgba(139, 92, 246, 0.3);
-                        color: #a78bfa;
-                        padding: 0.5rem 1rem;
-                        border-radius: 20px;
-                        font-size: 0.85rem;
+                        background: rgba(14, 165, 233, 0.1);
+                        border: 1px solid rgba(14, 165, 233, 0.3);
+                        color: #0ea5e9;
+                        padding: 0.4rem 0.8rem;
+                        border-radius: 15px;
+                        font-size: 0.8rem;
+                        font-weight: 500;
                     }
 
                     .cards-grid {
                         display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                        grid-template-columns: repeat(3, 1fr);
                         gap: 2rem;
+                        margin-bottom: 2rem;
                     }
 
                     .empty-state {
@@ -202,6 +321,13 @@ export default function SelfMadeProjects() {
                         margin-bottom: 0.5rem;
                     }
 
+                    @media (max-width: 1024px) {
+                        .cards-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 1.5rem;
+                        }
+                    }
+
                     @media (max-width: 768px) {
                         .container {
                             padding: 2rem 1rem;
@@ -215,10 +341,15 @@ export default function SelfMadeProjects() {
 
                         .cards-grid {
                             grid-template-columns: 1fr;
+                            gap: 1.5rem;
                         }
 
                         .page-title {
                             font-size: 2rem;
+                        }
+
+                        .card-image {
+                            height: 200px;
                         }
                     }
                 `}</style>
@@ -239,31 +370,36 @@ export default function SelfMadeProjects() {
                 </div>
 
                 <div className="cards-grid">
-                    {/* Example: Add your self-made projects here */}
-                    <div className={`flip-card ${flippedCards['portfolio'] ? 'flipped' : ''}`} onClick={() => toggleFlip('portfolio')}>
-                        <div className="flip-card-inner">
-                            <div className="flip-card-front">
-                                <div className="card-icon">
-                                    <i className="fas fa-laptop-code"></i>
-                                </div>
-                                <div className="card-content">
-                                    <h3>3D Interactive Portfolio</h3>
-                                    <p>This portfolio website featuring 3D animations, draggable floating geometries, theme switching, and integrated music player. Built with Next.js and React Three Fiber.</p>
+                    {projects.map((project) => (
+                        <div key={project.id} className="project-card">
+                            <div className="card-image">
+                                <img src={project.image} alt={project.title} />
+                                <div className="card-overlay">
                                     <div className="card-tags">
-                                        <span className="tag">Next.js</span>
-                                        <span className="tag">React Three Fiber</span>
-                                        <span className="tag">3D Graphics</span>
-                                        <span className="tag">CSS3</span>
+                                        {project.tags.map((tag, idx) => (
+                                            <span key={idx} className="tag">{tag}</span>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-                            <div className="flip-card-back">
-                                <img src="/portfolio-preview.png" alt="Portfolio Website" />
+                            <div className="card-body">
+                                <div className="card-icon">
+                                    <i className={project.icon}></i>
+                                </div>
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
+                                <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="view-btn"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    View Project <i className="fas fa-external-link-alt"></i>
+                                </a>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Add more self-made projects */}
+                    ))}
                 </div>
 
                 {/* Empty state if no projects yet
