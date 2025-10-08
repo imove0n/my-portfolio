@@ -1124,7 +1124,7 @@ export default function LoadingPage() {
                     </div>
 
                     <div className="progress-text">
-                        <span className="percentage">{Math.floor(progress)}%</span> complete
+                        <span className="percentage">{Math.floor(progress)}%</span>
                     </div>
 
                     <div className="loading-dots" style={{ display: showComplete ? 'none' : 'flex' }}>
