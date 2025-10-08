@@ -381,6 +381,8 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
     const slipDirection = useRef({ x: 0, z: 0 });
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
+    const [isDragging, setIsDragging] = React.useState(false);
+    const dragStartPos = useRef({ x: 0, y: 0 });
 
     // Preload sound
     React.useEffect(() => {
@@ -389,60 +391,92 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
         audioRef.current.load();
     }, []);
 
-    const handleClick = (e) => {
+    const handlePointerDown = (e) => {
         e.stopPropagation();
+        setIsDragging(true);
+        dragStartPos.current = { x: e.point.x, y: e.point.y };
 
         // Play sound effect
         if (audioRef.current) {
-            audioRef.current.currentTime = 0; // Reset to start
+            audioRef.current.currentTime = 0;
             audioRef.current.play().catch(err => console.log('Audio play failed:', err));
         }
+    };
 
-        // Apply slip away force in random direction
-        const angle = Math.random() * Math.PI * 2;
-        const force = 0.5 + Math.random() * 0.5; // Random slip strength
+    const handlePointerMove = (e) => {
+        if (isDragging && groupRef.current) {
+            e.stopPropagation();
+            // Update position while dragging
+            position[0] = e.point.x;
+            position[2] = e.point.z;
+        }
+    };
 
-        slipVelocity.current = {
-            x: Math.cos(angle) * force,
-            y: 0.3 + Math.random() * 0.3, // Pop up a bit
-            z: Math.sin(angle) * force
-        };
+    const handlePointerUp = (e) => {
+        e.stopPropagation();
 
-        // Reduce health
-        if (currentHealth <= 1) {
-            // On last hit, create shatter effect
-            setIsExploding(true);
+        if (isDragging) {
+            setIsDragging(false);
 
-            // Create shatter particles
-            const particles = [];
-            const currentPos = groupRef.current.position;
-            for (let i = 0; i < 12; i++) {
-                const angle = (Math.PI * 2 * i) / 12;
-                const spread = 0.3 + Math.random() * 0.3;
-                particles.push({
-                    id: Math.random(),
-                    position: [currentPos.x, currentPos.y, currentPos.z],
-                    velocity: {
-                        x: Math.cos(angle) * spread,
-                        y: 0.5 + Math.random() * 0.5,
-                        z: Math.sin(angle) * spread
-                    },
-                    size: 0.02 + Math.random() * 0.03
-                });
+            // Calculate slip velocity based on drag movement
+            const dx = e.point.x - dragStartPos.current.x;
+            const dy = e.point.y - dragStartPos.current.y;
+            const speed = Math.sqrt(dx * dx + dy * dy);
+
+            if (speed > 0.1) {
+                // Released with movement - apply slip based on drag direction
+                slipVelocity.current = {
+                    x: dx * 2,
+                    y: dy * 2,
+                    z: 0
+                };
+            } else {
+                // Released without much movement - random slip
+                const angle = Math.random() * Math.PI * 2;
+                const force = 0.5 + Math.random() * 0.5;
+                slipVelocity.current = {
+                    x: Math.cos(angle) * force,
+                    y: 0.3 + Math.random() * 0.3,
+                    z: Math.sin(angle) * force
+                };
             }
-            setShatterParticles(particles);
 
-            // Hide main geometry and clear particles after animation
-            setTimeout(() => {
-                if (groupRef.current) {
-                    groupRef.current.visible = false;
+            // Reduce health
+            if (currentHealth <= 1) {
+                // On last hit, create shatter effect
+                setIsExploding(true);
+
+                // Create shatter particles
+                const particles = [];
+                const currentPos = groupRef.current.position;
+                for (let i = 0; i < 12; i++) {
+                    const angle = (Math.PI * 2 * i) / 12;
+                    const spread = 0.3 + Math.random() * 0.3;
+                    particles.push({
+                        id: Math.random(),
+                        position: [currentPos.x, currentPos.y, currentPos.z],
+                        velocity: {
+                            x: Math.cos(angle) * spread,
+                            y: 0.5 + Math.random() * 0.5,
+                            z: Math.sin(angle) * spread
+                        },
+                        size: 0.02 + Math.random() * 0.03
+                    });
                 }
-                setShatterParticles([]);
-            }, 800);
-        } else {
-            setCurrentHealth(currentHealth - 1);
-            setHitAnimation(1);
-            setTimeout(() => setHitAnimation(0), 200);
+                setShatterParticles(particles);
+
+                // Hide main geometry and clear particles after animation
+                setTimeout(() => {
+                    if (groupRef.current) {
+                        groupRef.current.visible = false;
+                    }
+                    setShatterParticles([]);
+                }, 800);
+            } else {
+                setCurrentHealth(currentHealth - 1);
+                setHitAnimation(1);
+                setTimeout(() => setHitAnimation(0), 200);
+            }
         }
     };
 
@@ -532,8 +566,15 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     return (
         <>
             <group ref={groupRef} position={position} scale={scale}>
-                {/* Main filled mesh - clickable */}
-                <mesh ref={meshRef} onClick={handleClick} onPointerOver={(e) => (document.body.style.cursor = 'pointer')} onPointerOut={(e) => (document.body.style.cursor = 'auto')}>
+                {/* Main filled mesh - draggable */}
+                <mesh
+                    ref={meshRef}
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerOver={(e) => (document.body.style.cursor = 'grab')}
+                    onPointerOut={(e) => (document.body.style.cursor = 'auto')}
+                >
                     {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
                     {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
                     {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
