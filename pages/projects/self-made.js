@@ -13,84 +13,30 @@ export default function SelfMadeProjects() {
     const projects = [
         {
             id: 1,
-            title: '3D Interactive Portfolio',
-            description: 'A modern portfolio featuring 3D animations, draggable geometries, theme switching, and music player.',
-            image: '/portfolio-preview.png',
-            icon: 'fas fa-laptop-code',
-            tags: ['Next.js', 'Three.js', 'React'],
-            url: 'https://your-project-1.vercel.app'
-        },
-        {
-            id: 2,
             title: 'E-Commerce Platform',
             description: 'Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.',
             image: '/project2-preview.png',
             icon: 'fas fa-shopping-cart',
             tags: ['React', 'Node.js', 'MongoDB'],
-            url: 'https://your-project-2.vercel.app'
+            url: 'https://your-project-1.vercel.app'
         },
         {
-            id: 3,
-            title: 'Weather Dashboard',
-            description: 'Real-time weather application with interactive maps, forecasts, and location-based alerts.',
-            image: '/project3-preview.png',
-            icon: 'fas fa-cloud-sun',
-            tags: ['Vue.js', 'API', 'Charts'],
-            url: 'https://your-project-3.vercel.app'
-        },
-        {
-            id: 4,
+            id: 2,
             title: 'Task Management App',
             description: 'Collaborative task tracker with real-time updates, kanban boards, and team analytics.',
             image: '/project4-preview.png',
             icon: 'fas fa-tasks',
             tags: ['React', 'Firebase', 'Tailwind'],
-            url: 'https://your-project-4.vercel.app'
+            url: 'https://your-project-2.vercel.app'
         },
         {
-            id: 5,
+            id: 3,
             title: 'AI Chat Assistant',
             description: 'Intelligent chatbot powered by AI with natural language processing and context awareness.',
             image: '/project5-preview.png',
             icon: 'fas fa-robot',
             tags: ['Python', 'AI/ML', 'Flask'],
-            url: 'https://your-project-5.vercel.app'
-        },
-        {
-            id: 6,
-            title: 'Fitness Tracker',
-            description: 'Track workouts, nutrition, and progress with detailed analytics and personalized recommendations.',
-            image: '/project6-preview.png',
-            icon: 'fas fa-dumbbell',
-            tags: ['React Native', 'GraphQL', 'PostgreSQL'],
-            url: 'https://your-project-6.vercel.app'
-        },
-        {
-            id: 7,
-            title: 'Social Media Dashboard',
-            description: 'Unified dashboard to manage multiple social media accounts with analytics and scheduling.',
-            image: '/project7-preview.png',
-            icon: 'fas fa-chart-line',
-            tags: ['Angular', 'TypeScript', 'D3.js'],
-            url: 'https://your-project-7.vercel.app'
-        },
-        {
-            id: 8,
-            title: 'Recipe Finder',
-            description: 'Discover and save recipes with smart search, meal planning, and grocery list generation.',
-            image: '/project8-preview.png',
-            icon: 'fas fa-utensils',
-            tags: ['React', 'API', 'Redux'],
-            url: 'https://your-project-8.vercel.app'
-        },
-        {
-            id: 9,
-            title: 'Portfolio Builder',
-            description: 'Create stunning portfolios with drag-and-drop interface, templates, and instant deployment.',
-            image: '/project9-preview.png',
-            icon: 'fas fa-palette',
-            tags: ['Next.js', 'Vercel', 'Drag & Drop'],
-            url: 'https://your-project-9.vercel.app'
+            url: 'https://your-project-3.vercel.app'
         }
     ];
 
