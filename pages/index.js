@@ -1113,7 +1113,7 @@ export default function LoadingPage() {
 
                 <div className="loading-section">
                     <div className="compile-text">
-                        <span>{typedCompile}<span className="compile-cursor">█</span>complete</span>
+                        <span>{typedCompile}<span className="compile-cursor">█</span></span>
                     </div>
 
                     <div className="progress-container">
