@@ -343,6 +343,11 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const handleClick = (e) => {
         e.stopPropagation();
 
+        // Play sound effect
+        const audio = new Audio('/sound click.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(err => console.log('Audio play failed:', err));
+
         // Apply slip away force in random direction
         const angle = Math.random() * Math.PI * 2;
         const force = 0.5 + Math.random() * 0.5; // Random slip strength
