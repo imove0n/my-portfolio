@@ -1230,6 +1230,11 @@ useEffect(() => {
                             width: 100%;
                             position: relative;
                             z-index: 10;
+                            pointer-events: none;
+                        }
+
+                        .hero-content .btn {
+                            pointer-events: auto;
                         }
 
                         .hero-subtitle {
