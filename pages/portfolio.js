@@ -38,6 +38,7 @@
     const [theme, setTheme] = useState('original');
     // Logo auto-typing animation
     const [logoTypedText, setLogoTypedText] = useState('');
+    const [showBaseName, setShowBaseName] = useState(true);
     // Projects dropdown
     const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
 
@@ -110,136 +111,178 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
     useEffect(() => {
         let timeouts = [];
 
+        // Hide base name initially and show it at the end
+        setShowBaseName(true);
+
         const startSequence = () => {
             let step = 0;
 
             const sequence = [
-                // Start: "Laurence De Guzman" (already visible, wait 3 seconds)
-                { text: "", delay: 3000 },
+                // Start: wait 3 seconds with "Laurence De Guzman"
+                { text: "", showBase: true, delay: 3000 },
 
-                // Type "I am " before name
-                { text: "I", delay: 100 },
-                { text: "I ", delay: 80 },
-                { text: "I a", delay: 100 },
-                { text: "I am", delay: 100 },
-                { text: "I am ", delay: 150 },
+                // Hide base name and type "I am "
+                { text: "", showBase: false, delay: 100 },
+                { text: "I", showBase: false, delay: 100 },
+                { text: "I ", showBase: false, delay: 80 },
+                { text: "I a", showBase: false, delay: 100 },
+                { text: "I am", showBase: false, delay: 100 },
+                { text: "I am ", showBase: false, delay: 150 },
+
+                // Type full name
+                { text: "I am L", showBase: false, delay: 100 },
+                { text: "I am La", showBase: false, delay: 100 },
+                { text: "I am Lau", showBase: false, delay: 100 },
+                { text: "I am Laur", showBase: false, delay: 100 },
+                { text: "I am Laure", showBase: false, delay: 100 },
+                { text: "I am Lauren", showBase: false, delay: 100 },
+                { text: "I am Laurenc", showBase: false, delay: 100 },
+                { text: "I am Laurence", showBase: false, delay: 100 },
+                { text: "I am Laurence ", showBase: false, delay: 120 },
+                { text: "I am Laurence D", showBase: false, delay: 100 },
+                { text: "I am Laurence De", showBase: false, delay: 100 },
+                { text: "I am Laurence De ", showBase: false, delay: 120 },
+                { text: "I am Laurence De G", showBase: false, delay: 100 },
+                { text: "I am Laurence De Gu", showBase: false, delay: 100 },
+                { text: "I am Laurence De Guz", showBase: false, delay: 100 },
+                { text: "I am Laurence De Guzm", showBase: false, delay: 100 },
+                { text: "I am Laurence De Guzma", showBase: false, delay: 100 },
+                { text: "I am Laurence De Guzman", showBase: false, delay: 100 },
 
                 // Wait with "I am Laurence De Guzman"
-                { text: "I am ", delay: 2000 },
+                { text: "I am Laurence De Guzman", showBase: false, delay: 2000 },
 
                 // Backspace everything
-                { text: "I am", delay: 50 },
-                { text: "I a", delay: 50 },
-                { text: "I ", delay: 50 },
-                { text: "I", delay: 50 },
-                { text: "", delay: 50 },
+                { text: "I am Laurence De Guzma", showBase: false, delay: 50 },
+                { text: "I am Laurence De Guzm", showBase: false, delay: 50 },
+                { text: "I am Laurence De Guz", showBase: false, delay: 50 },
+                { text: "I am Laurence De Gu", showBase: false, delay: 50 },
+                { text: "I am Laurence De G", showBase: false, delay: 50 },
+                { text: "I am Laurence De ", showBase: false, delay: 50 },
+                { text: "I am Laurence De", showBase: false, delay: 50 },
+                { text: "I am Laurence D", showBase: false, delay: 50 },
+                { text: "I am Laurence ", showBase: false, delay: 50 },
+                { text: "I am Laurence", showBase: false, delay: 50 },
+                { text: "I am Lauren", showBase: false, delay: 50 },
+                { text: "I am Laure", showBase: false, delay: 50 },
+                { text: "I am Laur", showBase: false, delay: 50 },
+                { text: "I am Lau", showBase: false, delay: 50 },
+                { text: "I am La", showBase: false, delay: 50 },
+                { text: "I am L", showBase: false, delay: 50 },
+                { text: "I am ", showBase: false, delay: 50 },
+                { text: "I am", showBase: false, delay: 50 },
+                { text: "I a", showBase: false, delay: 50 },
+                { text: "I ", showBase: false, delay: 50 },
+                { text: "I", showBase: false, delay: 50 },
+                { text: "", showBase: false, delay: 50 },
 
                 // Type "I am Goodman"
-                { text: "I", delay: 100 },
-                { text: "I ", delay: 80 },
-                { text: "I a", delay: 100 },
-                { text: "I am", delay: 100 },
-                { text: "I am ", delay: 120 },
-                { text: "I am G", delay: 100 },
-                { text: "I am Go", delay: 100 },
-                { text: "I am Goo", delay: 100 },
-                { text: "I am Good", delay: 100 },
-                { text: "I am Goodm", delay: 100 },
-                { text: "I am Goodma", delay: 100 },
-                { text: "I am Goodman", delay: 100 },
+                { text: "I", showBase: false, delay: 100 },
+                { text: "I ", showBase: false, delay: 80 },
+                { text: "I a", showBase: false, delay: 100 },
+                { text: "I am", showBase: false, delay: 100 },
+                { text: "I am ", showBase: false, delay: 120 },
+                { text: "I am G", showBase: false, delay: 100 },
+                { text: "I am Go", showBase: false, delay: 100 },
+                { text: "I am Goo", showBase: false, delay: 100 },
+                { text: "I am Good", showBase: false, delay: 100 },
+                { text: "I am Goodm", showBase: false, delay: 100 },
+                { text: "I am Goodma", showBase: false, delay: 100 },
+                { text: "I am Goodman", showBase: false, delay: 100 },
 
                 // Wait
-                { text: "I am Goodman", delay: 1500 },
+                { text: "I am Goodman", showBase: false, delay: 1500 },
 
-                // Backspace to start of "Goodman"
-                { text: "I am Goodma", delay: 50 },
-                { text: "I am Goodm", delay: 50 },
-                { text: "I am Good", delay: 50 },
-                { text: "I am Goo", delay: 50 },
-                { text: "I am Go", delay: 50 },
-                { text: "I am G", delay: 50 },
-                { text: "I am ", delay: 50 },
-                { text: "I am", delay: 50 },
-                { text: "I a", delay: 50 },
-                { text: "I ", delay: 50 },
-                { text: "I", delay: 50 },
-                { text: "", delay: 50 },
+                // Backspace everything
+                { text: "I am Goodma", showBase: false, delay: 50 },
+                { text: "I am Goodm", showBase: false, delay: 50 },
+                { text: "I am Good", showBase: false, delay: 50 },
+                { text: "I am Goo", showBase: false, delay: 50 },
+                { text: "I am Go", showBase: false, delay: 50 },
+                { text: "I am G", showBase: false, delay: 50 },
+                { text: "I am ", showBase: false, delay: 50 },
+                { text: "I am", showBase: false, delay: 50 },
+                { text: "I a", showBase: false, delay: 50 },
+                { text: "I ", showBase: false, delay: 50 },
+                { text: "I", showBase: false, delay: 50 },
+                { text: "", showBase: false, delay: 50 },
 
                 // Type "not Saul Goodman"
-                { text: "n", delay: 100 },
-                { text: "no", delay: 100 },
-                { text: "not", delay: 100 },
-                { text: "not ", delay: 120 },
-                { text: "not S", delay: 100 },
-                { text: "not Sa", delay: 100 },
-                { text: "not Sau", delay: 100 },
-                { text: "not Saul", delay: 100 },
-                { text: "not Saul ", delay: 120 },
-                { text: "not Saul G", delay: 100 },
-                { text: "not Saul Go", delay: 100 },
-                { text: "not Saul Goo", delay: 100 },
-                { text: "not Saul Good", delay: 100 },
-                { text: "not Saul Goodm", delay: 100 },
-                { text: "not Saul Goodma", delay: 100 },
-                { text: "not Saul Goodman", delay: 100 },
+                { text: "n", showBase: false, delay: 100 },
+                { text: "no", showBase: false, delay: 100 },
+                { text: "not", showBase: false, delay: 100 },
+                { text: "not ", showBase: false, delay: 120 },
+                { text: "not S", showBase: false, delay: 100 },
+                { text: "not Sa", showBase: false, delay: 100 },
+                { text: "not Sau", showBase: false, delay: 100 },
+                { text: "not Saul", showBase: false, delay: 100 },
+                { text: "not Saul ", showBase: false, delay: 120 },
+                { text: "not Saul G", showBase: false, delay: 100 },
+                { text: "not Saul Go", showBase: false, delay: 100 },
+                { text: "not Saul Goo", showBase: false, delay: 100 },
+                { text: "not Saul Good", showBase: false, delay: 100 },
+                { text: "not Saul Goodm", showBase: false, delay: 100 },
+                { text: "not Saul Goodma", showBase: false, delay: 100 },
+                { text: "not Saul Goodman", showBase: false, delay: 100 },
 
                 // Wait
-                { text: "not Saul Goodman", delay: 1500 },
+                { text: "not Saul Goodman", showBase: false, delay: 1500 },
 
                 // Backspace everything
-                { text: "not Saul Goodma", delay: 50 },
-                { text: "not Saul Goodm", delay: 50 },
-                { text: "not Saul Good", delay: 50 },
-                { text: "not Saul Goo", delay: 50 },
-                { text: "not Saul Go", delay: 50 },
-                { text: "not Saul G", delay: 50 },
-                { text: "not Saul ", delay: 50 },
-                { text: "not Saul", delay: 50 },
-                { text: "not Sau", delay: 50 },
-                { text: "not Sa", delay: 50 },
-                { text: "not S", delay: 50 },
-                { text: "not ", delay: 50 },
-                { text: "not", delay: 50 },
-                { text: "no", delay: 50 },
-                { text: "n", delay: 50 },
-                { text: "", delay: 50 },
+                { text: "not Saul Goodma", showBase: false, delay: 50 },
+                { text: "not Saul Goodm", showBase: false, delay: 50 },
+                { text: "not Saul Good", showBase: false, delay: 50 },
+                { text: "not Saul Goo", showBase: false, delay: 50 },
+                { text: "not Saul Go", showBase: false, delay: 50 },
+                { text: "not Saul G", showBase: false, delay: 50 },
+                { text: "not Saul ", showBase: false, delay: 50 },
+                { text: "not Saul", showBase: false, delay: 50 },
+                { text: "not Sau", showBase: false, delay: 50 },
+                { text: "not Sa", showBase: false, delay: 50 },
+                { text: "not S", showBase: false, delay: 50 },
+                { text: "not ", showBase: false, delay: 50 },
+                { text: "not", showBase: false, delay: 50 },
+                { text: "no", showBase: false, delay: 50 },
+                { text: "n", showBase: false, delay: 50 },
+                { text: "", showBase: false, delay: 50 },
 
                 // Type "you got it?"
-                { text: "y", delay: 100 },
-                { text: "yo", delay: 100 },
-                { text: "you", delay: 100 },
-                { text: "you ", delay: 120 },
-                { text: "you g", delay: 100 },
-                { text: "you go", delay: 100 },
-                { text: "you got", delay: 100 },
-                { text: "you got ", delay: 120 },
-                { text: "you got i", delay: 100 },
-                { text: "you got it", delay: 100 },
-                { text: "you got it?", delay: 100 },
+                { text: "y", showBase: false, delay: 100 },
+                { text: "yo", showBase: false, delay: 100 },
+                { text: "you", showBase: false, delay: 100 },
+                { text: "you ", showBase: false, delay: 120 },
+                { text: "you g", showBase: false, delay: 100 },
+                { text: "you go", showBase: false, delay: 100 },
+                { text: "you got", showBase: false, delay: 100 },
+                { text: "you got ", showBase: false, delay: 120 },
+                { text: "you got i", showBase: false, delay: 100 },
+                { text: "you got it", showBase: false, delay: 100 },
+                { text: "you got it?", showBase: false, delay: 100 },
 
                 // Wait
-                { text: "you got it?", delay: 2000 },
+                { text: "you got it?", showBase: false, delay: 2000 },
 
                 // Backspace everything
-                { text: "you got it", delay: 50 },
-                { text: "you got i", delay: 50 },
-                { text: "you got ", delay: 50 },
-                { text: "you got", delay: 50 },
-                { text: "you go", delay: 50 },
-                { text: "you g", delay: 50 },
-                { text: "you ", delay: 50 },
-                { text: "you", delay: 50 },
-                { text: "yo", delay: 50 },
-                { text: "y", delay: 50 },
-                { text: "", delay: 500 },
+                { text: "you got it", showBase: false, delay: 50 },
+                { text: "you got i", showBase: false, delay: 50 },
+                { text: "you got ", showBase: false, delay: 50 },
+                { text: "you got", showBase: false, delay: 50 },
+                { text: "you go", showBase: false, delay: 50 },
+                { text: "you g", showBase: false, delay: 50 },
+                { text: "you ", showBase: false, delay: 50 },
+                { text: "you", showBase: false, delay: 50 },
+                { text: "yo", showBase: false, delay: 50 },
+                { text: "y", showBase: false, delay: 50 },
+                { text: "", showBase: false, delay: 500 },
 
-                // Loop back to start
-                { text: "", delay: 500, restart: true }
+                // Show base name again and loop
+                { text: "", showBase: true, delay: 500, restart: true }
             ];
 
             const typeStep = () => {
                 if (step < sequence.length) {
                     setLogoTypedText(sequence[step].text);
+                    setShowBaseName(sequence[step].showBase !== undefined ? sequence[step].showBase : false);
 
                     if (sequence[step].restart) {
                         const timeout = setTimeout(() => {
@@ -2474,10 +2517,8 @@ Your browser does not support the audio element.
                 <nav className="navbar">
                     <div className="nav-container">
                         <div className="logo">
-                            <span className="logo-base">
-                                {logoTypedText}
-                            </span>
-                            <span className="logo-text">Laurence De Guzman</span>
+                            {logoTypedText && <span className="logo-base">{logoTypedText}</span>}
+                            {showBaseName && <span className="logo-text">Laurence De Guzman</span>}
                         </div>
                         <ul className={`nav-menu ${isNavMenuActive ? 'active' : ''}`}>
                             <li><a href="#home" onClick={closeMenu}>Home</a></li>
