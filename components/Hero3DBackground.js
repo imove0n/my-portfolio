@@ -336,17 +336,26 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const [currentHealth, setCurrentHealth] = React.useState(health);
     const [isExploding, setIsExploding] = React.useState(false);
     const [hitAnimation, setHitAnimation] = React.useState(0);
+    const audioRef = useRef(null);
 
     const slipDirection = useRef({ x: 0, z: 0 });
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
+
+    // Preload sound
+    React.useEffect(() => {
+        audioRef.current = new Audio('/sound click.mp3');
+        audioRef.current.volume = 0.5;
+        audioRef.current.load();
+    }, []);
 
     const handleClick = (e) => {
         e.stopPropagation();
 
         // Play sound effect
-        const audio = new Audio('/sound click.mp3');
-        audio.volume = 0.5;
-        audio.play().catch(err => console.log('Audio play failed:', err));
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0; // Reset to start
+            audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+        }
 
         // Apply slip away force in random direction
         const angle = Math.random() * Math.PI * 2;
