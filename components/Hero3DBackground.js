@@ -326,6 +326,46 @@ function FloatingLaptopModel({ modelPath }) {
 }
 */
 
+// Shatter Particle Component
+function ShatterParticle({ position, velocity, color, size }) {
+    const meshRef = useRef();
+    const vel = useRef(velocity);
+    const life = useRef(1);
+
+    useFrame((state, delta) => {
+        if (!meshRef.current) return;
+
+        // Physics
+        vel.current.y -= delta * 5; // Gravity
+        meshRef.current.position.x += vel.current.x * delta * 3;
+        meshRef.current.position.y += vel.current.y * delta * 3;
+        meshRef.current.position.z += vel.current.z * delta * 3;
+
+        // Rotation
+        meshRef.current.rotation.x += delta * 10 * vel.current.x;
+        meshRef.current.rotation.y += delta * 10 * vel.current.y;
+
+        // Fade out
+        life.current -= delta * 2;
+        if (meshRef.current.material) {
+            meshRef.current.material.opacity = Math.max(0, life.current);
+        }
+    });
+
+    return (
+        <mesh ref={meshRef} position={position}>
+            <boxGeometry args={[size, size, size]} />
+            <meshStandardMaterial
+                color={color}
+                emissive={color}
+                emissiveIntensity={1}
+                transparent
+                opacity={1}
+            />
+        </mesh>
+    );
+}
+
 // Floating Code Symbol Component
 function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health }) {
     const groupRef = useRef();
@@ -337,6 +377,7 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const [isExploding, setIsExploding] = React.useState(false);
     const [hitAnimation, setHitAnimation] = React.useState(0);
     const audioRef = useRef(null);
+    const [shatterParticles, setShatterParticles] = React.useState([]);
 
     const slipDirection = useRef({ x: 0, z: 0 });
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
@@ -369,12 +410,34 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
 
         // Reduce health
         if (currentHealth <= 1) {
-            // On last hit, slip away and disappear
+            // On last hit, create shatter effect
             setIsExploding(true);
+
+            // Create shatter particles
+            const particles = [];
+            const currentPos = groupRef.current.position;
+            for (let i = 0; i < 12; i++) {
+                const angle = (Math.PI * 2 * i) / 12;
+                const spread = 0.3 + Math.random() * 0.3;
+                particles.push({
+                    id: Math.random(),
+                    position: [currentPos.x, currentPos.y, currentPos.z],
+                    velocity: {
+                        x: Math.cos(angle) * spread,
+                        y: 0.5 + Math.random() * 0.5,
+                        z: Math.sin(angle) * spread
+                    },
+                    size: 0.02 + Math.random() * 0.03
+                });
+            }
+            setShatterParticles(particles);
+
+            // Hide main geometry and clear particles after animation
             setTimeout(() => {
                 if (groupRef.current) {
                     groupRef.current.visible = false;
                 }
+                setShatterParticles([]);
             }, 800);
         } else {
             setCurrentHealth(currentHealth - 1);
@@ -467,38 +530,51 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     });
 
     return (
-        <group ref={groupRef} position={position} scale={scale}>
-            {/* Main filled mesh - clickable */}
-            <mesh ref={meshRef} onClick={handleClick} onPointerOver={(e) => (document.body.style.cursor = 'pointer')} onPointerOut={(e) => (document.body.style.cursor = 'auto')}>
-                {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
-                {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
-                {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
-                {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
-                {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
-                <meshStandardMaterial
-                    color={color || "#0ea5e9"}
-                    emissive={color || "#0ea5e9"}
-                    emissiveIntensity={1.5}
-                    transparent
-                    opacity={0.7}
-                />
-            </mesh>
+        <>
+            <group ref={groupRef} position={position} scale={scale}>
+                {/* Main filled mesh - clickable */}
+                <mesh ref={meshRef} onClick={handleClick} onPointerOver={(e) => (document.body.style.cursor = 'pointer')} onPointerOut={(e) => (document.body.style.cursor = 'auto')}>
+                    {shape === 'box' && <boxGeometry args={[0.15, 0.15, 0.15]} />}
+                    {shape === 'sphere' && <sphereGeometry args={[0.1, 16, 16]} />}
+                    {shape === 'torus' && <torusGeometry args={[0.08, 0.03, 8, 16]} />}
+                    {shape === 'octahedron' && <octahedronGeometry args={[0.1]} />}
+                    {shape === 'tetrahedron' && <tetrahedronGeometry args={[0.12]} />}
+                    <meshStandardMaterial
+                        color={color || "#0ea5e9"}
+                        emissive={color || "#0ea5e9"}
+                        emissiveIntensity={1.5}
+                        transparent
+                        opacity={0.7}
+                    />
+                </mesh>
 
-            {/* Edge lines for 3D effect - thicker */}
-            <lineSegments ref={lineRef}>
-                {shape === 'box' && <edgesGeometry args={[new THREE.BoxGeometry(0.15, 0.15, 0.15)]} />}
-                {shape === 'sphere' && <edgesGeometry args={[new THREE.SphereGeometry(0.1, 16, 16)]} />}
-                {shape === 'torus' && <edgesGeometry args={[new THREE.TorusGeometry(0.08, 0.03, 8, 16)]} />}
-                {shape === 'octahedron' && <edgesGeometry args={[new THREE.OctahedronGeometry(0.1)]} />}
-                {shape === 'tetrahedron' && <edgesGeometry args={[new THREE.TetrahedronGeometry(0.12)]} />}
-                <lineBasicMaterial
-                    color="#ffffff"
-                    transparent
-                    opacity={1}
-                    linewidth={3}
+                {/* Edge lines for 3D effect - thicker */}
+                <lineSegments ref={lineRef}>
+                    {shape === 'box' && <edgesGeometry args={[new THREE.BoxGeometry(0.15, 0.15, 0.15)]} />}
+                    {shape === 'sphere' && <edgesGeometry args={[new THREE.SphereGeometry(0.1, 16, 16)]} />}
+                    {shape === 'torus' && <edgesGeometry args={[new THREE.TorusGeometry(0.08, 0.03, 8, 16)]} />}
+                    {shape === 'octahedron' && <edgesGeometry args={[new THREE.OctahedronGeometry(0.1)]} />}
+                    {shape === 'tetrahedron' && <edgesGeometry args={[new THREE.TetrahedronGeometry(0.12)]} />}
+                    <lineBasicMaterial
+                        color="#ffffff"
+                        transparent
+                        opacity={1}
+                        linewidth={3}
+                    />
+                </lineSegments>
+            </group>
+
+            {/* Shatter particles */}
+            {shatterParticles.map((particle) => (
+                <ShatterParticle
+                    key={particle.id}
+                    position={particle.position}
+                    velocity={particle.velocity}
+                    color={color || "#0ea5e9"}
+                    size={particle.size}
                 />
-            </lineSegments>
-        </group>
+            ))}
+        </>
     );
 }
 
