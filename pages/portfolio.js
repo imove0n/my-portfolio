@@ -18,6 +18,7 @@
     const cursorRef = useRef(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [isClicking, setIsClicking] = useState(false);
+    const tapSoundRef = useRef(null);
     const [audioError, setAudioError] = useState(false);
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -371,6 +372,13 @@ useEffect(() => {
         return () => observer.disconnect();
     }, []);
 
+    // Preload tap sound
+    useEffect(() => {
+        tapSoundRef.current = new Audio('/when-tap.mp3');
+        tapSoundRef.current.volume = 0.3;
+        tapSoundRef.current.load();
+    }, []);
+
     // Custom cursor effect
     useEffect(() => {
         const moveCursor = (e) => {
@@ -384,14 +392,25 @@ useEffect(() => {
         const handleMouseDown = () => setIsClicking(true);
         const handleMouseUp = () => setIsClicking(false);
 
+        // Play tap sound on click (except on canvas/3D elements)
+        const handleClick = (e) => {
+            // Don't play if clicking on canvas (3D geometries have their own sound)
+            if (e.target.tagName !== 'CANVAS' && tapSoundRef.current) {
+                tapSoundRef.current.currentTime = 0;
+                tapSoundRef.current.play().catch(err => console.log('Tap sound failed:', err));
+            }
+        };
+
         window.addEventListener('mousemove', moveCursor);
         window.addEventListener('mousedown', handleMouseDown);
         window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('click', handleClick);
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
             window.removeEventListener('mousedown', handleMouseDown);
             window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('click', handleClick);
         };
     }, []);
 
