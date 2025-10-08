@@ -36,6 +36,9 @@
     const [flippedCards, setFlippedCards] = useState({});
     // Theme state: 'original' | 'dark' | 'light'
     const [theme, setTheme] = useState('original');
+    // Logo hover typing animation
+    const [isLogoHovered, setIsLogoHovered] = useState(false);
+    const [logoTypedText, setLogoTypedText] = useState('');
 
 // Playlist state
     const [playlist] = useState([
@@ -99,6 +102,43 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         type();
         return () => clearTimeout(timeout);
     }, []);
+
+    // Logo hover typing animation with hesitation effect
+    useEffect(() => {
+        const fullText = "I was born like this";
+
+        if (isLogoHovered) {
+            setLogoTypedText('');
+
+            // Create hesitation effect with variable delays (total ~2.8s)
+            const delays = [
+                100, 80, 150, 90, 200, 70, 120, 90, 180, 100,  // "I was born"
+                220, 80, 110, 90, 160, 100, 140, 90, 120, 100  // " like this"
+            ];
+
+            let currentIndex = 0;
+            let timeouts = [];
+
+            const typeChar = () => {
+                if (currentIndex < fullText.length) {
+                    setLogoTypedText(fullText.substring(0, currentIndex + 1));
+                    currentIndex++;
+
+                    const delay = delays[currentIndex - 1] || 100;
+                    const timeout = setTimeout(typeChar, delay);
+                    timeouts.push(timeout);
+                }
+            };
+
+            typeChar();
+
+            return () => {
+                timeouts.forEach(t => clearTimeout(t));
+            };
+        } else {
+            setLogoTypedText('');
+        }
+    }, [isLogoHovered]);
 
     // Initialize EmailJS
     useEffect(() => {
@@ -2110,9 +2150,13 @@ Your browser does not support the audio element.
                 {/* Navigation */}
                 <nav className="navbar">
                     <div className="nav-container">
-                        <div className="logo">
+                        <div
+                            className="logo"
+                            onMouseEnter={() => setIsLogoHovered(true)}
+                            onMouseLeave={() => setIsLogoHovered(false)}
+                        >
                             <span className="logo-text">Laurence De Guzman</span>
-                            <span className="logo-hover-text">I was born like this</span>
+                            <span className="logo-hover-text">{logoTypedText}</span>
                         </div>
                         <ul className={`nav-menu ${isNavMenuActive ? 'active' : ''}`}>
                             <li><a href="#home" onClick={closeMenu}>Home</a></li>
