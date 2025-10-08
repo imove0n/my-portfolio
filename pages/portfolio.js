@@ -2095,7 +2095,7 @@ Your browser does not support the audio element.
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <button className="theme-toggle-btn" onClick={toggleTheme}>
                                 <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'}`}></i>
-                                <span>{theme === 'original' ? 'dark' : theme === 'dark' ? 'light' : 'orig'}</span>
+                                <span>{theme === 'original' ? 'Dark' : theme === 'dark' ? 'Light' : 'Base'}</span>
                             </button>
                             <button className="mobile-menu-btn" onClick={toggleMenu}>
                                 <i className={`fas ${isNavMenuActive ? 'fa-times' : 'fa-bars'}`}></i>
