@@ -1098,29 +1098,34 @@ useEffect(() => {
 
                         /* Theme Toggle Button */
                         .theme-toggle-btn {
-                            background: rgba(14, 165, 233, 0.1);
-                            border: 1px solid var(--border-color);
+                            background: transparent;
+                            border: none;
                             color: var(--text-secondary);
-                            font-size: 1.2rem;
+                            font-size: 0.85rem;
+                            font-weight: 500;
                             cursor: pointer;
-                            padding: 8px 12px;
-                            border-radius: 8px;
-                            transition: all 0.3s ease;
+                            padding: 6px 10px;
+                            border-radius: 4px;
+                            transition: all 0.2s ease;
                             display: flex;
                             align-items: center;
-                            justify-content: center;
+                            gap: 6px;
                             margin-left: 0.5rem;
+                            text-transform: lowercase;
+                            letter-spacing: 0.3px;
                         }
 
                         .theme-toggle-btn:hover {
                             color: var(--primary-color);
-                            background: rgba(14, 165, 233, 0.2);
-                            border-color: var(--primary-color);
-                            transform: scale(1.05);
+                            background: rgba(14, 165, 233, 0.05);
                         }
 
                         .theme-toggle-btn:active {
-                            transform: scale(0.95);
+                            transform: scale(0.98);
+                        }
+
+                        .theme-toggle-btn i {
+                            font-size: 0.9rem;
                         }
 
                         /* Desktop Navigation */
@@ -2088,8 +2093,9 @@ Your browser does not support the audio element.
                             <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
                         </ul>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <button className="theme-toggle-btn" onClick={toggleTheme} title={theme === 'original' ? 'Switch to Dark Mode' : theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Original Theme'}>
+                            <button className="theme-toggle-btn" onClick={toggleTheme}>
                                 <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'}`}></i>
+                                <span>{theme === 'original' ? 'dark' : theme === 'dark' ? 'light' : 'orig'}</span>
                             </button>
                             <button className="mobile-menu-btn" onClick={toggleMenu}>
                                 <i className={`fas ${isNavMenuActive ? 'fa-times' : 'fa-bars'}`}></i>
