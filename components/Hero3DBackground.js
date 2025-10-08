@@ -108,19 +108,11 @@ function RealisticLaptop({ theme }) {
     // Store refs for all materials that need theme updates
     const materialRefs = useRef({
         bottomCase: null,
-        topCase: null,
         keyboard: null,
         keys: [],
         trackpad: null,
         screenLid: null,
-        bezel: null,
-        hingeLeft: null,
-        hingeRight: null,
-        bottomEdge: null,
-        sideEdgeLeft: null,
-        sideEdgeRight: null,
-        screenFrame: null,
-        screenInnerBezel: null
+        bezel: null
     });
 
     // Update theme ref without causing re-render
@@ -371,144 +363,6 @@ function RealisticLaptop({ theme }) {
                         metalness={0.9}
                         roughness={0.1}
                     />
-                </mesh>
-
-                {/* ==== ADDITIONAL DETAILS FOR 20+ COLORS ==== */}
-
-                {/* Top case (palm rest area) */}
-                <mesh position={[0, 0.02, 0.1]}>
-                    <boxGeometry args={[2.35, 0.01, 1.55]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.topCase = mat)}
-                        color="#252528"
-                        metalness={0.7}
-                        roughness={0.4}
-                    />
-                </mesh>
-
-                {/* Left hinge */}
-                <mesh position={[-0.8, 0.05, -0.7]} rotation={[-0.3, 0, 0]}>
-                    <cylinderGeometry args={[0.03, 0.03, 0.1, 16]} rotation={[0, 0, Math.PI / 2]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.hingeLeft = mat)}
-                        color="#151518"
-                        metalness={0.95}
-                        roughness={0.1}
-                    />
-                </mesh>
-
-                {/* Right hinge */}
-                <mesh position={[0.8, 0.05, -0.7]} rotation={[-0.3, 0, 0]}>
-                    <cylinderGeometry args={[0.03, 0.03, 0.1, 16]} rotation={[0, 0, Math.PI / 2]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.hingeRight = mat)}
-                        color="#151518"
-                        metalness={0.95}
-                        roughness={0.1}
-                    />
-                </mesh>
-
-                {/* Bottom edge strip */}
-                <mesh position={[0, -0.08, 0.8]}>
-                    <boxGeometry args={[2.4, 0.02, 0.05]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.bottomEdge = mat)}
-                        color="#0d0d0f"
-                        metalness={0.6}
-                        roughness={0.5}
-                    />
-                </mesh>
-
-                {/* Left side edge */}
-                <mesh position={[-1.2, -0.05, 0]}>
-                    <boxGeometry args={[0.02, 0.08, 1.6]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.sideEdgeLeft = mat)}
-                        color="#1f1f22"
-                        metalness={0.75}
-                        roughness={0.35}
-                    />
-                </mesh>
-
-                {/* Right side edge */}
-                <mesh position={[1.2, -0.05, 0]}>
-                    <boxGeometry args={[0.02, 0.08, 1.6]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.sideEdgeRight = mat)}
-                        color="#1f1f22"
-                        metalness={0.75}
-                        roughness={0.35}
-                    />
-                </mesh>
-
-                {/* Screen outer frame */}
-                <mesh position={[0, 0.7, -0.74]} rotation={[-0.3, 0, 0]}>
-                    <boxGeometry args={[2.35, 1.45, 0.005]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.screenFrame = mat)}
-                        color="#12121 5"
-                        metalness={0.85}
-                        roughness={0.25}
-                    />
-                </mesh>
-
-                {/* Screen inner bezel (extra dark) */}
-                <mesh position={[0, 0.7, -0.728]} rotation={[-0.3, 0, 0]}>
-                    <boxGeometry args={[2.25, 1.35, 0.002]} />
-                    <meshStandardMaterial
-                        ref={(mat) => (materialRefs.current.screenInnerBezel = mat)}
-                        color="#050505"
-                        metalness={0.5}
-                        roughness={0.6}
-                    />
-                </mesh>
-
-                {/* Vents (bottom left) */}
-                {Array.from({ length: 10 }).map((_, i) => (
-                    <mesh key={`vent-l-${i}`} position={[-0.9 + i * 0.04, -0.09, -0.6]}>
-                        <boxGeometry args={[0.02, 0.01, 0.2]} />
-                        <meshStandardMaterial
-                            color="#080808"
-                            metalness={0.3}
-                            roughness={0.8}
-                        />
-                    </mesh>
-                ))}
-
-                {/* Vents (bottom right) */}
-                {Array.from({ length: 10 }).map((_, i) => (
-                    <mesh key={`vent-r-${i}`} position={[0.5 + i * 0.04, -0.09, -0.6]}>
-                        <boxGeometry args={[0.02, 0.01, 0.2]} />
-                        <meshStandardMaterial
-                            color="#080808"
-                            metalness={0.3}
-                            roughness={0.8}
-                        />
-                    </mesh>
-                ))}
-
-                {/* Rubber feet */}
-                <mesh position={[-1, -0.09, 0.7]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.01, 16]} />
-                    <meshStandardMaterial color="#0a0a0a" metalness={0.1} roughness={0.95} />
-                </mesh>
-                <mesh position={[1, -0.09, 0.7]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.01, 16]} />
-                    <meshStandardMaterial color="#0a0a0a" metalness={0.1} roughness={0.95} />
-                </mesh>
-                <mesh position={[-1, -0.09, -0.7]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.01, 16]} />
-                    <meshStandardMaterial color="#0a0a0a" metalness={0.1} roughness={0.95} />
-                </mesh>
-                <mesh position={[1, -0.09, -0.7]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.01, 16]} />
-                    <meshStandardMaterial color="#0a0a0a" metalness={0.1} roughness={0.95} />
-                </mesh>
-
-                {/* Power button */}
-                <mesh position={[1.05, 0.015, -0.6]}>
-                    <cylinderGeometry args={[0.02, 0.02, 0.005, 16]} />
-                    <meshStandardMaterial color="#1c1c1e" metalness={0.4} roughness={0.6} />
                 </mesh>
 
                 {/* Ambient lighting from screen */}
