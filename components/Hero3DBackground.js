@@ -431,20 +431,21 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const handlePointerUp = (e) => {
         e.stopPropagation();
 
-        if (isDragging) {
+        if (isDraggingRef.current) {
             setIsDragging(false);
+            isDraggingRef.current = false;
 
             // Calculate slip velocity based on drag movement
-            const dx = e.point.x - dragStartPos.current.x;
-            const dy = e.point.y - dragStartPos.current.y;
-            const speed = Math.sqrt(dx * dx + dy * dy);
+            const dx = groupRef.current.position.x - dragStartPos.current.x;
+            const dz = groupRef.current.position.z - dragStartPos.current.z;
+            const speed = Math.sqrt(dx * dx + dz * dz);
 
-            if (speed > 0.1) {
+            if (speed > 0.2) {
                 // Released with movement - apply slip based on drag direction
                 slipVelocity.current = {
-                    x: dx * 2,
-                    y: dy * 2,
-                    z: 0
+                    x: dx * 1.5,
+                    y: 0.3 + Math.random() * 0.2,
+                    z: dz * 1.5
                 };
             } else {
                 // Released without much movement - random slip
