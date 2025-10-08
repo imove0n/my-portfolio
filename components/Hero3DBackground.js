@@ -169,71 +169,50 @@ function RealisticLaptop({ theme }) {
         const targetScale = isHovered ? 1.1 : 1;
         laptopRef.current.scale.lerp({ x: targetScale, y: targetScale, z: targetScale }, 0.1);
 
-        // Animated color shift with glitch effect
+        // Animated color shift with smooth breathing effect
         if (screenRef.current) {
-            const time = state.clock.elapsedTime * 0.2; // Slow cycle
+            const time = state.clock.elapsedTime * 0.15; // Slower cycle for smooth breathing
             const cycleProgress = (time % 10) / 10; // 0 to 1 over 10 seconds
 
-            let color;
+            // Define color palette for smooth transitions
+            const colors = [
+                { r: 0.05, g: 0.65, b: 0.91 },  // Cyan
+                { r: 0.54, g: 0.36, b: 0.96 },  // Purple
+                { r: 0.92, g: 0.28, b: 0.6 },   // Pink
+                { r: 0.05, g: 0.1, b: 0.35 },   // Dark Blue
+                { r: 0.18, g: 0.08, b: 0.35 },  // Dark Violet
+                { r: 0.25, g: 0.05, b: 0.4 },   // Deep Purple
+                { r: 0.05, g: 0.2, b: 0.05 },   // Dark Green
+                { r: 0.02, g: 0.02, b: 0.02 }   // Almost Black
+            ];
 
-            // Color cycle with more space colors: cyan -> purple -> pink -> dark blue -> dark violet -> deep purple -> dark green -> black -> reset
-            if (cycleProgress < 0.15) {
-                // Cyan (bright)
-                color = { r: 0.05, g: 0.65, b: 0.91 };
-            } else if (cycleProgress < 0.25) {
-                // Purple (medium)
-                color = { r: 0.54, g: 0.36, b: 0.96 };
-            } else if (cycleProgress < 0.35) {
-                // Pink (bright)
-                color = { r: 0.92, g: 0.28, b: 0.6 };
-            } else if (cycleProgress < 0.45) {
-                // Dark Blue (space)
-                color = { r: 0.05, g: 0.1, b: 0.35 };
-            } else if (cycleProgress < 0.55) {
-                // Dark Violet (deep space)
-                color = { r: 0.18, g: 0.08, b: 0.35 };
-            } else if (cycleProgress < 0.65) {
-                // Deep Purple (nebula)
-                color = { r: 0.25, g: 0.05, b: 0.4 };
-            } else if (cycleProgress < 0.75) {
-                // Dark Green (glitching)
-                const flicker = Math.sin(state.clock.elapsedTime * 30) * 0.1 + 0.9;
-                color = {
-                    r: 0.05 * flicker,
-                    g: 0.2 * flicker,
-                    b: 0.05 * flicker
-                };
-            } else if (cycleProgress < 0.9) {
-                // Almost black (broken screen)
-                const flicker = Math.sin(state.clock.elapsedTime * 50) * 0.05 + 0.05;
-                color = {
-                    r: 0.02 * flicker,
-                    g: 0.02 * flicker,
-                    b: 0.02 * flicker
-                };
-            } else {
-                // Quick flash back to bright (reset)
-                const resetProgress = (cycleProgress - 0.9) / 0.1;
-                color = {
-                    r: resetProgress * 0.5,
-                    g: resetProgress * 0.7,
-                    b: resetProgress
-                };
-            }
+            // Calculate which color we're transitioning between
+            const numColors = colors.length;
+            const colorIndex = cycleProgress * numColors;
+            const currentIndex = Math.floor(colorIndex);
+            const nextIndex = (currentIndex + 1) % numColors;
+            const blend = colorIndex - currentIndex; // 0 to 1 blend factor
+
+            // Smooth interpolation between colors (breathing effect)
+            const smoothBlend = blend < 0.5
+                ? 2 * blend * blend
+                : 1 - Math.pow(-2 * blend + 2, 2) / 2; // Ease in-out
+
+            const color1 = colors[currentIndex];
+            const color2 = colors[nextIndex];
+
+            const color = {
+                r: color1.r + (color2.r - color1.r) * smoothBlend,
+                g: color1.g + (color2.g - color1.g) * smoothBlend,
+                b: color1.b + (color2.b - color1.b) * smoothBlend
+            };
 
             screenRef.current.material.color.setRGB(color.r, color.g, color.b);
             screenRef.current.material.emissive.setRGB(color.r, color.g, color.b);
 
-            // Intensity varies based on phase
-            if (cycleProgress < 0.6) {
-                screenRef.current.material.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
-            } else if (cycleProgress < 0.75) {
-                screenRef.current.material.emissiveIntensity = 0.5 + Math.sin(state.clock.elapsedTime * 30) * 0.3;
-            } else if (cycleProgress < 0.9) {
-                screenRef.current.material.emissiveIntensity = 0.1 + Math.sin(state.clock.elapsedTime * 50) * 0.1;
-            } else {
-                screenRef.current.material.emissiveIntensity = 2; // Bright flash on reset
-            }
+            // Breathing intensity effect
+            const breathe = Math.sin(state.clock.elapsedTime * 0.8) * 0.3 + 0.9;
+            screenRef.current.material.emissiveIntensity = breathe;
         }
     });
 
