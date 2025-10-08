@@ -195,11 +195,11 @@ function RealisticLaptop() {
                 <mesh position={[0, -0.05, 0]}>
                     <boxGeometry args={[2.4, 0.08, 1.6]} />
                     <meshStandardMaterial
-                        color="#3c3c3e"
+                        color="#5c5c6e"
                         metalness={0.8}
                         roughness={0.3}
-                        emissive="#1a1a2e"
-                        emissiveIntensity={0.3}
+                        emissive="#0ea5e9"
+                        emissiveIntensity={1.2}
                     />
                 </mesh>
 
@@ -207,11 +207,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.01, 0.1]}>
                     <boxGeometry args={[2.1, 0.01, 1.3]} />
                     <meshStandardMaterial
-                        color="#2a2a2a"
+                        color="#4a4a5a"
                         metalness={0.2}
                         roughness={0.8}
-                        emissive="#0a0a0a"
-                        emissiveIntensity={0.2}
+                        emissive="#0ea5e9"
+                        emissiveIntensity={0.8}
                     />
                 </mesh>
 
@@ -230,9 +230,11 @@ function RealisticLaptop() {
                         >
                             <boxGeometry args={[0.12, 0.01, 0.12]} />
                             <meshStandardMaterial
-                                color="#3a3a3c"
+                                color="#6a6a7c"
                                 metalness={0.1}
                                 roughness={0.9}
+                                emissive="#0ea5e9"
+                                emissiveIntensity={0.5}
                             />
                         </mesh>
                     );
@@ -242,9 +244,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.01, 0.6]}>
                     <boxGeometry args={[0.8, 0.005, 0.5]} />
                     <meshStandardMaterial
-                        color="#1a1a1a"
+                        color="#3a3a4a"
                         metalness={0.4}
                         roughness={0.6}
+                        emissive="#0ea5e9"
+                        emissiveIntensity={0.6}
                     />
                 </mesh>
 
@@ -254,11 +258,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.7, -0.75]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.4, 1.5, 0.04]} />
                     <meshStandardMaterial
-                        color="#2a2a2a"
+                        color="#4a4a5a"
                         metalness={0.9}
                         roughness={0.2}
-                        emissive="#0a0a1a"
-                        emissiveIntensity={0.4}
+                        emissive="#0ea5e9"
+                        emissiveIntensity={1.5}
                     />
                 </mesh>
 
@@ -266,9 +270,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.7, -0.73]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.3, 1.4, 0.01]} />
                     <meshStandardMaterial
-                        color="#0a0a0a"
+                        color="#2a2a3a"
                         metalness={0.6}
                         roughness={0.4}
+                        emissive="#0ea5e9"
+                        emissiveIntensity={0.7}
                     />
                 </mesh>
 
