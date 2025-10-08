@@ -938,7 +938,8 @@ function Hero3DBackground({ theme }) {
 }
 
 // Wrap with React.memo to prevent re-renders from parent
-export default React.memo(Hero3DBackground);
+// Compare function always returns true to block ALL re-renders
+export default React.memo(Hero3DBackground, () => true);
 
 // Preload models (uncomment when using actual models)
 // useGLTF.preload('/models/robotic-hand.glb');
