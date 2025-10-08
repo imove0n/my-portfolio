@@ -808,6 +808,8 @@ useEffect(() => {
                             background-color: var(--bg-primary);
                             overflow-x: hidden;
                             cursor: none;
+                            margin: 0;
+                            padding: 0;
                         }
 
                         /* Custom space-themed cursor */
@@ -1207,6 +1209,8 @@ useEffect(() => {
                         .navbar {
                             position: fixed;
                             top: 0;
+                            left: 0;
+                            right: 0;
                             width: 100%;
                             background: rgba(15, 23, 42, 0.95);
                             backdrop-filter: blur(20px);
@@ -1232,6 +1236,8 @@ useEffect(() => {
                             align-items: center;
                             gap: 0.3rem;
                             position: relative;
+                            min-width: 220px;
+                            width: 220px;
                         }
 
                         .logo-base {
@@ -1287,7 +1293,6 @@ useEffect(() => {
                         .nav-menu a:hover {
                             color: var(--primary-color);
                             background: rgba(14, 165, 233, 0.03);
-                            padding-left: 2.5rem;
                             letter-spacing: 1px;
                         }
 
@@ -1341,7 +1346,6 @@ useEffect(() => {
                         }
 
                         .dropdown-menu a:hover {
-                            padding-left: 3.5rem !important;
                             background: rgba(14, 165, 233, 0.05);
                         }
 
@@ -1393,7 +1397,7 @@ useEffect(() => {
                         /* Desktop Navigation */
                         @media (min-width: 769px) {
                         .nav-container { padding: 1rem 2rem; }
-                        .logo { font-size: 1.5rem; gap: 0.5rem; }
+                        .logo { font-size: 1.5rem; gap: 0.5rem; min-width: 280px; width: 280px; }
                         
                         .nav-menu {
                             display: flex !important;
@@ -1443,7 +1447,6 @@ useEffect(() => {
                         
                         .nav-menu a:hover {
                             background: none;
-                            padding-left: 0;
                             letter-spacing: 2px;
                             transform: translateY(-2px);
                         }
