@@ -176,38 +176,43 @@ function RealisticLaptop({ theme }) {
 
             let color;
 
-            // Color cycle: light colors -> dark green -> dark black (glitch) -> reset
-            if (cycleProgress < 0.6) {
-                // Phase 1: Light space colors (cyan -> purple -> pink)
-                const lightTime = cycleProgress / 0.6;
-                const r = Math.sin(lightTime * Math.PI * 2) * 0.5 + 0.5;
-                const g = Math.sin(lightTime * Math.PI * 2 + 2) * 0.5 + 0.5;
-                const b = Math.sin(lightTime * Math.PI * 2 + 4) * 0.5 + 0.5;
-
-                color = {
-                    r: 0.05 + r * 0.9,
-                    g: 0.4 + g * 0.4,
-                    b: 0.7 + b * 0.3
-                };
+            // Color cycle with more space colors: cyan -> purple -> pink -> dark blue -> dark violet -> deep purple -> dark green -> black -> reset
+            if (cycleProgress < 0.15) {
+                // Cyan (bright)
+                color = { r: 0.05, g: 0.65, b: 0.91 };
+            } else if (cycleProgress < 0.25) {
+                // Purple (medium)
+                color = { r: 0.54, g: 0.36, b: 0.96 };
+            } else if (cycleProgress < 0.35) {
+                // Pink (bright)
+                color = { r: 0.92, g: 0.28, b: 0.6 };
+            } else if (cycleProgress < 0.45) {
+                // Dark Blue (space)
+                color = { r: 0.05, g: 0.1, b: 0.35 };
+            } else if (cycleProgress < 0.55) {
+                // Dark Violet (deep space)
+                color = { r: 0.18, g: 0.08, b: 0.35 };
+            } else if (cycleProgress < 0.65) {
+                // Deep Purple (nebula)
+                color = { r: 0.25, g: 0.05, b: 0.4 };
             } else if (cycleProgress < 0.75) {
-                // Phase 2: Dark green (glitching)
-                const glitchProgress = (cycleProgress - 0.6) / 0.15;
-                const flicker = Math.sin(state.clock.elapsedTime * 30) * 0.1 + 0.9; // Fast flicker
+                // Dark Green (glitching)
+                const flicker = Math.sin(state.clock.elapsedTime * 30) * 0.1 + 0.9;
                 color = {
                     r: 0.05 * flicker,
-                    g: (0.2 + glitchProgress * 0.2) * flicker,
+                    g: 0.2 * flicker,
                     b: 0.05 * flicker
                 };
             } else if (cycleProgress < 0.9) {
-                // Phase 3: Almost black (broken screen)
-                const flicker = Math.sin(state.clock.elapsedTime * 50) * 0.05 + 0.05; // Very dark flicker
+                // Almost black (broken screen)
+                const flicker = Math.sin(state.clock.elapsedTime * 50) * 0.05 + 0.05;
                 color = {
                     r: 0.02 * flicker,
                     g: 0.02 * flicker,
                     b: 0.02 * flicker
                 };
             } else {
-                // Phase 4: Quick flash back to bright (reset)
+                // Quick flash back to bright (reset)
                 const resetProgress = (cycleProgress - 0.9) / 0.1;
                 color = {
                     r: resetProgress * 0.5,
