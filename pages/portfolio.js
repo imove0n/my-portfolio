@@ -103,34 +103,54 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         return () => clearTimeout(timeout);
     }, []);
 
-    // Logo hover typing animation with hesitation effect
+    // Logo hover typing animation with hesitation and mistake effect
     useEffect(() => {
         const fullText = "I was born like this";
 
         if (isLogoHovered) {
             setLogoTypedText('');
 
-            // Create hesitation effect with variable delays (total ~2.8s)
-            const delays = [
-                100, 80, 150, 90, 200, 70, 120, 90, 180, 100,  // "I was born"
-                220, 80, 110, 90, 160, 100, 140, 90, 120, 100  // " like this"
+            let timeouts = [];
+            let step = 0;
+
+            // Typing sequence with mistake: "I wasss" -> backspace -> "I was"
+            const sequence = [
+                { text: "I", delay: 100 },
+                { text: "I ", delay: 80 },
+                { text: "I w", delay: 120 },
+                { text: "I wa", delay: 90 },
+                { text: "I was", delay: 100 },
+                { text: "I wass", delay: 80 },      // Mistake starts
+                { text: "I wasss", delay: 90 },     // Extra 's'
+                { text: "I wass", delay: 150 },     // Backspace
+                { text: "I was", delay: 100 },      // Backspace
+                { text: "I was ", delay: 120 },     // Continue correct
+                { text: "I was b", delay: 90 },
+                { text: "I was bo", delay: 100 },
+                { text: "I was bor", delay: 80 },
+                { text: "I was born", delay: 110 },
+                { text: "I was born ", delay: 200 },
+                { text: "I was born l", delay: 90 },
+                { text: "I was born li", delay: 100 },
+                { text: "I was born lik", delay: 80 },
+                { text: "I was born like", delay: 110 },
+                { text: "I was born like ", delay: 90 },
+                { text: "I was born like t", delay: 100 },
+                { text: "I was born like th", delay: 80 },
+                { text: "I was born like thi", delay: 90 },
+                { text: "I was born like this", delay: 120 }
             ];
 
-            let currentIndex = 0;
-            let timeouts = [];
-
-            const typeChar = () => {
-                if (currentIndex < fullText.length) {
-                    setLogoTypedText(fullText.substring(0, currentIndex + 1));
-                    currentIndex++;
-
-                    const delay = delays[currentIndex - 1] || 100;
-                    const timeout = setTimeout(typeChar, delay);
+            const typeStep = () => {
+                if (step < sequence.length) {
+                    setLogoTypedText(sequence[step].text);
+                    const timeout = setTimeout(typeStep, sequence[step].delay);
                     timeouts.push(timeout);
+                    step++;
                 }
             };
 
-            typeChar();
+            typeStep();
 
             return () => {
                 timeouts.forEach(t => clearTimeout(t));
