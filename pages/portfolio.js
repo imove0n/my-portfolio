@@ -2131,7 +2131,7 @@ Your browser does not support the audio element.
                 {/* Hero Section */}
                 <section id="home" className="hero">
                     {/* 3D Background */}
-                    <Hero3DBackground />
+                    <Hero3DBackground theme={theme} />
 
                     <div className="hero-content">
                         <p className="hero-subtitle">Hi, I'm</p>

@@ -99,10 +99,13 @@ function RoboticHandModel({ position, rotation, modelPath }) {
 */
 
 // Realistic Laptop Component
-function RealisticLaptop() {
+function RealisticLaptop({ theme }) {
     const laptopRef = useRef();
     const screenRef = useRef();
     const [isHovered, setIsHovered] = React.useState(false);
+
+    // Glow only in dark theme
+    const isDarkMode = theme === 'dark';
 
     useFrame((state) => {
         // Smooth rotation (faster when hovered)
@@ -195,11 +198,11 @@ function RealisticLaptop() {
                 <mesh position={[0, -0.05, 0]}>
                     <boxGeometry args={[2.4, 0.08, 1.6]} />
                     <meshStandardMaterial
-                        color="#5c5c6e"
+                        color={isDarkMode ? "#5c5c6e" : "#2c2c2e"}
                         metalness={0.8}
                         roughness={0.3}
-                        emissive="#0ea5e9"
-                        emissiveIntensity={1.2}
+                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                        emissiveIntensity={isDarkMode ? 1.2 : 0}
                     />
                 </mesh>
 
@@ -207,11 +210,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.01, 0.1]}>
                     <boxGeometry args={[2.1, 0.01, 1.3]} />
                     <meshStandardMaterial
-                        color="#4a4a5a"
+                        color={isDarkMode ? "#4a4a5a" : "#1a1a1a"}
                         metalness={0.2}
                         roughness={0.8}
-                        emissive="#0ea5e9"
-                        emissiveIntensity={0.8}
+                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                        emissiveIntensity={isDarkMode ? 0.8 : 0}
                     />
                 </mesh>
 
@@ -230,11 +233,11 @@ function RealisticLaptop() {
                         >
                             <boxGeometry args={[0.12, 0.01, 0.12]} />
                             <meshStandardMaterial
-                                color="#6a6a7c"
+                                color={isDarkMode ? "#6a6a7c" : "#3a3a3c"}
                                 metalness={0.1}
                                 roughness={0.9}
-                                emissive="#0ea5e9"
-                                emissiveIntensity={0.5}
+                                emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                                emissiveIntensity={isDarkMode ? 0.5 : 0}
                             />
                         </mesh>
                     );
@@ -244,11 +247,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.01, 0.6]}>
                     <boxGeometry args={[0.8, 0.005, 0.5]} />
                     <meshStandardMaterial
-                        color="#3a3a4a"
+                        color={isDarkMode ? "#3a3a4a" : "#1a1a1a"}
                         metalness={0.4}
                         roughness={0.6}
-                        emissive="#0ea5e9"
-                        emissiveIntensity={0.6}
+                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                        emissiveIntensity={isDarkMode ? 0.6 : 0}
                     />
                 </mesh>
 
@@ -258,11 +261,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.7, -0.75]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.4, 1.5, 0.04]} />
                     <meshStandardMaterial
-                        color="#4a4a5a"
+                        color={isDarkMode ? "#4a4a5a" : "#1a1a1a"}
                         metalness={0.9}
                         roughness={0.2}
-                        emissive="#0ea5e9"
-                        emissiveIntensity={1.5}
+                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                        emissiveIntensity={isDarkMode ? 1.5 : 0}
                     />
                 </mesh>
 
@@ -270,11 +273,11 @@ function RealisticLaptop() {
                 <mesh position={[0, 0.7, -0.73]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.3, 1.4, 0.01]} />
                     <meshStandardMaterial
-                        color="#2a2a3a"
+                        color={isDarkMode ? "#2a2a3a" : "#0a0a0a"}
                         metalness={0.6}
                         roughness={0.4}
-                        emissive="#0ea5e9"
-                        emissiveIntensity={0.7}
+                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
+                        emissiveIntensity={isDarkMode ? 0.7 : 0}
                     />
                 </mesh>
 
@@ -827,7 +830,7 @@ function FloatingSymbols() {
 }
 
 // Main Scene Component
-function Scene() {
+function Scene({ theme }) {
     return (
         <>
             {/* Lighting - adjusted for space theme */}
@@ -846,13 +849,13 @@ function Scene() {
             <FloatingSymbols />
 
             {/* Realistic Floating Laptop */}
-            <RealisticLaptop />
+            <RealisticLaptop theme={theme} />
         </>
     );
 }
 
 // Main Canvas Component
-function Hero3DBackground() {
+function Hero3DBackground({ theme }) {
     return (
         <div className="canvas-container">
             <Canvas
@@ -861,7 +864,7 @@ function Hero3DBackground() {
                 dpr={[1, 2]}
             >
                 <Suspense fallback={null}>
-                    <Scene />
+                    <Scene theme={theme} />
                 </Suspense>
             </Canvas>
 
