@@ -103,11 +103,64 @@ function RealisticLaptop({ theme }) {
     const laptopRef = useRef();
     const screenRef = useRef();
     const [isHovered, setIsHovered] = React.useState(false);
+    const themeRef = useRef(theme);
 
-    // Glow only in dark theme
-    const isDarkMode = theme === 'dark';
+    // Store refs for all materials that need theme updates
+    const materialRefs = useRef({
+        bottomCase: null,
+        keyboard: null,
+        keys: [],
+        trackpad: null,
+        screenLid: null,
+        bezel: null
+    });
+
+    // Update theme ref without causing re-render
+    React.useEffect(() => {
+        themeRef.current = theme;
+    }, [theme]);
 
     useFrame((state) => {
+        const isDarkMode = themeRef.current === 'dark';
+
+        // Update materials in the animation loop
+        if (materialRefs.current.bottomCase) {
+            materialRefs.current.bottomCase.color.setHex(isDarkMode ? 0x5c5c6e : 0x2c2c2e);
+            materialRefs.current.bottomCase.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+            materialRefs.current.bottomCase.emissiveIntensity = isDarkMode ? 1.2 : 0;
+        }
+
+        if (materialRefs.current.keyboard) {
+            materialRefs.current.keyboard.color.setHex(isDarkMode ? 0x4a4a5a : 0x1a1a1a);
+            materialRefs.current.keyboard.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+            materialRefs.current.keyboard.emissiveIntensity = isDarkMode ? 0.8 : 0;
+        }
+
+        materialRefs.current.keys.forEach(mat => {
+            if (mat) {
+                mat.color.setHex(isDarkMode ? 0x6a6a7c : 0x3a3a3c);
+                mat.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+                mat.emissiveIntensity = isDarkMode ? 0.5 : 0;
+            }
+        });
+
+        if (materialRefs.current.trackpad) {
+            materialRefs.current.trackpad.color.setHex(isDarkMode ? 0x3a3a4a : 0x1a1a1a);
+            materialRefs.current.trackpad.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+            materialRefs.current.trackpad.emissiveIntensity = isDarkMode ? 0.6 : 0;
+        }
+
+        if (materialRefs.current.screenLid) {
+            materialRefs.current.screenLid.color.setHex(isDarkMode ? 0x4a4a5a : 0x1a1a1a);
+            materialRefs.current.screenLid.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+            materialRefs.current.screenLid.emissiveIntensity = isDarkMode ? 1.5 : 0;
+        }
+
+        if (materialRefs.current.bezel) {
+            materialRefs.current.bezel.color.setHex(isDarkMode ? 0x2a2a3a : 0x0a0a0a);
+            materialRefs.current.bezel.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
+            materialRefs.current.bezel.emissiveIntensity = isDarkMode ? 0.7 : 0;
+        }
         // Smooth rotation (faster when hovered)
         const rotationSpeed = isHovered ? 0.6 : 0.3;
         laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * rotationSpeed) * 0.3;
@@ -198,11 +251,10 @@ function RealisticLaptop({ theme }) {
                 <mesh position={[0, -0.05, 0]}>
                     <boxGeometry args={[2.4, 0.08, 1.6]} />
                     <meshStandardMaterial
-                        color={isDarkMode ? "#5c5c6e" : "#2c2c2e"}
+                        ref={(mat) => (materialRefs.current.bottomCase = mat)}
+                        color="#2c2c2e"
                         metalness={0.8}
                         roughness={0.3}
-                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                        emissiveIntensity={isDarkMode ? 1.2 : 0}
                     />
                 </mesh>
 
@@ -210,11 +262,10 @@ function RealisticLaptop({ theme }) {
                 <mesh position={[0, 0.01, 0.1]}>
                     <boxGeometry args={[2.1, 0.01, 1.3]} />
                     <meshStandardMaterial
-                        color={isDarkMode ? "#4a4a5a" : "#1a1a1a"}
+                        ref={(mat) => (materialRefs.current.keyboard = mat)}
+                        color="#1a1a1a"
                         metalness={0.2}
                         roughness={0.8}
-                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                        emissiveIntensity={isDarkMode ? 0.8 : 0}
                     />
                 </mesh>
 
@@ -233,11 +284,14 @@ function RealisticLaptop({ theme }) {
                         >
                             <boxGeometry args={[0.12, 0.01, 0.12]} />
                             <meshStandardMaterial
-                                color={isDarkMode ? "#6a6a7c" : "#3a3a3c"}
+                                ref={(mat) => {
+                                    if (mat && !materialRefs.current.keys.includes(mat)) {
+                                        materialRefs.current.keys.push(mat);
+                                    }
+                                }}
+                                color="#3a3a3c"
                                 metalness={0.1}
                                 roughness={0.9}
-                                emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                                emissiveIntensity={isDarkMode ? 0.5 : 0}
                             />
                         </mesh>
                     );
@@ -247,11 +301,10 @@ function RealisticLaptop({ theme }) {
                 <mesh position={[0, 0.01, 0.6]}>
                     <boxGeometry args={[0.8, 0.005, 0.5]} />
                     <meshStandardMaterial
-                        color={isDarkMode ? "#3a3a4a" : "#1a1a1a"}
+                        ref={(mat) => (materialRefs.current.trackpad = mat)}
+                        color="#1a1a1a"
                         metalness={0.4}
                         roughness={0.6}
-                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                        emissiveIntensity={isDarkMode ? 0.6 : 0}
                     />
                 </mesh>
 
@@ -261,11 +314,10 @@ function RealisticLaptop({ theme }) {
                 <mesh position={[0, 0.7, -0.75]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.4, 1.5, 0.04]} />
                     <meshStandardMaterial
-                        color={isDarkMode ? "#4a4a5a" : "#1a1a1a"}
+                        ref={(mat) => (materialRefs.current.screenLid = mat)}
+                        color="#1a1a1a"
                         metalness={0.9}
                         roughness={0.2}
-                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                        emissiveIntensity={isDarkMode ? 1.5 : 0}
                     />
                 </mesh>
 
@@ -273,11 +325,10 @@ function RealisticLaptop({ theme }) {
                 <mesh position={[0, 0.7, -0.73]} rotation={[-0.3, 0, 0]}>
                     <boxGeometry args={[2.3, 1.4, 0.01]} />
                     <meshStandardMaterial
-                        color={isDarkMode ? "#2a2a3a" : "#0a0a0a"}
+                        ref={(mat) => (materialRefs.current.bezel = mat)}
+                        color="#0a0a0a"
                         metalness={0.6}
                         roughness={0.4}
-                        emissive={isDarkMode ? "#0ea5e9" : "#000000"}
-                        emissiveIntensity={isDarkMode ? 0.7 : 0}
                     />
                 </mesh>
 
