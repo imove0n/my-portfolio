@@ -2556,37 +2556,8 @@ Your browser does not support the audio element.
                 {/* Projects Section */}
                 <section id="projects" className="section">
                     <div className="container">
-                        <h2 className="section-title">Projects</h2>
+                        <h2 className="section-title">School Projects</h2>
                         <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1.1rem'}}>
-                            Explore my work across different categories
-                        </p>
-
-                        {/* Project Categories - Only 2 cards */}
-                        <div className="project-categories" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', maxWidth: '900px', margin: '0 auto 3rem'}}>
-                            <div className="project-category-card" onClick={() => router.push('/projects/self-made')}>
-                                <div className="category-icon-wrapper">
-                                    <i className="fas fa-code"></i>
-                                </div>
-                                <h3>Self-Made Projects</h3>
-                                <p>Personal projects built from passion and curiosity in various technologies</p>
-                                <span className="view-projects">View Projects →</span>
-                            </div>
-
-                            <div className="project-category-card" onClick={() => router.push('/projects/company-tests')}>
-                                <div className="category-icon-wrapper">
-                                    <i className="fas fa-briefcase"></i>
-                                </div>
-                                <h3>Program Test for Companies</h3>
-                                <p>Technical assessments and coding challenges completed for various companies</p>
-                                <span className="view-projects">View Projects →</span>
-                            </div>
-                        </div>
-
-                        {/* School Projects Section */}
-                        <h3 style={{textAlign: 'center', color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.8rem'}}>
-                            School Projects
-                        </h3>
-                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem'}}>
                             Academic projects from TUP Manila - BTVTED Major in Computer Programming
                         </p>
                         <div className="cards-grid">
