@@ -39,6 +39,8 @@
     // Logo hover typing animation
     const [isLogoHovered, setIsLogoHovered] = useState(false);
     const [logoTypedText, setLogoTypedText] = useState('');
+    // Projects dropdown
+    const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
 
 // Playlist state
     const [playlist] = useState([
@@ -1164,6 +1166,56 @@ useEffect(() => {
                             transform: translateX(0);
                         }
 
+                        /* Dropdown Menu Styles */
+                        .nav-dropdown {
+                            position: relative;
+                        }
+
+                        .nav-dropdown > a {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                        }
+
+                        .nav-dropdown > a i {
+                            font-size: 0.75rem;
+                            transition: transform 0.3s ease;
+                        }
+
+                        .nav-dropdown:hover > a i {
+                            transform: rotate(180deg);
+                        }
+
+                        .dropdown-menu {
+                            list-style: none;
+                            padding: 0;
+                            margin: 0;
+                            background: rgba(15, 23, 42, 0.95);
+                            border-left: 3px solid var(--primary-color);
+                            max-height: 0;
+                            overflow: hidden;
+                            transition: max-height 0.3s ease;
+                        }
+
+                        .dropdown-menu.show {
+                            max-height: 500px;
+                        }
+
+                        .dropdown-menu li {
+                            list-style: none;
+                        }
+
+                        .dropdown-menu a {
+                            padding: 0.75rem 2rem 0.75rem 3rem !important;
+                            font-size: 0.9rem;
+                            border-bottom: 1px solid rgba(51, 65, 85, 0.2);
+                        }
+
+                        .dropdown-menu a:hover {
+                            padding-left: 3.5rem !important;
+                            background: rgba(14, 165, 233, 0.05);
+                        }
+
                         .mobile-menu-btn {
                             display: block;
                             background: none;
@@ -2277,7 +2329,20 @@ Your browser does not support the audio element.
                             <li><a href="#about" onClick={closeMenu}>About</a></li>
                             <li><a href="#experience" onClick={closeMenu}>Experience</a></li>
                             <li><a href="#skills" onClick={closeMenu}>Skills</a></li>
-                            <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
+                            <li
+                                className="nav-dropdown"
+                                onMouseEnter={() => setIsProjectsDropdownOpen(true)}
+                                onMouseLeave={() => setIsProjectsDropdownOpen(false)}
+                            >
+                                <a href="#projects" onClick={closeMenu}>
+                                    Projects <i className="fas fa-chevron-down"></i>
+                                </a>
+                                <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`}>
+                                    <li><a href="#projects" onClick={closeMenu}>School Projects</a></li>
+                                    <li><a href="/projects/self-made" onClick={closeMenu}>Self-Made Projects</a></li>
+                                    <li><a href="/projects/company-tests" onClick={closeMenu}>Program Test for Companies</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
                         </ul>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -2496,17 +2561,8 @@ Your browser does not support the audio element.
                             Explore my work across different categories
                         </p>
 
-                        {/* Project Categories */}
-                        <div className="project-categories">
-                            <div className="project-category-card" onClick={() => router.push('/projects/school-projects')}>
-                                <div className="category-icon-wrapper">
-                                    <i className="fas fa-graduation-cap"></i>
-                                </div>
-                                <h3>School Projects</h3>
-                                <p>Academic projects from TUP Manila showcasing programming and problem-solving skills</p>
-                                <span className="view-projects">View Projects →</span>
-                            </div>
-
+                        {/* Project Categories - Only 2 cards */}
+                        <div className="project-categories" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', maxWidth: '900px', margin: '0 auto 3rem'}}>
                             <div className="project-category-card" onClick={() => router.push('/projects/self-made')}>
                                 <div className="category-icon-wrapper">
                                     <i className="fas fa-code"></i>
@@ -2526,10 +2582,13 @@ Your browser does not support the audio element.
                             </div>
                         </div>
 
-                        {/* Keep original school projects below for quick preview */}
-                        <h3 style={{textAlign: 'center', color: 'var(--text-primary)', marginTop: '3rem', marginBottom: '1.5rem', fontSize: '1.5rem'}}>
-                            Featured School Projects
+                        {/* School Projects Section */}
+                        <h3 style={{textAlign: 'center', color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.8rem'}}>
+                            School Projects
                         </h3>
+                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem'}}>
+                            Academic projects from TUP Manila - BTVTED Major in Computer Programming
+                        </p>
                         <div className="cards-grid">
                             {/* AI Chatbot Card */}
                             <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
