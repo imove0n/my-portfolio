@@ -1327,7 +1327,78 @@ useEffect(() => {
                         .nav-menu a:hover::after {
                             transform: translate(-50%, 0) scale(1);
                         }
-                        
+
+                        /* Desktop Dropdown - Floating Box */
+                        .nav-dropdown {
+                            position: relative;
+                        }
+
+                        .dropdown-menu {
+                            position: absolute;
+                            top: 100%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            margin-top: 1rem;
+                            background: rgba(15, 23, 42, 0.98);
+                            backdrop-filter: blur(20px);
+                            border: 1px solid rgba(14, 165, 233, 0.3);
+                            border-radius: 8px;
+                            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                            min-width: 250px;
+                            padding: 0.5rem 0;
+                            opacity: 0;
+                            visibility: hidden;
+                            transform: translateX(-50%) translateY(-10px);
+                            transition: all 0.3s ease;
+                            z-index: 1000;
+                        }
+
+                        .dropdown-menu.show {
+                            opacity: 1;
+                            visibility: visible;
+                            transform: translateX(-50%) translateY(0);
+                            max-height: none;
+                        }
+
+                        .dropdown-menu::before {
+                            content: '';
+                            position: absolute;
+                            top: -8px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 0;
+                            height: 0;
+                            border-left: 8px solid transparent;
+                            border-right: 8px solid transparent;
+                            border-bottom: 8px solid rgba(14, 165, 233, 0.3);
+                        }
+
+                        .dropdown-menu li {
+                            list-style: none;
+                        }
+
+                        .dropdown-menu a {
+                            padding: 0.75rem 1.5rem !important;
+                            display: block;
+                            color: var(--text-secondary) !important;
+                            border: none !important;
+                            font-size: 0.95rem;
+                            transition: all 0.2s ease !important;
+                        }
+
+                        .dropdown-menu a::before,
+                        .dropdown-menu a::after {
+                            display: none !important;
+                        }
+
+                        .dropdown-menu a:hover {
+                            background: rgba(14, 165, 233, 0.1) !important;
+                            color: var(--primary-color) !important;
+                            padding-left: 1.5rem !important;
+                            letter-spacing: 0 !important;
+                            transform: none !important;
+                        }
+
                         .mobile-menu-btn { display: none; }
                     }
 
