@@ -1304,6 +1304,12 @@ useEffect(() => {
                             font-weight: 600;
                         }
 
+                        .serif-i {
+                            font-family: 'Georgia', 'Times New Roman', serif;
+                            font-weight: 400;
+                            font-style: italic;
+                        }
+
                         .cursor {
                             color: var(--accent-color);
                             animation: blink 1s infinite;
@@ -2139,7 +2145,7 @@ Your browser does not support the audio element.
                             Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>{glitchText}</span>
                         </h1>
                         <div className="typing-container">
-                            I <span className="typing-text">{currentText}</span><span className="cursor">|</span>
+                            <span className="serif-i">I</span> <span className="typing-text">{currentText}</span><span className="cursor">|</span>
                         </div>
                         <p className="hero-description">
                             Computer Technician • IT Generalist • Aspiring Cybersecurity & ERP Specialist
