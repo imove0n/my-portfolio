@@ -1316,13 +1316,13 @@ useEffect(() => {
 
                         .hero-description {
                             font-size: 1rem;
-                            color: #cbd5e1;
+                            color: ${theme === 'light' ? '#1e293b' : '#cbd5e1'};
                             margin-bottom: 2rem;
                             line-height: 1.6;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.8s forwards;
                             padding: 0 1rem;
-                            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+                            text-shadow: ${theme === 'light' ? '0 1px 2px rgba(255, 255, 255, 0.5)' : '0 2px 15px rgba(0, 0, 0, 0.8)'};
                         }
 
                         .hero-buttons {
