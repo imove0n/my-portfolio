@@ -1639,6 +1639,98 @@ useEffect(() => {
                             .learning-tags { justify-content: flex-start; }
                         }
 
+                        /* Project Categories */
+                        .project-categories {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                            gap: 2rem;
+                            margin: 2rem 0;
+                        }
+
+                        .project-category-card {
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(30, 41, 59, 0.6)'};
+                            backdrop-filter: blur(10px);
+                            border: 2px solid ${theme === 'light' ? 'rgba(14, 165, 233, 0.2)' : 'rgba(14, 165, 233, 0.3)'};
+                            border-radius: 16px;
+                            padding: 2rem;
+                            cursor: pointer;
+                            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                            position: relative;
+                            overflow: hidden;
+                        }
+
+                        .project-category-card::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 4px;
+                            background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+                            transform: scaleX(0);
+                            transform-origin: left;
+                            transition: transform 0.4s ease;
+                        }
+
+                        .project-category-card:hover::before {
+                            transform: scaleX(1);
+                        }
+
+                        .project-category-card:hover {
+                            transform: translateY(-10px) scale(1.02);
+                            border-color: #0ea5e9;
+                            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.3);
+                        }
+
+                        .category-icon-wrapper {
+                            width: 70px;
+                            height: 70px;
+                            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                            border-radius: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-bottom: 1.5rem;
+                            transition: all 0.4s ease;
+                        }
+
+                        .project-category-card:hover .category-icon-wrapper {
+                            transform: rotate(10deg) scale(1.1);
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.5);
+                        }
+
+                        .category-icon-wrapper i {
+                            font-size: 2rem;
+                            color: white;
+                        }
+
+                        .project-category-card h3 {
+                            font-size: 1.5rem;
+                            font-weight: 600;
+                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-primary)'};
+                            margin-bottom: 0.75rem;
+                        }
+
+                        .project-category-card p {
+                            color: ${theme === 'light' ? '#475569' : 'var(--text-secondary)'};
+                            line-height: 1.6;
+                            margin-bottom: 1.5rem;
+                        }
+
+                        .view-projects {
+                            color: #0ea5e9;
+                            font-weight: 600;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            transition: all 0.3s ease;
+                        }
+
+                        .project-category-card:hover .view-projects {
+                            gap: 1rem;
+                            color: #3b82f6;
+                        }
+
                         /* Cards Grid */
                         .cards-grid {
                             display: grid;
@@ -2399,8 +2491,45 @@ Your browser does not support the audio element.
                 {/* Projects Section */}
                 <section id="projects" className="section">
                     <div className="container">
-                        <h2 className="section-title">School Projects</h2>
-                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '1rem'}}></p>
+                        <h2 className="section-title">Projects</h2>
+                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1.1rem'}}>
+                            Explore my work across different categories
+                        </p>
+
+                        {/* Project Categories */}
+                        <div className="project-categories">
+                            <div className="project-category-card" onClick={() => router.push('/projects/school-projects')}>
+                                <div className="category-icon-wrapper">
+                                    <i className="fas fa-graduation-cap"></i>
+                                </div>
+                                <h3>School Projects</h3>
+                                <p>Academic projects from TUP Manila showcasing programming and problem-solving skills</p>
+                                <span className="view-projects">View Projects →</span>
+                            </div>
+
+                            <div className="project-category-card" onClick={() => router.push('/projects/self-made')}>
+                                <div className="category-icon-wrapper">
+                                    <i className="fas fa-code"></i>
+                                </div>
+                                <h3>Self-Made Projects</h3>
+                                <p>Personal projects built from passion and curiosity in various technologies</p>
+                                <span className="view-projects">View Projects →</span>
+                            </div>
+
+                            <div className="project-category-card" onClick={() => router.push('/projects/company-tests')}>
+                                <div className="category-icon-wrapper">
+                                    <i className="fas fa-briefcase"></i>
+                                </div>
+                                <h3>Program Test for Companies</h3>
+                                <p>Technical assessments and coding challenges completed for various companies</p>
+                                <span className="view-projects">View Projects →</span>
+                            </div>
+                        </div>
+
+                        {/* Keep original school projects below for quick preview */}
+                        <h3 style={{textAlign: 'center', color: 'var(--text-primary)', marginTop: '3rem', marginBottom: '1.5rem', fontSize: '1.5rem'}}>
+                            Featured School Projects
+                        </h3>
                         <div className="cards-grid">
                             {/* AI Chatbot Card */}
                             <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
