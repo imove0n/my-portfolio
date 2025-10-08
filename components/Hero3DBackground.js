@@ -382,7 +382,9 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const slipDirection = useRef({ x: 0, z: 0 });
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
     const [isDragging, setIsDragging] = React.useState(false);
-    const dragStartPos = useRef({ x: 0, y: 0 });
+    const dragStartPos = useRef({ x: 0, y: 0, z: 0 });
+    const dragOffset = useRef({ x: 0, y: 0, z: 0 });
+    const isDraggingRef = useRef(false);
 
     // Preload sound
     React.useEffect(() => {
@@ -394,7 +396,21 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const handlePointerDown = (e) => {
         e.stopPropagation();
         setIsDragging(true);
-        dragStartPos.current = { x: e.point.x, y: e.point.y };
+        isDraggingRef.current = true;
+
+        // Store initial positions
+        dragStartPos.current = {
+            x: groupRef.current.position.x,
+            y: groupRef.current.position.y,
+            z: groupRef.current.position.z
+        };
+
+        // Calculate offset between click point and object center
+        dragOffset.current = {
+            x: groupRef.current.position.x - e.point.x,
+            y: groupRef.current.position.y - e.point.y,
+            z: groupRef.current.position.z - e.point.z
+        };
 
         // Play sound effect
         if (audioRef.current) {
@@ -404,11 +420,11 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     };
 
     const handlePointerMove = (e) => {
-        if (isDragging && groupRef.current) {
+        if (isDraggingRef.current && groupRef.current) {
             e.stopPropagation();
-            // Update position while dragging
-            position[0] = e.point.x;
-            position[2] = e.point.z;
+            // Update position smoothly following cursor
+            position[0] = e.point.x + dragOffset.current.x;
+            position[2] = e.point.z + dragOffset.current.z;
         }
     };
 
