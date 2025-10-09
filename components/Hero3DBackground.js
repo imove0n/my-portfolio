@@ -417,7 +417,7 @@ function ShatterParticle({ position, velocity, color, size }) {
 }
 
 // Floating Code Symbol Component
-function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health }) {
+function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health, theme }) {
     const groupRef = useRef();
     const meshRef = useRef();
     const lineRef = useRef();
@@ -643,9 +643,29 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
             meshRef.current.material.opacity = opacity;
             // Flash effect when hit
             meshRef.current.material.emissiveIntensity = 1.5 + hitAnimation * 2;
+
+            // Adjust color for light mode
+            if (theme === 'light') {
+                const darkColor = color === '#0ea5e9' ? '#0284c7' :
+                                 color === '#8b5cf6' ? '#7c3aed' :
+                                 color === '#ec4899' ? '#db2777' :
+                                 color === '#06b6d4' ? '#0891b2' :
+                                 color === '#a855f7' ? '#9333ea' : '#be185d';
+                meshRef.current.material.color.set(darkColor);
+                meshRef.current.material.emissive.set(darkColor);
+            } else {
+                meshRef.current.material.color.set(color);
+                meshRef.current.material.emissive.set(color);
+            }
         }
         if (lineRef.current) {
             lineRef.current.material.opacity = opacity * 1.2;
+            // Darker edges in light mode for visibility
+            if (theme === 'light') {
+                lineRef.current.material.color.set('#334155');
+            } else {
+                lineRef.current.material.color.set('#ffffff');
+            }
         }
     });
 
@@ -704,8 +724,65 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     );
 }
 
+// Cloud Component for Light Mode
+function Cloud({ position, scale, speed }) {
+    const cloudRef = useRef();
+    const initialX = useRef(position[0]);
+
+    useFrame((state) => {
+        if (!cloudRef.current) return;
+        const time = state.clock.getElapsedTime();
+        // Drift horizontally
+        cloudRef.current.position.x = initialX.current + Math.sin(time * speed * 0.3) * 2;
+        cloudRef.current.position.y = position[1] + Math.sin(time * speed * 0.2) * 0.3;
+    });
+
+    return (
+        <group ref={cloudRef} position={position} scale={scale}>
+            {/* Main cloud body made of spheres */}
+            <mesh position={[0, 0, 0]}>
+                <sphereGeometry args={[0.6, 16, 16]} />
+                <meshStandardMaterial color="#ffffff" transparent opacity={0.8} />
+            </mesh>
+            <mesh position={[0.5, 0.1, 0]}>
+                <sphereGeometry args={[0.5, 16, 16]} />
+                <meshStandardMaterial color="#ffffff" transparent opacity={0.75} />
+            </mesh>
+            <mesh position={[-0.4, 0.05, 0]}>
+                <sphereGeometry args={[0.45, 16, 16]} />
+                <meshStandardMaterial color="#ffffff" transparent opacity={0.7} />
+            </mesh>
+            <mesh position={[0.2, -0.2, 0]}>
+                <sphereGeometry args={[0.4, 16, 16]} />
+                <meshStandardMaterial color="#ffffff" transparent opacity={0.65} />
+            </mesh>
+        </group>
+    );
+}
+
+// Sky Clouds Component for Light Mode
+function SkyClouds() {
+    const cloudData = Array.from({ length: 15 }).map((_, i) => ({
+        position: [
+            (Math.random() - 0.5) * 20,
+            2 + Math.random() * 4,
+            -5 - Math.random() * 10
+        ],
+        scale: 0.8 + Math.random() * 1.5,
+        speed: 0.3 + Math.random() * 0.5
+    }));
+
+    return (
+        <>
+            {cloudData.map((cloud, i) => (
+                <Cloud key={i} {...cloud} />
+            ))}
+        </>
+    );
+}
+
 // Starfield Background Component
-function Starfield() {
+function Starfield({ theme }) {
     const starsRef = useRef();
     const starCount = 1000;
 
@@ -716,6 +793,9 @@ function Starfield() {
         starPositions[i + 1] = (Math.random() - 0.5) * 50; // y
         starPositions[i + 2] = (Math.random() - 0.5) * 50; // z
     }
+
+    // Hide stars in light mode (sky doesn't have visible stars during day)
+    if (theme === 'light') return null;
 
     return (
         <points ref={starsRef}>
@@ -739,8 +819,9 @@ function Starfield() {
 }
 
 // Space Dust/Particles Component
-function SpaceDust() {
+function SpaceDust({ theme }) {
     const dustRef = useRef();
+    const materialRef = useRef();
     const particleCount = 200;
 
     // Generate random particle positions and sizes (some bigger like meteors)
@@ -787,6 +868,17 @@ function SpaceDust() {
         }
 
         dustRef.current.geometry.attributes.position.needsUpdate = true;
+
+        // Update particle color based on theme
+        if (materialRef.current) {
+            if (theme === 'light') {
+                materialRef.current.color.setHex(0x0284c7); // Darker blue for light mode
+                materialRef.current.opacity = 0.6;
+            } else {
+                materialRef.current.color.setHex(0x8b5cf6); // Purple for dark/base mode
+                materialRef.current.opacity = 0.7;
+            }
+        }
     });
 
     return (
@@ -806,6 +898,7 @@ function SpaceDust() {
                 />
             </bufferGeometry>
             <pointsMaterial
+                ref={materialRef}
                 size={0.05}
                 color="#8b5cf6"
                 transparent
@@ -818,7 +911,7 @@ function SpaceDust() {
 }
 
 // Floating Symbols Field
-function FloatingSymbols() {
+function FloatingSymbols({ theme }) {
     const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
     const spaceColors = [
         '#0ea5e9', // Cyan
@@ -858,7 +951,7 @@ function FloatingSymbols() {
     return (
         <>
             {symbolPositions.map((props, i) => (
-                <FloatingSymbol key={i} {...props} />
+                <FloatingSymbol key={i} {...props} theme={theme} />
             ))}
         </>
     );
@@ -868,20 +961,33 @@ function FloatingSymbols() {
 function Scene({ theme }) {
     return (
         <>
-            {/* Lighting - adjusted for space theme */}
-            <ambientLight intensity={0.3} />
-            <directionalLight position={[5, 5, 5]} intensity={0.4} color="#ffffff" />
-            <directionalLight position={[-5, 3, -5]} intensity={0.3} color="#8b5cf6" />
-            <pointLight position={[0, 0, 0]} intensity={0.5} color="#0ea5e9" distance={20} />
+            {/* Lighting - adjusted based on theme */}
+            <ambientLight intensity={theme === 'light' ? 0.8 : 0.3} />
+            <directionalLight
+                position={[5, 5, 5]}
+                intensity={theme === 'light' ? 1 : 0.4}
+                color={theme === 'light' ? '#fbbf24' : '#ffffff'}
+            />
+            <directionalLight
+                position={[-5, 3, -5]}
+                intensity={theme === 'light' ? 0.6 : 0.3}
+                color={theme === 'light' ? '#60a5fa' : '#8b5cf6'}
+            />
+            {theme !== 'light' && (
+                <pointLight position={[0, 0, 0]} intensity={0.5} color="#0ea5e9" distance={20} />
+            )}
 
-            {/* Starfield Background */}
-            <Starfield />
+            {/* Starfield Background (hidden in light mode) */}
+            <Starfield theme={theme} />
+
+            {/* Sky Clouds (only in light mode) */}
+            {theme === 'light' && <SkyClouds />}
 
             {/* Space Dust Particles */}
-            <SpaceDust />
+            <SpaceDust theme={theme} />
 
             {/* Floating Code Symbols */}
-            <FloatingSymbols />
+            <FloatingSymbols theme={theme} />
 
             {/* Realistic Floating Laptop */}
             <RealisticLaptop theme={theme} />
@@ -892,7 +998,7 @@ function Scene({ theme }) {
 // Main Canvas Component
 function Hero3DBackground({ theme }) {
     return (
-        <div className="canvas-container">
+        <div className="canvas-container" data-theme={theme}>
             <Canvas
                 camera={{ position: [0, 1, 8], fov: 50 }}
                 gl={{ alpha: true, antialias: true }}
@@ -901,6 +1007,8 @@ function Hero3DBackground({ theme }) {
                 <Suspense fallback={null}>
                     <Scene theme={theme} />
                 </Suspense>
+                {/* Sky background color for light mode */}
+                {theme === 'light' && <color attach="background" args={['#87CEEB']} />}
             </Canvas>
 
             <style jsx>{`
@@ -912,7 +1020,13 @@ function Hero3DBackground({ theme }) {
                     height: 100%;
                     z-index: 0;
                     pointer-events: auto;
+                    transition: background 0.5s ease;
                 }
+
+                .canvas-container[data-theme="light"] {
+                    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 50%, #ffffff 100%);
+                }
+
                 .canvas-container canvas {
                     pointer-events: auto !important;
                 }
@@ -921,9 +1035,10 @@ function Hero3DBackground({ theme }) {
     );
 }
 
-// Wrap with React.memo to prevent re-renders from parent
-// Compare function always returns true to block ALL re-renders
-export default React.memo(Hero3DBackground, () => true);
+// Wrap with React.memo - only re-render when theme changes
+export default React.memo(Hero3DBackground, (prevProps, nextProps) => {
+    return prevProps.theme === nextProps.theme; // Re-render only if theme changes
+});
 
 // Preload models (uncomment when using actual models)
 // useGLTF.preload('/models/robotic-hand.glb');
