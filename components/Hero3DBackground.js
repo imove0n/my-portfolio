@@ -103,6 +103,8 @@ function RealisticLaptop({ theme }) {
     const laptopRef = useRef();
     const screenRef = useRef();
     const [isHovered, setIsHovered] = React.useState(false);
+    const [isGlitching, setIsGlitching] = React.useState(false);
+    const glitchTimeRef = useRef(0);
     const themeRef = useRef(theme);
 
     // Store refs for all materials that need theme updates
@@ -119,6 +121,14 @@ function RealisticLaptop({ theme }) {
     React.useEffect(() => {
         themeRef.current = theme;
     }, [theme]);
+
+    // Handle click to trigger glitch
+    const handleClick = (e) => {
+        e.stopPropagation();
+        setIsGlitching(true);
+        glitchTimeRef.current = 0; // Reset glitch timer
+        setTimeout(() => setIsGlitching(false), 800); // Glitch for 800ms
+    };
 
     useFrame((state) => {
         const isDarkMode = themeRef.current === 'dark';
@@ -186,33 +196,64 @@ function RealisticLaptop({ theme }) {
                 { r: 0.02, g: 0.02, b: 0.02 }   // Almost Black
             ];
 
-            // Calculate which color we're transitioning between
-            const numColors = colors.length;
-            const colorIndex = cycleProgress * numColors;
-            const currentIndex = Math.floor(colorIndex);
-            const nextIndex = (currentIndex + 1) % numColors;
-            const blend = colorIndex - currentIndex; // 0 to 1 blend factor
+            let color;
+            let emissiveIntensity;
 
-            // Smooth interpolation between colors (breathing effect)
-            const smoothBlend = blend < 0.5
-                ? 2 * blend * blend
-                : 1 - Math.pow(-2 * blend + 2, 2) / 2; // Ease in-out
+            // Glitch effect when clicked
+            if (isGlitching) {
+                glitchTimeRef.current += state.delta;
+                const glitchProgress = glitchTimeRef.current / 0.8; // 0 to 1 over 800ms
 
-            const color1 = colors[currentIndex];
-            const color2 = colors[nextIndex];
+                // Rapid color flickering during glitch
+                const flickerSpeed = 50; // Very fast flicker
+                const flickerIndex = Math.floor(state.clock.elapsedTime * flickerSpeed) % colors.length;
+                const randomColor = colors[flickerIndex];
 
-            const color = {
-                r: color1.r + (color2.r - color1.r) * smoothBlend,
-                g: color1.g + (color2.g - color1.g) * smoothBlend,
-                b: color1.b + (color2.b - color1.b) * smoothBlend
-            };
+                // Random offset for more chaotic glitch
+                const offset = Math.random() * 0.3;
+                color = {
+                    r: Math.min(1, randomColor.r + offset),
+                    g: Math.min(1, randomColor.g + offset),
+                    b: Math.min(1, randomColor.b + offset)
+                };
+
+                // Intense flashing during glitch
+                emissiveIntensity = 1.5 + Math.random() * 1.5;
+
+                // Random position offset for screen shake effect
+                if (laptopRef.current) {
+                    laptopRef.current.position.x += (Math.random() - 0.5) * 0.05;
+                    laptopRef.current.position.y += (Math.random() - 0.5) * 0.05;
+                }
+            } else {
+                // Normal smooth color transition
+                const numColors = colors.length;
+                const colorIndex = cycleProgress * numColors;
+                const currentIndex = Math.floor(colorIndex);
+                const nextIndex = (currentIndex + 1) % numColors;
+                const blend = colorIndex - currentIndex;
+
+                // Smooth interpolation between colors (breathing effect)
+                const smoothBlend = blend < 0.5
+                    ? 2 * blend * blend
+                    : 1 - Math.pow(-2 * blend + 2, 2) / 2;
+
+                const color1 = colors[currentIndex];
+                const color2 = colors[nextIndex];
+
+                color = {
+                    r: color1.r + (color2.r - color1.r) * smoothBlend,
+                    g: color1.g + (color2.g - color1.g) * smoothBlend,
+                    b: color1.b + (color2.b - color1.b) * smoothBlend
+                };
+
+                // Breathing intensity effect
+                emissiveIntensity = Math.sin(state.clock.elapsedTime * 0.8) * 0.3 + 0.9;
+            }
 
             screenRef.current.material.color.setRGB(color.r, color.g, color.b);
             screenRef.current.material.emissive.setRGB(color.r, color.g, color.b);
-
-            // Breathing intensity effect
-            const breathe = Math.sin(state.clock.elapsedTime * 0.8) * 0.3 + 0.9;
-            screenRef.current.material.emissiveIntensity = breathe;
+            screenRef.current.material.emissiveIntensity = emissiveIntensity;
         }
     });
 
@@ -220,6 +261,7 @@ function RealisticLaptop({ theme }) {
         <Float speed={1} rotationIntensity={0.1} floatIntensity={0.3}>
             <group
                 ref={laptopRef}
+                onClick={handleClick}
                 onPointerOver={() => {
                     setIsHovered(true);
                     document.body.style.cursor = 'pointer';
