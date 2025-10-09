@@ -2591,18 +2591,22 @@ Your browser does not support the audio element.
                             <li
                                 className="nav-dropdown"
                             >
-                                <a
-                                    href="#projects"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setIsProjectsDropdownOpen(!isProjectsDropdownOpen);
-                                    }}
+                                <button
+                                    onClick={() => setIsProjectsDropdownOpen(!isProjectsDropdownOpen)}
                                     aria-label="Toggle Projects dropdown menu"
                                     aria-haspopup="true"
                                     aria-expanded={isProjectsDropdownOpen}
+                                    style={{
+                                        background: 'none',
+                                        border: 'none',
+                                        color: 'inherit',
+                                        font: 'inherit',
+                                        cursor: 'pointer',
+                                        padding: 0
+                                    }}
                                 >
                                     Projects <i className="fas fa-chevron-down"></i>
-                                </a>
+                                </button>
                                 <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`} role="menu">
                                     <li role="menuitem"><a href="#projects" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View School Projects">School Projects</a></li>
                                     <li role="menuitem"><a href="/projects/self-made" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Self-Made Projects">Self-Made Projects</a></li>
