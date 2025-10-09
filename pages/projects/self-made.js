@@ -77,22 +77,47 @@ export default function SelfMadeProjects() {
                         position: absolute;
                         left: 2rem;
                         top: 2rem;
-                        background: rgba(14, 165, 233, 0.1);
-                        border: 1px solid rgba(14, 165, 233, 0.3);
-                        color: #0ea5e9;
-                        padding: 0.75rem 1.5rem;
-                        border-radius: 8px;
+                        background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+                        border: none;
+                        color: white;
+                        padding: 0.875rem 1.75rem;
+                        border-radius: 12px;
                         cursor: pointer;
                         font-size: 1rem;
+                        font-weight: 700;
                         display: flex;
                         align-items: center;
-                        gap: 0.5rem;
-                        transition: all 0.3s ease;
+                        gap: 0.625rem;
+                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .back-btn::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    }
+
+                    .back-btn:hover::before {
+                        opacity: 1;
                     }
 
                     .back-btn:hover {
-                        background: rgba(14, 165, 233, 0.2);
-                        transform: translateX(-5px);
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.6);
+                    }
+
+                    .back-btn span {
+                        position: relative;
+                        z-index: 1;
                     }
 
                     .page-title {
@@ -370,7 +395,7 @@ export default function SelfMadeProjects() {
             </Head>
 
             <button className="back-btn" onClick={goBack}>
-                ← Back
+                <span>← Back</span>
             </button>
 
             <div className="container">
