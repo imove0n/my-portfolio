@@ -85,17 +85,42 @@ export default function CompanyTests() {
                     }
 
                     .flip-card {
-                        perspective: 1500px;
-                        min-height: 450px;
+                        perspective: 2000px;
+                        min-height: 480px;
                         background: transparent;
                         cursor: pointer;
+                        position: relative;
+                    }
+
+                    .flip-card::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        height: 4px;
+                        background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
+                        background-size: 200% 100%;
+                        animation: shimmer 3s linear infinite;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        border-radius: 0 0 16px 16px;
+                    }
+
+                    .flip-card:hover::after {
+                        opacity: 1;
+                    }
+
+                    @keyframes shimmer {
+                        0% { background-position: -200% 0; }
+                        100% { background-position: 200% 0; }
                     }
 
                     .flip-card-inner {
                         position: relative;
                         width: 100%;
                         height: 100%;
-                        transition: transform 0.8s;
+                        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
                         transform-style: preserve-3d;
                     }
 
@@ -108,75 +133,135 @@ export default function CompanyTests() {
                         width: 100%;
                         height: 100%;
                         backface-visibility: hidden;
-                        border-radius: 12px;
+                        border-radius: 16px;
                         overflow: hidden;
                     }
 
                     .flip-card-front {
-                        background: rgba(30, 41, 59, 0.6);
-                        border: 1px solid rgba(148, 163, 184, 0.1);
-                        padding: 2rem;
+                        background: linear-gradient(145deg, #1e2936, #161d28);
+                        border: 2px solid #2a3441;
+                        padding: 0;
                         display: flex;
                         flex-direction: column;
+                        transition: all 0.3s ease;
+                    }
+
+                    .flip-card:hover .flip-card-front {
+                        border-color: #f59e0b;
+                        box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
                     }
 
                     .flip-card-back {
-                        background: rgba(15, 23, 42, 0.95);
+                        background: #0f1419;
+                        border: 2px solid #f59e0b;
                         transform: rotateY(180deg);
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        padding: 1rem;
+                        padding: 1.5rem;
+                        box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
                     }
 
                     .flip-card-back img {
                         max-width: 100%;
                         max-height: 100%;
                         object-fit: contain;
-                        border-radius: 8px;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                    }
+
+                    .card-header {
+                        background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+                        padding: 1.5rem 2rem;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .card-header::before {
+                        content: '';
+                        position: absolute;
+                        top: -50%;
+                        right: -50%;
+                        width: 200%;
+                        height: 200%;
+                        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    }
+
+                    .flip-card:hover .card-header::before {
+                        opacity: 1;
                     }
 
                     .card-icon {
-                        width: 70px;
-                        height: 70px;
-                        background: linear-gradient(135deg, #f59e0b, #ef4444);
-                        border-radius: 12px;
+                        width: 75px;
+                        height: 75px;
+                        background: rgba(255, 255, 255, 0.25);
+                        backdrop-filter: blur(10px);
+                        border: 3px solid rgba(255, 255, 255, 0.4);
+                        border-radius: 50%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin-bottom: 1.5rem;
+                        transition: all 0.4s ease;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                    }
+
+                    .flip-card:hover .card-icon {
+                        transform: rotate(-15deg) scale(1.15);
+                        background: rgba(255, 255, 255, 0.35);
+                        border-color: rgba(255, 255, 255, 0.6);
                     }
 
                     .card-icon i {
-                        font-size: 2rem;
+                        font-size: 2.25rem;
                         color: white;
+                        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+                    }
+
+                    .card-content {
+                        padding: 2rem;
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
                     }
 
                     .card-content h3 {
                         font-size: 1.5rem;
-                        color: #f8fafc;
+                        color: #f1f5f9;
                         margin-bottom: 1rem;
+                        font-weight: 700;
+                        letter-spacing: -0.02em;
+                        line-height: 1.3;
                     }
 
                     .card-content p {
                         color: #94a3b8;
-                        line-height: 1.6;
-                        margin-bottom: 1.5rem;
+                        line-height: 1.7;
+                        margin-bottom: 1.75rem;
+                        flex: 1;
+                        font-size: 0.975rem;
                     }
 
                     .card-tags {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 0.5rem;
+                        gap: 0.625rem;
+                        margin-top: auto;
                     }
 
                     .tag {
-                        background: rgba(245, 158, 11, 0.1);
-                        border: 1px solid rgba(245, 158, 11, 0.3);
+                        background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+                        border: none;
                         color: #fbbf24;
-                        padding: 0.5rem 1rem;
-                        border-radius: 20px;
-                        font-size: 0.85rem;
+                        padding: 0.5rem 1.125rem;
+                        border-radius: 8px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        backdrop-filter: blur(10px);
+                        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
                     }
 
                     .cards-grid {
@@ -244,8 +329,10 @@ export default function CompanyTests() {
                     <div className={`flip-card ${flippedCards['test1'] ? 'flipped' : ''}`} onClick={() => toggleFlip('test1')}>
                         <div className="flip-card-inner">
                             <div className="flip-card-front">
-                                <div className="card-icon">
-                                    <i className="fas fa-code-branch"></i>
+                                <div className="card-header">
+                                    <div className="card-icon">
+                                        <i className="fas fa-code-branch"></i>
+                                    </div>
                                 </div>
                                 <div className="card-content">
                                     <h3>Company Name - Technical Assessment</h3>

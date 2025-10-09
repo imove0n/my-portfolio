@@ -108,139 +108,207 @@ export default function SelfMadeProjects() {
                     }
 
                     .project-card {
-                        background: rgba(30, 41, 59, 0.6);
-                        border: 1px solid rgba(148, 163, 184, 0.1);
-                        border-radius: 12px;
+                        position: relative;
+                        background: #1a2332;
+                        border: 2px solid #2d3748;
+                        border-radius: 16px;
                         overflow: hidden;
-                        transition: all 0.3s ease;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                         display: flex;
                         flex-direction: column;
                         cursor: pointer;
                     }
 
+                    .project-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.15), transparent);
+                        transition: left 0.5s ease;
+                    }
+
+                    .project-card:hover::before {
+                        left: 100%;
+                    }
+
                     .project-card:hover {
-                        transform: translateY(-8px);
-                        border-color: rgba(14, 165, 233, 0.4);
-                        box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+                        transform: translateY(-10px) scale(1.02);
+                        border-color: #0ea5e9;
+                        box-shadow: 0 25px 50px rgba(14, 165, 233, 0.25), 0 0 0 1px rgba(14, 165, 233, 0.3);
                     }
 
                     .card-image {
                         position: relative;
                         width: 100%;
-                        height: 220px;
+                        height: 240px;
                         overflow: hidden;
-                        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                        background: #0f1419;
+                        border-bottom: 3px solid #0ea5e9;
+                    }
+
+                    .card-image::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(180deg, transparent 60%, #1a2332 100%);
+                        pointer-events: none;
                     }
 
                     .card-image img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
-                        transition: transform 0.3s ease;
+                        transition: all 0.4s ease;
+                        filter: brightness(0.85) saturate(1.1);
                     }
 
                     .project-card:hover .card-image img {
-                        transform: scale(1.1);
+                        transform: scale(1.15);
+                        filter: brightness(1) saturate(1.2);
                     }
 
                     .card-overlay {
                         position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background: linear-gradient(to bottom, transparent 0%, rgba(15, 23, 42, 0.9) 100%);
+                        top: 1rem;
+                        right: 1rem;
                         display: flex;
-                        align-items: flex-end;
-                        padding: 1rem;
+                        gap: 0.5rem;
                         opacity: 0;
-                        transition: opacity 0.3s ease;
+                        transform: translateY(-10px);
+                        transition: all 0.3s ease;
+                        z-index: 2;
                     }
 
                     .project-card:hover .card-overlay {
                         opacity: 1;
+                        transform: translateY(0);
                     }
 
                     .card-body {
-                        padding: 1.5rem;
+                        padding: 2rem 1.75rem;
                         display: flex;
                         flex-direction: column;
                         flex: 1;
+                        background: linear-gradient(to bottom, #1a2332, #141c28);
                     }
 
                     .card-icon {
-                        width: 50px;
-                        height: 50px;
-                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-                        border-radius: 10px;
+                        position: absolute;
+                        top: 200px;
+                        left: 1.75rem;
+                        width: 65px;
+                        height: 65px;
+                        background: linear-gradient(145deg, #0ea5e9, #06b6d4);
+                        border-radius: 50%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin-bottom: 1rem;
+                        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4), 0 0 0 4px #1a2332;
+                        z-index: 1;
+                        transition: all 0.3s ease;
+                    }
+
+                    .project-card:hover .card-icon {
+                        transform: rotate(360deg) scale(1.1);
+                        box-shadow: 0 12px 30px rgba(14, 165, 233, 0.6), 0 0 0 4px #1a2332;
                     }
 
                     .card-icon i {
-                        font-size: 1.5rem;
+                        font-size: 1.75rem;
                         color: white;
                     }
 
                     .card-body h3 {
-                        font-size: 1.3rem;
-                        color: #f8fafc;
-                        margin-bottom: 0.75rem;
-                        font-weight: 600;
+                        font-size: 1.4rem;
+                        color: #f1f5f9;
+                        margin: 2.5rem 0 0.875rem;
+                        font-weight: 700;
+                        letter-spacing: -0.02em;
                     }
 
                     .card-body p {
                         color: #94a3b8;
-                        line-height: 1.6;
-                        margin-bottom: 1.5rem;
+                        line-height: 1.7;
+                        margin-bottom: 1.75rem;
                         flex: 1;
-                        font-size: 0.95rem;
+                        font-size: 0.975rem;
                     }
 
                     .view-btn {
-                        background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+                        background: #0ea5e9;
                         color: white;
                         border: none;
-                        padding: 0.75rem 1.5rem;
-                        border-radius: 8px;
-                        font-size: 0.95rem;
-                        font-weight: 600;
+                        padding: 0.875rem 1.75rem;
+                        border-radius: 10px;
+                        font-size: 0.975rem;
+                        font-weight: 700;
                         cursor: pointer;
                         transition: all 0.3s ease;
                         text-decoration: none;
                         display: inline-flex;
                         align-items: center;
-                        gap: 0.5rem;
+                        gap: 0.625rem;
                         justify-content: center;
                         margin-top: auto;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .view-btn::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s ease;
+                    }
+
+                    .view-btn:hover::before {
+                        left: 100%;
                     }
 
                     .view-btn:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
-                        background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+                        background: #06b6d4;
+                        transform: translateY(-3px);
+                        box-shadow: 0 12px 24px rgba(14, 165, 233, 0.5);
                     }
 
                     .view-btn i {
-                        font-size: 0.85rem;
+                        font-size: 0.875rem;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .view-btn:hover i {
+                        transform: translateX(3px);
                     }
 
                     .card-tags {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 0.5rem;
+                        gap: 0.625rem;
                     }
 
                     .tag {
-                        background: rgba(14, 165, 233, 0.1);
-                        border: 1px solid rgba(14, 165, 233, 0.3);
-                        color: #0ea5e9;
-                        padding: 0.4rem 0.8rem;
-                        border-radius: 15px;
+                        background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(6, 182, 212, 0.15));
+                        border: none;
+                        color: #22d3ee;
+                        padding: 0.5rem 1rem;
+                        border-radius: 8px;
                         font-size: 0.8rem;
-                        font-weight: 500;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        backdrop-filter: blur(10px);
                     }
 
                     .cards-grid {
