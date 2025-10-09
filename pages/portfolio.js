@@ -1589,14 +1589,18 @@ useEffect(() => {
                             font-size: 2.2rem;
                             font-weight: 700;
                             margin-bottom: 1rem;
-                            background: linear-gradient(135deg, #ffffff, #0ea5e9, #8b5cf6);
+                            background: ${theme === 'light'
+                                ? 'linear-gradient(135deg, #1e293b, #0284c7, #7c3aed)'
+                                : 'linear-gradient(135deg, #ffffff, #0ea5e9, #8b5cf6)'};
                             background-clip: text;
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
                             opacity: 0;
                             animation: fadeInUp 1s ease 0.4s forwards;
                             line-height: 1.2;
-                            filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.5));
+                            filter: ${theme === 'light'
+                                ? 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
+                                : 'drop-shadow(0 0 20px rgba(14, 165, 233, 0.5))'};
                         }
 
                        .glitch-text {
