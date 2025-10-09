@@ -30,7 +30,16 @@
     const [previousVolume, setPreviousVolume] = useState(50);
     // Profile image cycling
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isFlipping, setIsFlipping] = useState(false);
     const profileImages = ['Grad2.jpg', 'Grad3.jpg', 'Grad4.jpg'];
+
+    const handleImageChange = () => {
+        setIsFlipping(true);
+        setTimeout(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % profileImages.length);
+            setTimeout(() => setIsFlipping(false), 300);
+        }, 300);
+    };
     const [glitchText, setGlitchText] = useState('Guzman');
     // Flip card state for projects
     const [flippedCards, setFlippedCards] = useState({});
@@ -1817,6 +1826,26 @@ useEffect(() => {
                             object-position: center 20%;
                             border-radius: 50%;
                             display: block;
+                            transition: all 0.3s ease;
+                        }
+
+                        .profile-image.flipping img {
+                            animation: flipImage 0.6s ease-in-out;
+                        }
+
+                        @keyframes flipImage {
+                            0% {
+                                transform: rotateY(0deg) scale(1);
+                                opacity: 1;
+                            }
+                            50% {
+                                transform: rotateY(90deg) scale(0.8);
+                                opacity: 0.3;
+                            }
+                            100% {
+                                transform: rotateY(0deg) scale(1);
+                                opacity: 1;
+                            }
                         }
 
                         .profile-image .fallback-icon {
@@ -2607,10 +2636,10 @@ Your browser does not support the audio element.
                     <div className="container">
                         <h2 className="section-title">About Me</h2>
                         <div className="about-content fade-in">
-                           <div className="profile-image" onClick={() => setCurrentImageIndex((prev) => (prev + 1) % profileImages.length)} style={{ cursor: 'pointer' }}>
-    <img 
+                           <div className={`profile-image ${isFlipping ? 'flipping' : ''}`} onClick={handleImageChange} style={{ cursor: 'pointer' }}>
+    <img
         src={`/${profileImages[currentImageIndex]}`}
-        alt="Laurence De Guzman" 
+        alt="Laurence De Guzman"
         onError={handleImageError}
     />
     <i className="fas fa-user fallback-icon"></i>
