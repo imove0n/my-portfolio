@@ -2641,7 +2641,7 @@ Your browser does not support the audio element.
                                 Currently Learning & Growing
                             </h3>
                             <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                                "Nothing can stop me from learning" - Currently expanding my skills in cutting-edge technologies
+                                "Nothing can stop me from learning" - Currently expanding my skills
                             </p>
                             <div className="learning-tags">
                             <span className="tag">Next.js & TypeScript</span>
