@@ -1799,11 +1799,32 @@ useEffect(() => {
                             margin: 0 auto;
                             cursor: pointer;
                             transition: all 0.4s ease;
+                            animation: profilePulse 3s ease-in-out infinite;
+                        }
+
+                        @keyframes profilePulse {
+                            0%, 100% {
+                                transform: scale(1) rotate(0deg);
+                                box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+                            }
+                            25% {
+                                transform: scale(1.03) rotate(-2deg);
+                                box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
+                            }
+                            50% {
+                                transform: scale(1.05) rotate(0deg);
+                                box-shadow: 0 15px 40px rgba(14, 165, 233, 0.5);
+                            }
+                            75% {
+                                transform: scale(1.03) rotate(2deg);
+                                box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
+                            }
                         }
 
                         .profile-image:hover {
-                            transform: scale(1.05) rotate(2deg);
-                            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.4);
+                            animation: none;
+                            transform: scale(1.08) rotate(2deg);
+                            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.6);
                         }
 
 .profile-image:active {
