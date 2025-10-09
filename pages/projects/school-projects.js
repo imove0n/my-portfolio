@@ -208,7 +208,7 @@ export default function SchoolProjects() {
             </Head>
 
             <button className="back-btn" onClick={goBack}>
-                ← Back
+                 Back
             </button>
 
             <div className="container">

@@ -282,7 +282,7 @@ export default function ProjectsHub() {
             <div className="projects-container">
                 <div className="header">
                     <button className="back-btn" onClick={goBack}>
-                        ← Back to Home
+                        Back to Home
                     </button>
                     <h1 className="page-title">My Projects</h1>
                     <p className="page-subtitle">

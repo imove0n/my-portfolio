@@ -357,7 +357,7 @@ export default function CategoryProjects() {
             >
                 <div className="header">
                     <button className="back-btn" onClick={goBack}>
-                        ← Back to Projects
+                         Back to Projects
                     </button>
 
                     <div className="category-header">

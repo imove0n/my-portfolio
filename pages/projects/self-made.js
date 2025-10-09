@@ -395,7 +395,7 @@ export default function SelfMadeProjects() {
             </Head>
 
             <button className="back-btn" onClick={goBack}>
-                <span>← Back</span>
+                <span> Back</span>
             </button>
 
             <div className="container">
