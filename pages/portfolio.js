@@ -2885,8 +2885,8 @@ Your browser does not support the audio element.
                         <div className="contact-content">
                             <div className="contact-info fade-in">
                                 <h3>Let's Connect!</h3>
-                                <p>Half of what you need to know about me is here; the other half, you'll have to meet me in person to discover.</p>
-                                <p>I'm always open to discussing new opportunities, projects, or just having a chat about technology!</p>
+                                <p>Half of what you need to know about me is here; the other half, maybe personalities or stories that you never heard of.</p>
+                                <p>I'm always open to discussing new opportunities, projects, just pm me on any platform!</p>
                                 
                                 <div className="contact-links">
                                     <a href="mailto:laurencedeguzman04142003@gmail.com" className="contact-link" target="_blank">
