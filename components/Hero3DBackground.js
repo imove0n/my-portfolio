@@ -125,41 +125,41 @@ function RealisticLaptop({ theme }) {
 
         // Update materials in the animation loop
         if (materialRefs.current.bottomCase) {
-            materialRefs.current.bottomCase.color.setHex(isDarkMode ? 0x5c5c6e : 0x2c2c2e);
-            materialRefs.current.bottomCase.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-            materialRefs.current.bottomCase.emissiveIntensity = isDarkMode ? 1.2 : 0;
+            materialRefs.current.bottomCase.color.setHex(isDarkMode ? 0xe5e7eb : 0x2c2c2e);
+            materialRefs.current.bottomCase.emissive.setHex(0x000000);
+            materialRefs.current.bottomCase.emissiveIntensity = 0;
         }
 
         if (materialRefs.current.keyboard) {
-            materialRefs.current.keyboard.color.setHex(isDarkMode ? 0x4a4a5a : 0x1a1a1a);
-            materialRefs.current.keyboard.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-            materialRefs.current.keyboard.emissiveIntensity = isDarkMode ? 0.8 : 0;
+            materialRefs.current.keyboard.color.setHex(isDarkMode ? 0xd1d5db : 0x1a1a1a);
+            materialRefs.current.keyboard.emissive.setHex(0x000000);
+            materialRefs.current.keyboard.emissiveIntensity = 0;
         }
 
         materialRefs.current.keys.forEach(mat => {
             if (mat) {
-                mat.color.setHex(isDarkMode ? 0x6a6a7c : 0x3a3a3c);
-                mat.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-                mat.emissiveIntensity = isDarkMode ? 0.5 : 0;
+                mat.color.setHex(isDarkMode ? 0xffffff : 0x3a3a3c);
+                mat.emissive.setHex(0x000000);
+                mat.emissiveIntensity = 0;
             }
         });
 
         if (materialRefs.current.trackpad) {
-            materialRefs.current.trackpad.color.setHex(isDarkMode ? 0x3a3a4a : 0x1a1a1a);
-            materialRefs.current.trackpad.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-            materialRefs.current.trackpad.emissiveIntensity = isDarkMode ? 0.6 : 0;
+            materialRefs.current.trackpad.color.setHex(isDarkMode ? 0xd1d5db : 0x1a1a1a);
+            materialRefs.current.trackpad.emissive.setHex(0x000000);
+            materialRefs.current.trackpad.emissiveIntensity = 0;
         }
 
         if (materialRefs.current.screenLid) {
-            materialRefs.current.screenLid.color.setHex(isDarkMode ? 0x4a4a5a : 0x1a1a1a);
-            materialRefs.current.screenLid.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-            materialRefs.current.screenLid.emissiveIntensity = isDarkMode ? 1.5 : 0;
+            materialRefs.current.screenLid.color.setHex(isDarkMode ? 0xe5e7eb : 0x1a1a1a);
+            materialRefs.current.screenLid.emissive.setHex(0x000000);
+            materialRefs.current.screenLid.emissiveIntensity = 0;
         }
 
         if (materialRefs.current.bezel) {
-            materialRefs.current.bezel.color.setHex(isDarkMode ? 0x2a2a3a : 0x0a0a0a);
-            materialRefs.current.bezel.emissive.setHex(isDarkMode ? 0x0ea5e9 : 0x000000);
-            materialRefs.current.bezel.emissiveIntensity = isDarkMode ? 0.7 : 0;
+            materialRefs.current.bezel.color.setHex(isDarkMode ? 0x9ca3af : 0x0a0a0a);
+            materialRefs.current.bezel.emissive.setHex(0x000000);
+            materialRefs.current.bezel.emissiveIntensity = 0;
         }
         // Smooth rotation (faster when hovered)
         const rotationSpeed = isHovered ? 0.6 : 0.3;
