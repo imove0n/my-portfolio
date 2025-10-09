@@ -2540,16 +2540,23 @@ Your browser does not support the audio element.
                             <li><a href="#skills" onClick={closeMenu} aria-label="Navigate to Skills section">Skills</a></li>
                             <li
                                 className="nav-dropdown"
-                                onMouseEnter={() => setIsProjectsDropdownOpen(true)}
-                                onMouseLeave={() => setIsProjectsDropdownOpen(false)}
                             >
-                                <a href="#projects" onClick={closeMenu} aria-label="Navigate to Projects section" aria-haspopup="true" aria-expanded={isProjectsDropdownOpen}>
+                                <a
+                                    href="#projects"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setIsProjectsDropdownOpen(!isProjectsDropdownOpen);
+                                    }}
+                                    aria-label="Toggle Projects dropdown menu"
+                                    aria-haspopup="true"
+                                    aria-expanded={isProjectsDropdownOpen}
+                                >
                                     Projects <i className="fas fa-chevron-down"></i>
                                 </a>
                                 <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`} role="menu">
-                                    <li role="menuitem"><a href="#projects" onClick={closeMenu} aria-label="View School Projects">School Projects</a></li>
-                                    <li role="menuitem"><a href="/projects/self-made" onClick={closeMenu} aria-label="View Self-Made Projects">Self-Made Projects</a></li>
-                                    <li role="menuitem"><a href="/projects/company-tests" onClick={closeMenu} aria-label="View Program Test for Companies">Program Test for Companies</a></li>
+                                    <li role="menuitem"><a href="#projects" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View School Projects">School Projects</a></li>
+                                    <li role="menuitem"><a href="/projects/self-made" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Self-Made Projects">Self-Made Projects</a></li>
+                                    <li role="menuitem"><a href="/projects/company-tests" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Program Test for Companies">Program Test for Companies</a></li>
                                 </ul>
                             </li>
                             <li><a href="#contact" onClick={closeMenu} aria-label="Navigate to Contact section">Contact</a></li>
