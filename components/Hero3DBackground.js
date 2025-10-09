@@ -762,15 +762,18 @@ function Cloud({ position, scale, speed }) {
 
 // Sky Clouds Component for Light Mode
 function SkyClouds() {
-    const cloudData = Array.from({ length: 15 }).map((_, i) => ({
-        position: [
-            (Math.random() - 0.5) * 20,
-            2 + Math.random() * 4,
-            -5 - Math.random() * 10
-        ],
-        scale: 0.8 + Math.random() * 1.5,
-        speed: 0.3 + Math.random() * 0.5
-    }));
+    // Use useMemo to keep cloud positions stable
+    const cloudData = React.useMemo(() => {
+        return Array.from({ length: 15 }).map((_, i) => ({
+            position: [
+                (Math.random() - 0.5) * 20,
+                2 + Math.random() * 4,
+                -5 - Math.random() * 10
+            ],
+            scale: 0.8 + Math.random() * 1.5,
+            speed: 0.3 + Math.random() * 0.5
+        }));
+    }, []); // Empty dependency - only create once
 
     return (
         <>
@@ -922,31 +925,33 @@ function FloatingSymbols({ theme }) {
         '#f472b6'  // Light pink
     ];
 
-    // Generate random positions - avoid the center laptop area
-    const symbolPositions = Array.from({ length: 30 }).map(() => {
-        // Randomly choose left or right side
-        const isLeftSide = Math.random() > 0.5;
+    // Use useMemo to keep positions stable across theme changes
+    const symbolPositions = React.useMemo(() => {
+        return Array.from({ length: 30 }).map(() => {
+            // Randomly choose left or right side
+            const isLeftSide = Math.random() > 0.5;
 
-        // Position on left side (-8 to -2.5) or right side (2.5 to 8)
-        const xPosition = isLeftSide
-            ? -8 + Math.random() * 5.5   // Left: -8 to -2.5
-            : 2.5 + Math.random() * 5.5; // Right: 2.5 to 8
+            // Position on left side (-8 to -2.5) or right side (2.5 to 8)
+            const xPosition = isLeftSide
+                ? -8 + Math.random() * 5.5   // Left: -8 to -2.5
+                : 2.5 + Math.random() * 5.5; // Right: 2.5 to 8
 
-        return {
-            shape: shapes[Math.floor(Math.random() * shapes.length)],
-            color: spaceColors[Math.floor(Math.random() * spaceColors.length)],
-            position: [
-                xPosition,                    // x: left or right sides only
-                0,                            // y: will be controlled by animation
-                (Math.random() - 0.5) * 6    // z: depth (some close, some far)
-            ],
-            speed: 0.5 + Math.random() * 0.5,
-            scale: 1 + Math.random() * 1.5, // Larger symbols
-            offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
-            duration: 30 + Math.random() * 20,  // How long to rise (30-50 seconds, slower and relaxed)
-            health: Math.floor(Math.random() * 4) + 1  // Random health: 1 to 4 hits
-        };
-    });
+            return {
+                shape: shapes[Math.floor(Math.random() * shapes.length)],
+                color: spaceColors[Math.floor(Math.random() * spaceColors.length)],
+                position: [
+                    xPosition,                    // x: left or right sides only
+                    0,                            // y: will be controlled by animation
+                    (Math.random() - 0.5) * 6    // z: depth (some close, some far)
+                ],
+                speed: 0.5 + Math.random() * 0.5,
+                scale: 1 + Math.random() * 1.5, // Larger symbols
+                offset: Math.random() * 100,      // Start time offset (0-100 seconds for independence)
+                duration: 30 + Math.random() * 20,  // How long to rise (30-50 seconds, slower and relaxed)
+                health: Math.floor(Math.random() * 4) + 1  // Random health: 1 to 4 hits
+            };
+        });
+    }, []); // Empty dependency array - only create once
 
     return (
         <>
