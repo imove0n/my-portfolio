@@ -801,6 +801,10 @@ useEffect(() => {
                         `}
                     }
 
+                        html {
+                            scroll-behavior: smooth;
+                        }
+
                         body {
                             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                             line-height: 1.6;
@@ -2530,32 +2534,32 @@ Your browser does not support the audio element.
                             {showBaseName && <span className="logo-text">Laurence De Guzman</span>}
                         </div>
                         <ul className={`nav-menu ${isNavMenuActive ? 'active' : ''}`}>
-                            <li><a href="#home" onClick={closeMenu}>Home</a></li>
-                            <li><a href="#about" onClick={closeMenu}>About</a></li>
-                            <li><a href="#experience" onClick={closeMenu}>Experience</a></li>
-                            <li><a href="#skills" onClick={closeMenu}>Skills</a></li>
+                            <li><a href="#home" onClick={closeMenu} aria-label="Navigate to Home section">Home</a></li>
+                            <li><a href="#about" onClick={closeMenu} aria-label="Navigate to About section">About</a></li>
+                            <li><a href="#experience" onClick={closeMenu} aria-label="Navigate to Experience section">Experience</a></li>
+                            <li><a href="#skills" onClick={closeMenu} aria-label="Navigate to Skills section">Skills</a></li>
                             <li
                                 className="nav-dropdown"
                                 onMouseEnter={() => setIsProjectsDropdownOpen(true)}
                                 onMouseLeave={() => setIsProjectsDropdownOpen(false)}
                             >
-                                <a href="#projects" onClick={closeMenu}>
+                                <a href="#projects" onClick={closeMenu} aria-label="Navigate to Projects section" aria-haspopup="true" aria-expanded={isProjectsDropdownOpen}>
                                     Projects <i className="fas fa-chevron-down"></i>
                                 </a>
-                                <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`}>
-                                    <li><a href="#projects" onClick={closeMenu}>School Projects</a></li>
-                                    <li><a href="/projects/self-made" onClick={closeMenu}>Self-Made Projects</a></li>
-                                    <li><a href="/projects/company-tests" onClick={closeMenu}>Program Test for Companies</a></li>
+                                <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`} role="menu">
+                                    <li role="menuitem"><a href="#projects" onClick={closeMenu} aria-label="View School Projects">School Projects</a></li>
+                                    <li role="menuitem"><a href="/projects/self-made" onClick={closeMenu} aria-label="View Self-Made Projects">Self-Made Projects</a></li>
+                                    <li role="menuitem"><a href="/projects/company-tests" onClick={closeMenu} aria-label="View Program Test for Companies">Program Test for Companies</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
+                            <li><a href="#contact" onClick={closeMenu} aria-label="Navigate to Contact section">Contact</a></li>
                         </ul>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <button className="theme-toggle-btn" onClick={toggleTheme}>
+                            <button className="theme-toggle-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === 'original' ? 'Dark' : theme === 'dark' ? 'Light' : 'Base'} mode`}>
                                 <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'}`}></i>
                                 <span>{theme === 'original' ? 'Dark' : theme === 'dark' ? 'Light' : 'Base'}</span>
                             </button>
-                            <button className="mobile-menu-btn" onClick={toggleMenu}>
+                            <button className="mobile-menu-btn" onClick={toggleMenu} aria-label={isNavMenuActive ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={isNavMenuActive}>
                                 <i className={`fas ${isNavMenuActive ? 'fa-times' : 'fa-bars'}`}></i>
                             </button>
                         </div>
@@ -2579,11 +2583,11 @@ Your browser does not support the audio element.
                             Computer Technician • IT Generalist • Aspiring Cybersecurity & ERP Specialist
                         </p>
                         <div className="hero-buttons">
-                            <a href="#contact" className="btn btn-primary">
+                            <a href="#contact" className="btn btn-primary" aria-label="Navigate to contact section to connect">
                                 <i className="fas fa-comment-dots"></i>
                                 Let's Connect
                             </a>
-                            <a href="mailto:laurencedeguzman04142003@gmail.com" className="btn btn-outline" target="_blank">
+                            <a href="mailto:laurencedeguzman04142003@gmail.com" className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Send email to Laurence De Guzman">
                                 <i className="fas fa-envelope"></i>
                                 Email Me
                             </a>
@@ -2885,19 +2889,19 @@ Your browser does not support the audio element.
                                 </div>
 
                                 <div className="social-links">
-                                    <a href="https://www.linkedin.com/in/laurence-de-guzman-32386b309/" className="social-link linkedin" target="_blank">
+                                    <a href="https://www.linkedin.com/in/laurence-de-guzman-32386b309/" className="social-link linkedin" target="_blank" rel="noopener noreferrer" aria-label="Visit Laurence's LinkedIn profile">
                                         <i className="fab fa-linkedin-in"></i>
                                         LinkedIn
                                     </a>
-                                    <a href="https://github.com/imove0n" className="social-link github" target="_blank">
+                                    <a href="https://github.com/imove0n" className="social-link github" target="_blank" rel="noopener noreferrer" aria-label="Visit Laurence's GitHub profile">
                                         <i className="fab fa-github"></i>
                                         GitHub
                                     </a>
-                                    <a href="https://www.facebook.com/imove0n" className="social-link facebook" target="_blank">
+                                    <a href="https://www.facebook.com/imove0n" className="social-link facebook" target="_blank" rel="noopener noreferrer" aria-label="Visit Laurence's Facebook profile">
                                         <i className="fab fa-facebook-f"></i>
                                         Facebook
                                     </a>
-                                    <a href="mailto:laurencedeguzman04142003@gmail.com" className="social-link email" target="_blank">
+                                    <a href="mailto:laurencedeguzman04142003@gmail.com" className="social-link email" target="_blank" rel="noopener noreferrer" aria-label="Send email to Laurence De Guzman">
                                         <i className="fas fa-envelope"></i>
                                         Gmail
                                     </a>
