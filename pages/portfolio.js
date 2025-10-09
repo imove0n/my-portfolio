@@ -2625,7 +2625,7 @@ Your browser does not support the audio element.
                                 </p>
                                 <p>
                                   Today, I work as a Junior Technical Support at a local company in the Philippines, where I handle 
-                                 end-to-end IT operations from hardware diagnostics, computer builds, and CCTV installations to Odoo 
+                                 end-to-end IT operations from hardware diagnostics, computer builds, to Odoo 
                                     ERP customization, email/domain hosting management, and cloud backup systems. I recently built a 24/7 
                                 Facebook AI chatbot using N8N for automated customer service and proposed cybersecurity solutions 
                                     including antivirus and firewall implementations. My background spans creating Python games converted 
@@ -2757,12 +2757,12 @@ Your browser does not support the audio element.
                             <div className="skill-item fade-in">
                                    <i className="fas fa-shield-alt"></i>
                                   <h4>Cybersecurity & Infrastructure</h4>
-                                 <p>Network Security, Enterprise Antivirus, Firewall Configuration, CCTV Installation, Security Auditing, Threat Prevention</p>
+                                 <p>Network Security, Enterprise Antivirus, Firewall Configuration, Security Auditing, Threat Prevention</p>
                             </div>
                             <div className="skill-item fade-in">
                                     <i className="fas fa-microchip"></i>
                                     <h4>Hardware & Technical Support</h4>
-                                  <p>Computer Building/Upgrades, Hardware Diagnostics, CCTV Systems, Arduino, Raspberry Pi, IoT Development, Circuit Design</p>
+                                  <p>Computer Building/Upgrades, Hardware Diagnostics, Arduino, Raspberry Pi, IoT Development, Circuit Design</p>
                                 </div>
                             </div>
                         </div>
