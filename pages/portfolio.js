@@ -1440,7 +1440,12 @@ useEffect(() => {
                             overflow: visible;
                             background: none;
                             width: auto;
-                            vertical-align: baseline;
+                            line-height: inherit;
+                            margin: 0;
+                        }
+
+                        .nav-menu button {
+                            vertical-align: top;
                         }
 
                         .nav-menu a::before,
