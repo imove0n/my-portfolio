@@ -1442,6 +1442,8 @@ useEffect(() => {
                             width: auto;
                             line-height: inherit;
                             margin: 0;
+                            font-size: inherit;
+                            font-family: inherit;
                         }
 
                         .nav-menu button {
