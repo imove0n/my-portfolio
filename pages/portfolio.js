@@ -1432,14 +1432,18 @@ useEffect(() => {
                             gap: 2rem;
                         }
                         
-                        .nav-menu a {
+                        .nav-menu a,
+                        .nav-menu button {
                             padding: 0.5rem 0;
                             border: none;
                             position: relative;
                             overflow: visible;
+                            background: none;
+                            width: auto;
                         }
-                        
-                        .nav-menu a::before {
+
+                        .nav-menu a::before,
+                        .nav-menu button::before {
                             content: '';
                             position: absolute;
                             width: 100%;
@@ -1451,8 +1455,9 @@ useEffect(() => {
                             transform-origin: right;
                             transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                         }
-                        
-                        .nav-menu a::after {
+
+                        .nav-menu a::after,
+                        .nav-menu button::after {
                             content: '';
                             position: absolute;
                             width: 6px;
@@ -1465,19 +1470,22 @@ useEffect(() => {
                             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                             box-shadow: 0 0 10px var(--accent-color);
                         }
-                        
-                        .nav-menu a:hover {
+
+                        .nav-menu a:hover,
+                        .nav-menu button:hover {
                             background: none;
                             letter-spacing: 2px;
                             transform: translateY(-2px);
                         }
-                        
-                        .nav-menu a:hover::before {
+
+                        .nav-menu a:hover::before,
+                        .nav-menu button:hover::before {
                             transform: scaleX(1);
                             transform-origin: left;
                         }
-                        
-                        .nav-menu a:hover::after {
+
+                        .nav-menu a:hover::after,
+                        .nav-menu button:hover::after {
                             transform: translate(-50%, 0) scale(1);
                         }
 
