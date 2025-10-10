@@ -18,80 +18,10 @@ function Float({ children, speed = 1, rotationIntensity = 0, floatIntensity = 1 
     return <group ref={ref}>{children}</group>;
 }
 
-// BLACK HOLE Component with Accretion Disk
-function BlackHole({ position }) {
-    const blackHoleRef = useRef();
-    const accretionDiskRef = useRef();
-    const glowRef = useRef();
-
-    useFrame((state) => {
-        const time = state.clock.getElapsedTime();
-
-        // Rotate accretion disk
-        if (accretionDiskRef.current) {
-            accretionDiskRef.current.rotation.z = time * 0.5;
-        }
-
-        // Pulsing glow effect
-        if (glowRef.current) {
-            const pulse = Math.sin(time * 2) * 0.3 + 1;
-            glowRef.current.scale.setScalar(pulse);
-        }
-    });
-
-    return (
-        <group position={position}>
-            {/* Black hole core (event horizon) */}
-            <mesh ref={blackHoleRef}>
-                <sphereGeometry args={[0.4, 32, 32]} />
-                <meshBasicMaterial color="#000000" />
-            </mesh>
-
-            {/* Gravitational lensing glow */}
-            <mesh ref={glowRef}>
-                <sphereGeometry args={[0.5, 32, 32]} />
-                <meshBasicMaterial
-                    color="#ff6600"
-                    transparent
-                    opacity={0.3}
-                    side={THREE.BackSide}
-                />
-            </mesh>
-
-            {/* Accretion disk */}
-            <mesh ref={accretionDiskRef} rotation={[Math.PI / 2, 0, 0]}>
-                <torusGeometry args={[1.2, 0.3, 16, 100]} />
-                <meshStandardMaterial
-                    color="#ff4400"
-                    emissive="#ff6600"
-                    emissiveIntensity={2}
-                    transparent
-                    opacity={0.8}
-                />
-            </mesh>
-
-            {/* Inner bright ring */}
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-                <torusGeometry args={[0.8, 0.15, 16, 100]} />
-                <meshStandardMaterial
-                    color="#ffaa00"
-                    emissive="#ffaa00"
-                    emissiveIntensity={3}
-                    transparent
-                    opacity={0.9}
-                />
-            </mesh>
-
-            {/* Point light for illumination */}
-            <pointLight position={[0, 0, 0]} intensity={3} color="#ff6600" distance={10} />
-        </group>
-    );
-}
-
-// MILKY WAY Galaxy Background
+// MILKY WAY Galaxy Background - FAR AWAY
 function MilkyWayGalaxy() {
     const galaxyRef = useRef();
-    const particleCount = 3000;
+    const particleCount = 5000; // More particles for better detail at distance
 
     // Generate spiral galaxy pattern
     const { positions, colors, sizes } = useMemo(() => {
@@ -102,30 +32,30 @@ function MilkyWayGalaxy() {
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
 
-            // Spiral galaxy math
-            const radius = Math.random() * 15 + 5;
+            // Spiral galaxy math - larger radius for bigger galaxy
+            const radius = Math.random() * 25 + 8; // Bigger galaxy
             const spinAngle = radius * 0.3;
             const branchAngle = ((i % 6) / 6) * Math.PI * 2;
 
-            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
-            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
-            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.8;
+            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4;
+            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.8;
 
             positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-            positions[i3 + 1] = randomY * 0.3;
-            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ - 20; // Far away
+            positions[i3 + 1] = randomY * 0.4;
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ - 50; // MUCH farther away!
 
-            // Colors - mix of blue, white, and orange
+            // Colors - mix of blue, white, and orange (galaxy colors)
             const mixedColor = new THREE.Color();
-            const innerColor = new THREE.Color('#4488ff');
-            const outerColor = new THREE.Color('#ff8844');
-            mixedColor.lerpColors(innerColor, outerColor, radius / 20);
+            const innerColor = new THREE.Color('#5599ff'); // Bright blue core
+            const outerColor = new THREE.Color('#ff9955'); // Orange outer arms
+            mixedColor.lerpColors(innerColor, outerColor, radius / 30);
 
             colors[i3] = mixedColor.r;
             colors[i3 + 1] = mixedColor.g;
             colors[i3 + 2] = mixedColor.b;
 
-            sizes[i] = Math.random() * 2 + 0.5;
+            sizes[i] = Math.random() * 3 + 0.8; // Slightly bigger particles
         }
 
         return { positions, colors, sizes };
@@ -133,7 +63,7 @@ function MilkyWayGalaxy() {
 
     useFrame((state) => {
         if (galaxyRef.current) {
-            galaxyRef.current.rotation.z = state.clock.getElapsedTime() * 0.01;
+            galaxyRef.current.rotation.z = state.clock.getElapsedTime() * 0.005; // Slower rotation
         }
     });
 
@@ -160,152 +90,14 @@ function MilkyWayGalaxy() {
                 />
             </bufferGeometry>
             <pointsMaterial
-                size={0.1}
+                size={0.12}
                 transparent
-                opacity={0.8}
+                opacity={0.7} // Slightly more subtle
                 vertexColors
                 sizeAttenuation={true}
                 blending={THREE.AdditiveBlending}
             />
         </points>
-    );
-}
-
-// NEBULA Clouds
-function NebulaClouds() {
-    const nebulaRef = useRef();
-
-    useFrame((state) => {
-        if (nebulaRef.current) {
-            nebulaRef.current.rotation.z = state.clock.getElapsedTime() * 0.02;
-        }
-    });
-
-    return (
-        <group ref={nebulaRef} position={[0, 0, -15]}>
-            {/* Multiple overlapping spheres create nebula effect */}
-            {[...Array(5)].map((_, i) => (
-                <mesh key={i} position={[(Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 5]}>
-                    <sphereGeometry args={[3 + Math.random() * 3, 32, 32]} />
-                    <meshBasicMaterial
-                        color={i % 2 === 0 ? '#6366f1' : '#ec4899'}
-                        transparent
-                        opacity={0.15}
-                        side={THREE.BackSide}
-                    />
-                </mesh>
-            ))}
-        </group>
-    );
-}
-
-// SHOOTING STAR Component
-function ShootingStar({ startPosition, delay }) {
-    const starRef = useRef();
-    const trailRef = useRef();
-    const [isVisible, setIsVisible] = React.useState(false);
-    const startTime = useRef(null);
-
-    useFrame((state) => {
-        const time = state.clock.getElapsedTime();
-
-        if (!startTime.current && time > delay) {
-            startTime.current = time;
-            setIsVisible(true);
-        }
-
-        if (startTime.current && isVisible) {
-            const elapsed = time - startTime.current;
-            const duration = 2;
-            const progress = elapsed / duration;
-
-            if (progress < 1) {
-                // Move diagonally across screen
-                starRef.current.position.x = startPosition[0] - progress * 15;
-                starRef.current.position.y = startPosition[1] - progress * 8;
-                starRef.current.position.z = startPosition[2] - progress * 5;
-
-                // Fade out
-                if (trailRef.current) {
-                    trailRef.current.material.opacity = 1 - progress;
-                }
-            } else {
-                // Reset for next cycle
-                startTime.current = time + Math.random() * 10;
-                setIsVisible(false);
-            }
-        }
-    });
-
-    if (!isVisible) return null;
-
-    return (
-        <group ref={starRef} position={startPosition}>
-            <mesh>
-                <sphereGeometry args={[0.05, 8, 8]} />
-                <meshBasicMaterial color="#ffffff" />
-            </mesh>
-            {/* Trail */}
-            <mesh ref={trailRef} position={[0.5, 0, 0]} rotation={[0, 0, Math.PI / 4]}>
-                <boxGeometry args={[2, 0.02, 0.02]} />
-                <meshBasicMaterial color="#ffffff" transparent opacity={1} />
-            </mesh>
-            <pointLight position={[0, 0, 0]} intensity={0.5} color="#ffffff" distance={2} />
-        </group>
-    );
-}
-
-// 3D HOLOGRAPHIC SPINNING TEXT
-function HolographicText({ text, position }) {
-    const textGroupRef = useRef();
-    const glitchOffset = useRef({ x: 0, y: 0 });
-
-    useFrame((state) => {
-        const time = state.clock.getElapsedTime();
-
-        // Orbit around center
-        textGroupRef.current.position.x = position[0] + Math.cos(time * 0.3) * 2;
-        textGroupRef.current.position.y = position[1] + Math.sin(time * 0.5) * 0.5;
-        textGroupRef.current.rotation.y = time * 0.5;
-
-        // Random glitch every few seconds
-        if (Math.random() > 0.98) {
-            glitchOffset.current.x = (Math.random() - 0.5) * 0.1;
-            glitchOffset.current.y = (Math.random() - 0.5) * 0.1;
-        } else {
-            glitchOffset.current.x *= 0.9;
-            glitchOffset.current.y *= 0.9;
-        }
-    });
-
-    return (
-        <group ref={textGroupRef} position={position}>
-            {/* Main text using 3D boxes as letters (simplified) */}
-            {text.split('').map((char, i) => (
-                <mesh key={i} position={[(i - text.length / 2) * 0.3, 0, 0]}>
-                    <boxGeometry args={[0.25, 0.4, 0.1]} />
-                    <meshStandardMaterial
-                        color="#00ffff"
-                        emissive="#00ffff"
-                        emissiveIntensity={2}
-                        transparent
-                        opacity={0.8}
-                        wireframe={Math.random() > 0.7} // Random wireframe for glitch
-                    />
-                </mesh>
-            ))}
-
-            {/* Holographic glow layers */}
-            <mesh position={[0, 0, -0.1]}>
-                <planeGeometry args={[text.length * 0.3, 0.6]} />
-                <meshBasicMaterial
-                    color="#00ffff"
-                    transparent
-                    opacity={0.2}
-                    side={THREE.DoubleSide}
-                />
-            </mesh>
-        </group>
     );
 }
 
@@ -455,7 +247,6 @@ function RealisticLaptop({ theme }) {
         <Float speed={1} rotationIntensity={0.1} floatIntensity={0.3}>
             <group
                 ref={laptopRef}
-                position={[2, 0, 0]} // Moved right to make room for black hole
                 onClick={handleClick}
                 onPointerOver={() => {
                     setIsHovered(true);
@@ -617,8 +408,8 @@ function ShatterParticle({ position, velocity, color, size }) {
     );
 }
 
-// Floating Code Symbol Component WITH BLACK HOLE GRAVITY
-function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health, theme, blackHolePosition }) {
+// Floating Code Symbol Component
+function FloatingSymbol({ position, shape, speed, scale, offset, duration, color, health, theme }) {
     const groupRef = useRef();
     const meshRef = useRef();
     const lineRef = useRef();
@@ -629,7 +420,6 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     const [hitAnimation, setHitAnimation] = React.useState(0);
     const audioRef = useRef(null);
     const [shatterParticles, setShatterParticles] = React.useState([]);
-    const [beingSucked, setBeingSucked] = React.useState(false);
 
     const slipVelocity = useRef({ x: 0, y: 0, z: 0 });
     const [isDragging, setIsDragging] = React.useState(false);
@@ -741,40 +531,6 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
     useFrame((state, delta) => {
         if (!groupRef.current || !groupRef.current.visible) return;
 
-        // BLACK HOLE GRAVITY EFFECT
-        if (blackHolePosition && !isDraggingRef.current) {
-            const dx = blackHolePosition[0] - position[0];
-            const dy = blackHolePosition[1] - groupRef.current.position.y;
-            const dz = blackHolePosition[2] - position[2];
-            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            // If within gravity range (5 units), apply pull
-            if (distance < 5) {
-                const pullStrength = (1 - distance / 5) * 0.02; // Stronger as closer
-                const pullX = (dx / distance) * pullStrength;
-                const pullY = (dy / distance) * pullStrength;
-                const pullZ = (dz / distance) * pullStrength;
-
-                position[0] += pullX;
-                position[2] += pullZ;
-
-                // Spaghettification effect - stretch geometry as it approaches
-                if (distance < 2) {
-                    const stretchFactor = 1 + (2 - distance) * 0.5;
-                    groupRef.current.scale.y = scale * stretchFactor;
-                    groupRef.current.rotation.z += delta * 5; // Spin faster
-
-                    // Mark as being sucked
-                    setBeingSucked(true);
-                }
-
-                // Disappear if too close to event horizon
-                if (distance < 0.5) {
-                    groupRef.current.visible = false;
-                }
-            }
-        }
-
         if (isDraggingRef.current) {
             raycaster.current.setFromCamera(mouse.current, camera);
             raycaster.current.ray.intersectPlane(plane.current, intersectionPoint.current);
@@ -829,7 +585,7 @@ function FloatingSymbol({ position, shape, speed, scale, offset, duration, color
             const flashScale = 1 + hitAnimation * 0.3;
             groupRef.current.scale.set(scale * flashScale, scale * flashScale, scale * flashScale);
             setHitAnimation(Math.max(0, hitAnimation - delta * 5));
-        } else if (!beingSucked) {
+        } else {
             groupRef.current.scale.set(scale, scale, scale);
         }
 
@@ -1109,7 +865,7 @@ function SpaceDust({ theme }) {
 }
 
 // Floating Symbols Field
-function FloatingSymbols({ theme, blackHolePosition }) {
+function FloatingSymbols({ theme }) {
     const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
     const spaceColors = [
         '#0ea5e9',
@@ -1148,7 +904,7 @@ function FloatingSymbols({ theme, blackHolePosition }) {
     return (
         <>
             {symbolPositions.map((props, i) => (
-                <FloatingSymbol key={i} {...props} theme={theme} blackHolePosition={blackHolePosition} />
+                <FloatingSymbol key={i} {...props} theme={theme} />
             ))}
         </>
     );
@@ -1156,11 +912,9 @@ function FloatingSymbols({ theme, blackHolePosition }) {
 
 // Main Scene Component
 function Scene({ theme }) {
-    const blackHolePosition = [-3, 0, 0]; // Position on the left
-
     return (
         <>
-            {/* Lighting */}
+            {/* Lighting - adjusted based on theme */}
             <ambientLight intensity={theme === 'light' ? 0.8 : 0.3} />
             <directionalLight
                 position={[5, 5, 5]}
@@ -1176,11 +930,8 @@ function Scene({ theme }) {
                 <pointLight position={[0, 0, 0]} intensity={0.5} color="#0ea5e9" distance={20} />
             )}
 
-            {/* MILKY WAY GALAXY (far background) */}
+            {/* MILKY WAY GALAXY (far, far away in the background) */}
             <MilkyWayGalaxy />
-
-            {/* NEBULA CLOUDS */}
-            <NebulaClouds />
 
             {/* Starfield Background (hidden in light mode) */}
             <Starfield theme={theme} />
@@ -1191,22 +942,11 @@ function Scene({ theme }) {
             {/* Space Dust Particles */}
             <SpaceDust theme={theme} />
 
-            {/* BLACK HOLE (left side) */}
-            <BlackHole position={blackHolePosition} />
+            {/* Floating Code Symbols */}
+            <FloatingSymbols theme={theme} />
 
-            {/* Floating Code Symbols with gravity */}
-            <FloatingSymbols theme={theme} blackHolePosition={blackHolePosition} />
-
-            {/* HOLOGRAPHIC 3D TEXT */}
-            <HolographicText text="DEVELOPER" position={[0, 2.5, 0]} />
-
-            {/* Realistic Floating Laptop (right side) */}
+            {/* Realistic Floating Laptop */}
             <RealisticLaptop theme={theme} />
-
-            {/* SHOOTING STARS */}
-            <ShootingStar startPosition={[8, 4, -5]} delay={2} />
-            <ShootingStar startPosition={[-8, 5, -3]} delay={5} />
-            <ShootingStar startPosition={[6, 3, -8]} delay={8} />
         </>
     );
 }
