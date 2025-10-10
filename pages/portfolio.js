@@ -1281,7 +1281,8 @@ useEffect(() => {
 
                         .nav-menu.active { display: flex; }
                         .nav-menu li { list-style: none; }
-                        .nav-menu a {
+                        .nav-menu a,
+                        .nav-menu button {
                             color: var(--text-secondary);
                             text-decoration: none;
                             font-weight: 500;
@@ -1291,9 +1292,12 @@ useEffect(() => {
                             border-bottom: 1px solid rgba(51, 65, 85, 0.3);
                             position: relative;
                             overflow: hidden;
+                            width: 100%;
+                            text-align: left;
                         }
 
-                        .nav-menu a::before {
+                        .nav-menu a::before,
+                        .nav-menu button::before {
                             content: '';
                             position: absolute;
                             left: 0;
@@ -1305,13 +1309,15 @@ useEffect(() => {
                             transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                         }
 
-                        .nav-menu a:hover {
+                        .nav-menu a:hover,
+                        .nav-menu button:hover {
                             color: var(--primary-color);
                             background: rgba(14, 165, 233, 0.03);
                             letter-spacing: 1px;
                         }
 
-                        .nav-menu a:hover::before {
+                        .nav-menu a:hover::before,
+                        .nav-menu button:hover::before {
                             transform: translateX(0);
                         }
 
