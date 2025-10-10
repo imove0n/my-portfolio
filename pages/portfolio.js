@@ -2602,14 +2602,6 @@ Your browser does not support the audio element.
                                     aria-label="Toggle Projects dropdown menu"
                                     aria-haspopup="true"
                                     aria-expanded={isProjectsDropdownOpen}
-                                    style={{
-                                        background: 'none',
-                                        border: 'none',
-                                        color: 'inherit',
-                                        font: 'inherit',
-                                        cursor: 'pointer',
-                                        padding: 0
-                                    }}
                                 >
                                     Projects <i className="fas fa-chevron-down"></i>
                                 </button>
