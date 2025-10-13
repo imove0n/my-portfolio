@@ -116,16 +116,15 @@ function DistantGalaxies() {
         ];
 
         return Array.from({ length: 7 }).map((_, index) => {
-            // Define zones: top-left, top-right, bottom-left, bottom-right, top-center, bottom-center, left-center
-            // AVOID CENTER where laptop is!
+            // Define zones: EXTREME EDGES AND CORNERS - far from center!
             const zones = [
-                { xRange: [-50, -20], yRange: [15, 35] },    // Top-left
-                { xRange: [20, 50], yRange: [15, 35] },      // Top-right
-                { xRange: [-50, -20], yRange: [-35, -15] },  // Bottom-left
-                { xRange: [20, 50], yRange: [-35, -15] },    // Bottom-right
-                { xRange: [-15, 15], yRange: [20, 40] },     // Top-center
-                { xRange: [-15, 15], yRange: [-40, -20] },   // Bottom-center
-                { xRange: [-55, -35], yRange: [-10, 10] }    // Far-left-center
+                { xRange: [-70, -50], yRange: [35, 50] },    // TOP-LEFT CORNER (extreme)
+                { xRange: [50, 70], yRange: [35, 50] },      // TOP-RIGHT CORNER (extreme)
+                { xRange: [-70, -50], yRange: [-50, -35] },  // BOTTOM-LEFT CORNER (extreme)
+                { xRange: [50, 70], yRange: [-50, -35] },    // BOTTOM-RIGHT CORNER (extreme)
+                { xRange: [-10, 10], yRange: [40, 55] },     // TOP EDGE (high up)
+                { xRange: [-10, 10], yRange: [-55, -40] },   // BOTTOM EDGE (low down)
+                { xRange: [-75, -60], yRange: [-15, 15] }    // FAR-LEFT EDGE
             ];
 
             const zone = zones[index];
