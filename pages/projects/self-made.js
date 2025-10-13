@@ -1,13 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 export default function SelfMadeProjects() {
     const router = useRouter();
+    const cursorRef = useRef(null);
+    const [isClicking, setIsClicking] = useState(false);
 
     const goBack = () => {
         router.push('/portfolio#projects');
     };
+
+    // Custom cursor movement
+    useEffect(() => {
+        const moveCursor = (e) => {
+            if (cursorRef.current) {
+                cursorRef.current.style.left = e.clientX + 'px';
+                cursorRef.current.style.top = e.clientY + 'px';
+            }
+        };
+
+        const handleMouseDown = () => setIsClicking(true);
+        const handleMouseUp = () => setIsClicking(false);
+
+        window.addEventListener('mousemove', moveCursor);
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, []);
 
     // Projects data - Replace URLs with your actual Vercel deployments
     const projects = [
@@ -59,7 +84,7 @@ export default function SelfMadeProjects() {
                         color: #f8fafc;
                         min-height: 100vh;
                         overflow-x: hidden;
-                        cursor: url('/doto.cur'), auto;
+                        cursor: none;
                     }
 
                     .container {
@@ -391,6 +416,39 @@ export default function SelfMadeProjects() {
                             height: 200px;
                         }
                     }
+
+                    /* Custom space-themed cursor */
+                    .custom-cursor {
+                        position: fixed;
+                        width: 20px;
+                        height: 20px;
+                        border: 2px solid #0ea5e9;
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 9999;
+                        transition: transform 0.15s ease, opacity 0.15s ease;
+                        box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), inset 0 0 10px rgba(14, 165, 233, 0.3);
+                        background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent);
+                    }
+
+                    .custom-cursor::after {
+                        content: '';
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: #0ea5e9;
+                        border-radius: 50%;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        box-shadow: 0 0 10px #0ea5e9;
+                    }
+
+                    .custom-cursor.clicking {
+                        transform: scale(0.8);
+                        border-color: #ec4899;
+                        box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+                    }
                 `}</style>
             </Head>
 
@@ -449,6 +507,9 @@ export default function SelfMadeProjects() {
                 </div>
                 */}
             </div>
+
+            {/* Custom Cursor */}
+            <div className={`custom-cursor ${isClicking ? 'clicking' : ''}`} ref={cursorRef}></div>
         </>
     );
 }

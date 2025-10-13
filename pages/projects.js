@@ -88,7 +88,7 @@ export default function ProjectsHub() {
                         color: #f8fafc;
                         min-height: 100vh;
                         overflow-x: hidden;
-                        cursor: url('/doto.cur'), auto;
+                        cursor: none;
                     }
 
                     .projects-container {
