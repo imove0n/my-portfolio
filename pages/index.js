@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
@@ -12,6 +12,8 @@ export default function LoadingPage() {
     const [hasPlayed, setHasPlayed] = useState(false);
     const [typedTitle, setTypedTitle] = useState('');
     const [typedCompile, setTypedCompile] = useState('');
+    const cursorRef = useRef(null);
+    const [isClicking, setIsClicking] = useState(false);
 
     const messages = [
         { id: 'msg1', text: 'Initializing development environment...', threshold: 10 },
@@ -189,6 +191,29 @@ export default function LoadingPage() {
         return () => clearTimeout(startTyping);
     }, []);
 
+    // Custom cursor movement
+    useEffect(() => {
+        const moveCursor = (e) => {
+            if (cursorRef.current) {
+                cursorRef.current.style.left = e.clientX + 'px';
+                cursorRef.current.style.top = e.clientY + 'px';
+            }
+        };
+
+        const handleMouseDown = () => setIsClicking(true);
+        const handleMouseUp = () => setIsClicking(false);
+
+        window.addEventListener('mousemove', moveCursor);
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, []);
+
     const enterPortfolio = () => {
         const audio = document.getElementById('backgroundMusic');
         if (audio && !audio.muted) {
@@ -223,7 +248,7 @@ export default function LoadingPage() {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <style>{`
                     body {
-                        cursor: url('/doto.cur'), auto;
+                        cursor: none;
                         font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
                         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
                         color: #f8fafc;
@@ -1063,6 +1088,39 @@ export default function LoadingPage() {
                         }
                         .floating-symbols { display: none; }
                     }
+
+                    /* Custom space-themed cursor */
+                    .custom-cursor {
+                        position: fixed;
+                        width: 20px;
+                        height: 20px;
+                        border: 2px solid #0ea5e9;
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 9999;
+                        transition: transform 0.15s ease, opacity 0.15s ease;
+                        box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), inset 0 0 10px rgba(14, 165, 233, 0.3);
+                        background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent);
+                    }
+
+                    .custom-cursor::after {
+                        content: '';
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: #0ea5e9;
+                        border-radius: 50%;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        box-shadow: 0 0 10px #0ea5e9;
+                    }
+
+                    .custom-cursor.clicking {
+                        transform: scale(0.8);
+                        border-color: #ec4899;
+                        box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+                    }
                 `}</style>
             </Head>
 
@@ -1177,6 +1235,9 @@ export default function LoadingPage() {
                     </button>
                 </div>
             </div>
+
+            {/* Custom Cursor */}
+            <div className={`custom-cursor ${isClicking ? 'clicking' : ''}`} ref={cursorRef}></div>
         </>
     );
 }
