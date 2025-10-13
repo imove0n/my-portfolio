@@ -1085,9 +1085,6 @@ function Scene({ theme }) {
             {/* MILKY WAY GALAXY (far, far away in the background) */}
             <MilkyWayGalaxy />
 
-            {/* DISTANT GALAXIES (multiple smaller galaxies even farther away) */}
-            <DistantGalaxies />
-
             {/* Starfield Background (hidden in light mode) */}
             <Starfield theme={theme} />
 
