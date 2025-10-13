@@ -941,10 +941,11 @@ useEffect(() => {
 
                         .player-title {
                             font-size: 0.75rem;
-                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
+                            color: ${theme === 'light' ? '#ffffff' : 'var(--text-secondary)'};
                             text-transform: uppercase;
                             letter-spacing: 1px;
-                            font-weight: ${theme === 'light' ? '700' : '600'};
+                            font-weight: 700;
+                            text-shadow: ${theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'};
                         }
 
                         .play-pause-btn {
@@ -1012,11 +1013,12 @@ useEffect(() => {
                         .audio-title {
                             font-size: 0.9rem;
                             font-weight: 600;
-                            color: var(--text-primary);
+                            color: ${theme === 'light' ? '#ffffff' : 'var(--text-primary)'};
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
                             margin-bottom: 8px;
+                            text-shadow: ${theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'};
                         }
 
                         .audio-progress {
@@ -1024,8 +1026,9 @@ useEffect(() => {
                             align-items: center;
                             gap: 8px;
                             font-size: 0.7rem;
-                            color: ${theme === 'light' ? '#334155' : 'var(--text-secondary)'};
-                            font-weight: ${theme === 'light' ? '600' : '400'};
+                            color: ${theme === 'light' ? '#ffffff' : 'var(--text-secondary)'};
+                            font-weight: 600;
+                            text-shadow: ${theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.5)' : 'none'};
                         }
 
                         .progress-bar {
@@ -1284,17 +1287,18 @@ useEffect(() => {
                         .nav-menu li { list-style: none; }
                         .nav-menu a,
                         .nav-menu button {
-                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
+                            color: ${theme === 'light' ? '#ffffff' : 'var(--text-secondary)'};
                             text-decoration: none;
-                            font-weight: ${theme === 'light' ? '600' : '500'};
+                            font-weight: 600;
                             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                             padding: 1rem 2rem;
                             display: block;
-                            border-bottom: 1px solid ${theme === 'light' ? 'rgba(203, 213, 225, 0.5)' : 'rgba(51, 65, 85, 0.3)'};
+                            border-bottom: 1px solid ${theme === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(51, 65, 85, 0.3)'};
                             position: relative;
                             overflow: hidden;
                             width: 100%;
                             text-align: left;
+                            text-shadow: ${theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4)' : 'none'};
                         }
 
                         .nav-menu a::before,
