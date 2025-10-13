@@ -116,19 +116,37 @@ function DistantGalaxies() {
         ];
 
         return Array.from({ length: 7 }).map((_, index) => {
-            // Random position in 3D space
-            const x = (Math.random() - 0.5) * 80; // Random X: -40 to +40
-            const y = (Math.random() - 0.5) * 60; // Random Y: -30 to +30
+            // Define zones: top-left, top-right, bottom-left, bottom-right, top-center, bottom-center, left-center
+            // AVOID CENTER where laptop is!
+            const zones = [
+                { xRange: [-50, -20], yRange: [15, 35] },    // Top-left
+                { xRange: [20, 50], yRange: [15, 35] },      // Top-right
+                { xRange: [-50, -20], yRange: [-35, -15] },  // Bottom-left
+                { xRange: [20, 50], yRange: [-35, -15] },    // Bottom-right
+                { xRange: [-15, 15], yRange: [20, 40] },     // Top-center
+                { xRange: [-15, 15], yRange: [-40, -20] },   // Bottom-center
+                { xRange: [-55, -35], yRange: [-10, 10] }    // Far-left-center
+            ];
+
+            const zone = zones[index];
+            const x = zone.xRange[0] + Math.random() * (zone.xRange[1] - zone.xRange[0]);
+            const y = zone.yRange[0] + Math.random() * (zone.yRange[1] - zone.yRange[0]);
             const z = -150 - Math.random() * 100; // Random Z: -150 to -250 (super far!)
+
+            // Random 3D rotation for tilted/angled galaxies (like real galaxy photos!)
+            const rotationX = (Math.random() - 0.5) * Math.PI; // Random tilt X-axis
+            const rotationY = (Math.random() - 0.5) * Math.PI; // Random tilt Y-axis
+            const rotationZ = Math.random() * Math.PI * 2;     // Random facing direction
 
             return {
                 position: [x, y, z],
                 particleCount: 600 + Math.floor(Math.random() * 400), // 600-1000 particles (small)
                 radius: [3 + Math.random() * 2, 8 + Math.random() * 4], // Small radius: 3-5 to 8-12
-                rotation: 0.0005 + Math.random() * 0.002, // Slow rotation
+                rotation: 0.0005 + Math.random() * 0.002, // Slow rotation speed
                 spiralArms: 3 + Math.floor(Math.random() * 3), // 3-5 arms
                 colors: colorPalette[index],
-                opacity: 0.25 + Math.random() * 0.2 // 0.25-0.45 (faint)
+                opacity: 0.25 + Math.random() * 0.2, // 0.25-0.45 (faint)
+                initialRotation: [rotationX, rotationY, rotationZ] // 3D tilt angles!
             };
         });
     }, []); // Empty dependency = generates new positions on every mount/reload
@@ -143,8 +161,17 @@ function DistantGalaxies() {
 }
 
 // Single distant galaxy component
-function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors, spiralArms, opacity }) {
+function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors, spiralArms, opacity, initialRotation }) {
     const galaxyRef = useRef();
+
+    // Set initial 3D rotation on mount
+    React.useEffect(() => {
+        if (galaxyRef.current && initialRotation) {
+            galaxyRef.current.rotation.x = initialRotation[0];
+            galaxyRef.current.rotation.y = initialRotation[1];
+            galaxyRef.current.rotation.z = initialRotation[2];
+        }
+    }, [initialRotation]);
 
     const { positions, colors: particleColors, sizes } = useMemo(() => {
         const positions = new Float32Array(particleCount * 3);
@@ -187,8 +214,9 @@ function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors
     }, [particleCount, radius, colors, spiralArms]);
 
     useFrame((state) => {
-        if (galaxyRef.current) {
-            galaxyRef.current.rotation.z = state.clock.getElapsedTime() * rotation;
+        if (galaxyRef.current && initialRotation) {
+            // Keep the initial X and Y rotation, only animate Z rotation slowly
+            galaxyRef.current.rotation.z = initialRotation[2] + state.clock.getElapsedTime() * rotation;
         }
     });
 
