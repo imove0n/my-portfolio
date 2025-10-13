@@ -101,53 +101,37 @@ function MilkyWayGalaxy() {
     );
 }
 
-// DISTANT GALAXIES - Unique, realistic, well-spaced galaxies
+// DISTANT GALAXIES - 7 small random galaxies that change position on every reload
 function DistantGalaxies() {
-    // Each galaxy is UNIQUE - different size, distance, position, color, particle count, spiral arms
+    // Generate 7 random small distant galaxies - different position on each page load
     const galaxies = useMemo(() => {
-        return [
-            {
-                // Tiny distant galaxy - top right corner, extremely far
-                position: [25, 18, -120],
-                particleCount: 800, // Very small
-                radius: [3, 8], // Compact
-                rotation: 0.001, // Slow rotation
-                spiralArms: 3, // Fewer arms
-                colors: ['#8899ff', '#aabbff'], // Subtle blue tones
-                opacity: 0.35 // Very faint
-            },
-            {
-                // Medium galaxy - far left, mid-height
-                position: [-35, 5, -95],
-                particleCount: 2000, // Medium size
-                radius: [10, 22], // Bigger spread
-                rotation: 0.004, // Faster rotation
-                spiralArms: 5, // More arms
-                colors: ['#ff88aa', '#ffccdd'], // Pink-ish
-                opacity: 0.5
-            },
-            {
-                // Large but very distant - bottom center
-                position: [5, -20, -140],
-                particleCount: 2500, // Larger
-                radius: [12, 28], // Wide spiral
-                rotation: 0.0015, // Slow majestic rotation
-                spiralArms: 6, // Many arms
-                colors: ['#ffaa66', '#ff8844'], // Orange tones
-                opacity: 0.4 // Distant and faint
-            },
-            {
-                // Small tilted galaxy - upper left
-                position: [-22, 25, -105],
-                particleCount: 1100, // Smaller
-                radius: [5, 14], // Compact spiral
-                rotation: 0.003,
-                spiralArms: 4,
-                colors: ['#99ffcc', '#66ddaa'], // Teal/cyan
-                opacity: 0.45
-            }
+        const colorPalette = [
+            ['#6688ff', '#99aaff'],
+            ['#ff88bb', '#ffaacc'],
+            ['#88ffaa', '#aaffcc'],
+            ['#ffaa77', '#ffcc99'],
+            ['#aa88ff', '#ccaaff'],
+            ['#77ddff', '#99eeff'],
+            ['#ffbb88', '#ffddaa']
         ];
-    }, []);
+
+        return Array.from({ length: 7 }).map((_, index) => {
+            // Random position in 3D space
+            const x = (Math.random() - 0.5) * 80; // Random X: -40 to +40
+            const y = (Math.random() - 0.5) * 60; // Random Y: -30 to +30
+            const z = -150 - Math.random() * 100; // Random Z: -150 to -250 (super far!)
+
+            return {
+                position: [x, y, z],
+                particleCount: 600 + Math.floor(Math.random() * 400), // 600-1000 particles (small)
+                radius: [3 + Math.random() * 2, 8 + Math.random() * 4], // Small radius: 3-5 to 8-12
+                rotation: 0.0005 + Math.random() * 0.002, // Slow rotation
+                spiralArms: 3 + Math.floor(Math.random() * 3), // 3-5 arms
+                colors: colorPalette[index],
+                opacity: 0.25 + Math.random() * 0.2 // 0.25-0.45 (faint)
+            };
+        });
+    }, []); // Empty dependency = generates new positions on every mount/reload
 
     return (
         <>
