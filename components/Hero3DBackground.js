@@ -101,38 +101,50 @@ function MilkyWayGalaxy() {
     );
 }
 
-// DISTANT GALAXIES - Multiple smaller galaxies even farther away
+// DISTANT GALAXIES - Unique, realistic, well-spaced galaxies
 function DistantGalaxies() {
-    // Create 3-4 small distant galaxies at different positions
+    // Each galaxy is UNIQUE - different size, distance, position, color, particle count, spiral arms
     const galaxies = useMemo(() => {
         return [
             {
-                position: [15, -8, -80], // Far right, lower, very far back
-                particleCount: 1500,
-                radius: [8, 18],
+                // Tiny distant galaxy - top right corner, extremely far
+                position: [25, 18, -120],
+                particleCount: 800, // Very small
+                radius: [3, 8], // Compact
+                rotation: 0.001, // Slow rotation
+                spiralArms: 3, // Fewer arms
+                colors: ['#8899ff', '#aabbff'], // Subtle blue tones
+                opacity: 0.35 // Very faint
+            },
+            {
+                // Medium galaxy - far left, mid-height
+                position: [-35, 5, -95],
+                particleCount: 2000, // Medium size
+                radius: [10, 22], // Bigger spread
+                rotation: 0.004, // Faster rotation
+                spiralArms: 5, // More arms
+                colors: ['#ff88aa', '#ffccdd'], // Pink-ish
+                opacity: 0.5
+            },
+            {
+                // Large but very distant - bottom center
+                position: [5, -20, -140],
+                particleCount: 2500, // Larger
+                radius: [12, 28], // Wide spiral
+                rotation: 0.0015, // Slow majestic rotation
+                spiralArms: 6, // Many arms
+                colors: ['#ffaa66', '#ff8844'], // Orange tones
+                opacity: 0.4 // Distant and faint
+            },
+            {
+                // Small tilted galaxy - upper left
+                position: [-22, 25, -105],
+                particleCount: 1100, // Smaller
+                radius: [5, 14], // Compact spiral
                 rotation: 0.003,
-                colors: ['#6699ff', '#ffaa66']
-            },
-            {
-                position: [-20, 10, -90], // Far left, higher, extremely far back
-                particleCount: 1200,
-                radius: [6, 15],
-                rotation: 0.002,
-                colors: ['#ff99cc', '#66ccff']
-            },
-            {
-                position: [8, 15, -100], // Upper right, super far
-                particleCount: 1000,
-                radius: [5, 12],
-                rotation: 0.0025,
-                colors: ['#99ff99', '#ffcc66']
-            },
-            {
-                position: [-10, -12, -85], // Lower left, very far
-                particleCount: 1300,
-                radius: [7, 16],
-                rotation: 0.0018,
-                colors: ['#cc99ff', '#ff9966']
+                spiralArms: 4,
+                colors: ['#99ffcc', '#66ddaa'], // Teal/cyan
+                opacity: 0.45
             }
         ];
     }, []);
@@ -147,7 +159,7 @@ function DistantGalaxies() {
 }
 
 // Single distant galaxy component
-function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors }) {
+function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors, spiralArms, opacity }) {
     const galaxyRef = useRef();
 
     const { positions, colors: particleColors, sizes } = useMemo(() => {
@@ -158,34 +170,37 @@ function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
 
-            // Spiral galaxy math
+            // Spiral galaxy math - using unique spiral arms count
             const r = Math.random() * (radius[1] - radius[0]) + radius[0];
-            const spinAngle = r * 0.3;
-            const branchAngle = ((i % 5) / 5) * Math.PI * 2;
+            const spinAngle = r * (0.2 + Math.random() * 0.2); // Variable spin tightness
+            const branchAngle = ((i % spiralArms) / spiralArms) * Math.PI * 2;
 
-            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.6;
-            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
-            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.6;
+            // More variation in particle distribution for authenticity
+            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (0.4 + Math.random() * 0.4);
+            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.3);
+            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * (0.4 + Math.random() * 0.4);
 
             positions[i3] = Math.cos(branchAngle + spinAngle) * r + randomX;
-            positions[i3 + 1] = randomY * 0.3;
+            positions[i3 + 1] = randomY * (0.2 + Math.random() * 0.2); // Variable thickness
             positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + randomZ;
 
-            // Color mixing
+            // Color mixing with more variation
             const mixedColor = new THREE.Color();
             const innerColor = new THREE.Color(colors[0]);
             const outerColor = new THREE.Color(colors[1]);
-            mixedColor.lerpColors(innerColor, outerColor, r / radius[1]);
+            const colorMix = r / radius[1] + (Math.random() - 0.5) * 0.2; // Add some randomness
+            mixedColor.lerpColors(innerColor, outerColor, Math.max(0, Math.min(1, colorMix)));
 
             particleColors[i3] = mixedColor.r;
             particleColors[i3 + 1] = mixedColor.g;
             particleColors[i3 + 2] = mixedColor.b;
 
-            sizes[i] = Math.random() * 1.5 + 0.3;
+            // Variable particle sizes for more realistic look
+            sizes[i] = Math.random() * 1.2 + 0.2;
         }
 
         return { positions, colors: particleColors, sizes };
-    }, [particleCount, radius, colors]);
+    }, [particleCount, radius, colors, spiralArms]);
 
     useFrame((state) => {
         if (galaxyRef.current) {
@@ -218,7 +233,7 @@ function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors
             <pointsMaterial
                 size={0.08}
                 transparent
-                opacity={0.5}
+                opacity={opacity}
                 vertexColors
                 sizeAttenuation={true}
                 blending={THREE.AdditiveBlending}
