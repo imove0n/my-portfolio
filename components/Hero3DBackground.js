@@ -101,6 +101,132 @@ function MilkyWayGalaxy() {
     );
 }
 
+// DISTANT GALAXIES - Multiple smaller galaxies even farther away
+function DistantGalaxies() {
+    // Create 3-4 small distant galaxies at different positions
+    const galaxies = useMemo(() => {
+        return [
+            {
+                position: [15, -8, -80], // Far right, lower, very far back
+                particleCount: 1500,
+                radius: [8, 18],
+                rotation: 0.003,
+                colors: ['#6699ff', '#ffaa66']
+            },
+            {
+                position: [-20, 10, -90], // Far left, higher, extremely far back
+                particleCount: 1200,
+                radius: [6, 15],
+                rotation: 0.002,
+                colors: ['#ff99cc', '#66ccff']
+            },
+            {
+                position: [8, 15, -100], // Upper right, super far
+                particleCount: 1000,
+                radius: [5, 12],
+                rotation: 0.0025,
+                colors: ['#99ff99', '#ffcc66']
+            },
+            {
+                position: [-10, -12, -85], // Lower left, very far
+                particleCount: 1300,
+                radius: [7, 16],
+                rotation: 0.0018,
+                colors: ['#cc99ff', '#ff9966']
+            }
+        ];
+    }, []);
+
+    return (
+        <>
+            {galaxies.map((galaxy, index) => (
+                <SingleDistantGalaxy key={index} {...galaxy} />
+            ))}
+        </>
+    );
+}
+
+// Single distant galaxy component
+function SingleDistantGalaxy({ position, particleCount, radius, rotation, colors }) {
+    const galaxyRef = useRef();
+
+    const { positions, colors: particleColors, sizes } = useMemo(() => {
+        const positions = new Float32Array(particleCount * 3);
+        const particleColors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+
+        for (let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+
+            // Spiral galaxy math
+            const r = Math.random() * (radius[1] - radius[0]) + radius[0];
+            const spinAngle = r * 0.3;
+            const branchAngle = ((i % 5) / 5) * Math.PI * 2;
+
+            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.6;
+            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
+            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.6;
+
+            positions[i3] = Math.cos(branchAngle + spinAngle) * r + randomX;
+            positions[i3 + 1] = randomY * 0.3;
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + randomZ;
+
+            // Color mixing
+            const mixedColor = new THREE.Color();
+            const innerColor = new THREE.Color(colors[0]);
+            const outerColor = new THREE.Color(colors[1]);
+            mixedColor.lerpColors(innerColor, outerColor, r / radius[1]);
+
+            particleColors[i3] = mixedColor.r;
+            particleColors[i3 + 1] = mixedColor.g;
+            particleColors[i3 + 2] = mixedColor.b;
+
+            sizes[i] = Math.random() * 1.5 + 0.3;
+        }
+
+        return { positions, colors: particleColors, sizes };
+    }, [particleCount, radius, colors]);
+
+    useFrame((state) => {
+        if (galaxyRef.current) {
+            galaxyRef.current.rotation.z = state.clock.getElapsedTime() * rotation;
+        }
+    });
+
+    return (
+        <points ref={galaxyRef} position={position}>
+            <bufferGeometry>
+                <bufferAttribute
+                    attach="attributes-position"
+                    count={particleCount}
+                    array={positions}
+                    itemSize={3}
+                />
+                <bufferAttribute
+                    attach="attributes-color"
+                    count={particleCount}
+                    array={particleColors}
+                    itemSize={3}
+                />
+                <bufferAttribute
+                    attach="attributes-size"
+                    count={particleCount}
+                    array={sizes}
+                    itemSize={1}
+                />
+            </bufferGeometry>
+            <pointsMaterial
+                size={0.08}
+                transparent
+                opacity={0.5}
+                vertexColors
+                sizeAttenuation={true}
+                blending={THREE.AdditiveBlending}
+            />
+        </points>
+    );
+}
+
 // Realistic Laptop Component (keeping your original)
 function RealisticLaptop({ theme }) {
     const laptopRef = useRef();
@@ -932,6 +1058,9 @@ function Scene({ theme }) {
 
             {/* MILKY WAY GALAXY (far, far away in the background) */}
             <MilkyWayGalaxy />
+
+            {/* DISTANT GALAXIES (multiple smaller galaxies even farther away) */}
+            <DistantGalaxies />
 
             {/* Starfield Background (hidden in light mode) */}
             <Starfield theme={theme} />
