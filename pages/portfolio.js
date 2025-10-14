@@ -1294,11 +1294,21 @@ useEffect(() => {
                             left: 0;
                             right: 0;
                             width: 100%;
-                            background: rgba(15, 23, 42, 0.95);
-                            backdrop-filter: blur(20px);
-                            border-bottom: 1px solid var(--border-color);
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.15)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.5)'
+                                : 'rgba(15, 23, 42, 0.4)'};
+                            backdrop-filter: blur(25px) saturate(180%);
+                            -webkit-backdrop-filter: blur(25px) saturate(180%);
+                            border-bottom: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(148, 163, 184, 0.15)'};
                             z-index: 1000;
                             transition: all 0.3s ease, background 0.5s ease, border-color 0.5s ease;
+                            box-shadow:
+                                0 4px 24px 0 rgba(0, 0, 0, 0.08),
+                                inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
                         }
 
                         .nav-container {
@@ -2063,14 +2073,38 @@ useEffect(() => {
 
                         /* Current Learning Section */
                         .current-learning {
-                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
-                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.15)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.4)'
+                                : 'rgba(15, 23, 42, 0.3)'};
+                            backdrop-filter: blur(20px) saturate(180%);
+                            -webkit-backdrop-filter: blur(20px) saturate(180%);
                             padding: 1.5rem;
-                            border-radius: 12px;
-                            border: 1px solid var(--border-color);
+                            border-radius: 16px;
+                            border: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(148, 163, 184, 0.2)'};
                             margin-top: 2rem;
                             text-align: center;
                             transition: all 0.3s ease;
+                            position: relative;
+                            box-shadow:
+                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                        }
+
+                        .current-learning::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 1px;
+                            background: linear-gradient(90deg,
+                                transparent,
+                                rgba(255, 255, 255, 0.3),
+                                transparent);
                         }
 
                         .current-learning:hover {
@@ -2285,13 +2319,23 @@ useEffect(() => {
                         }
 
                         .flip-card-front {
-                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
-                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
-                            border: 1px solid var(--border-color);
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.18)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.45)'
+                                : 'rgba(15, 23, 42, 0.35)'};
+                            backdrop-filter: blur(20px) saturate(180%);
+                            -webkit-backdrop-filter: blur(20px) saturate(180%);
+                            border: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(148, 163, 184, 0.2)'};
                             padding: 1.5rem;
                             transform: rotateY(0deg);
                             overflow: hidden;
                             transition: all 0.3s ease;
+                            box-shadow:
+                                0 8px 32px 0 rgba(0, 0, 0, 0.12),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
                         }
 
                         .flip-card:hover .flip-card-front {
@@ -2310,13 +2354,22 @@ useEffect(() => {
                         }
 
                         .flip-card-back {
-                            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.2)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.5)'
+                                : 'rgba(15, 23, 42, 0.4)'};
+                            backdrop-filter: blur(25px) saturate(200%);
+                            -webkit-backdrop-filter: blur(25px) saturate(200%);
                             border: 2px solid var(--primary-color);
                             transform: rotateY(180deg);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             padding: 2rem;
+                            box-shadow:
+                                0 12px 40px 0 rgba(14, 165, 233, 0.2),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
                         }
 
                         .flip-card-back img {
@@ -2429,13 +2482,37 @@ useEffect(() => {
                         }
 
                         .skill-item {
-                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
-                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
-                            border: 1px solid var(--border-color);
-                            border-radius: 10px;
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.12)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.35)'
+                                : 'rgba(15, 23, 42, 0.25)'};
+                            backdrop-filter: blur(16px) saturate(180%);
+                            -webkit-backdrop-filter: blur(16px) saturate(180%);
+                            border: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.25)'
+                                : 'rgba(148, 163, 184, 0.18)'};
+                            border-radius: 12px;
                             padding: 1.2rem;
                             text-align: center;
                             transition: all 0.3s ease;
+                            position: relative;
+                            box-shadow:
+                                0 4px 24px 0 rgba(0, 0, 0, 0.08),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+                        }
+
+                        .skill-item::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 1px;
+                            background: linear-gradient(90deg,
+                                transparent,
+                                rgba(255, 255, 255, 0.2),
+                                transparent);
                         }
 
                         .skill-item:hover {
@@ -2480,13 +2557,37 @@ useEffect(() => {
 
                         .contact-info {
                             text-align: center;
-                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
-                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
-                            border: 1px solid var(--border-color);
-                            border-radius: 12px;
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.15)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.4)'
+                                : 'rgba(15, 23, 42, 0.3)'};
+                            backdrop-filter: blur(20px) saturate(180%);
+                            -webkit-backdrop-filter: blur(20px) saturate(180%);
+                            border: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(148, 163, 184, 0.2)'};
+                            border-radius: 16px;
                             padding: 1.5rem;
                             margin-bottom: 2rem;
                             transition: all 0.3s ease;
+                            position: relative;
+                            box-shadow:
+                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                        }
+
+                        .contact-info::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 1px;
+                            background: linear-gradient(90deg,
+                                transparent,
+                                rgba(255, 255, 255, 0.3),
+                                transparent);
                         }
 
                         .contact-info:hover {
