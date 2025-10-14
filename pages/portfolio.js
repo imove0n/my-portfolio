@@ -2075,7 +2075,7 @@ useEffect(() => {
                         /* Current Learning Section */
                         .current-learning {
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.15)'
+                                ? 'rgba(255, 255, 255, 0.75)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.4)'
                                 : 'rgba(15, 23, 42, 0.3)'};
@@ -2084,15 +2084,15 @@ useEffect(() => {
                             padding: 1.5rem;
                             border-radius: 16px;
                             border: 1px solid ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.3)'
+                                ? 'rgba(100, 116, 139, 0.2)'
                                 : 'rgba(148, 163, 184, 0.2)'};
                             margin-top: 2rem;
                             text-align: center;
                             transition: all 0.3s ease;
                             position: relative;
-                            box-shadow:
-                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                            box-shadow: ${theme === 'light'
+                                ? '0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
+                                : '0 8px 32px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'};
                         }
 
                         .current-learning::before {
@@ -2104,7 +2104,7 @@ useEffect(() => {
                             height: 1px;
                             background: linear-gradient(90deg,
                                 transparent,
-                                rgba(255, 255, 255, 0.3),
+                                ${theme === 'light' ? 'rgba(100, 116, 139, 0.3)' : 'rgba(255, 255, 255, 0.3)'},
                                 transparent);
                         }
 
@@ -2250,14 +2250,14 @@ useEffect(() => {
 
                         .card {
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.15)'
+                                ? 'rgba(255, 255, 255, 0.75)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.4)'
                                 : 'rgba(15, 23, 42, 0.3)'};
                             backdrop-filter: blur(20px) saturate(180%);
                             -webkit-backdrop-filter: blur(20px) saturate(180%);
                             border: 1px solid ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.3)'
+                                ? 'rgba(100, 116, 139, 0.2)'
                                 : 'rgba(148, 163, 184, 0.2)'};
                             border-radius: 16px;
                             padding: 1.5rem;
@@ -2266,9 +2266,9 @@ useEffect(() => {
                             overflow: hidden;
                             min-height: 240px;
                             cursor: pointer;
-                            box-shadow:
-                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                            box-shadow: ${theme === 'light'
+                                ? '0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
+                                : '0 8px 32px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'};
                         }
 
                         .card::before {
@@ -2280,7 +2280,7 @@ useEffect(() => {
                             height: 1px;
                             background: linear-gradient(90deg,
                                 transparent,
-                                rgba(255, 255, 255, 0.3),
+                                ${theme === 'light' ? 'rgba(100, 116, 139, 0.3)' : 'rgba(255, 255, 255, 0.3)'},
                                 transparent);
                         }
 
@@ -2321,22 +2321,22 @@ useEffect(() => {
 
                         .flip-card-front {
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.18)'
+                                ? 'rgba(255, 255, 255, 0.75)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.45)'
                                 : 'rgba(15, 23, 42, 0.35)'};
                             backdrop-filter: blur(20px) saturate(180%);
                             -webkit-backdrop-filter: blur(20px) saturate(180%);
                             border: 1px solid ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.3)'
+                                ? 'rgba(100, 116, 139, 0.2)'
                                 : 'rgba(148, 163, 184, 0.2)'};
                             padding: 1.5rem;
                             transform: rotateY(0deg);
                             overflow: hidden;
                             transition: all 0.3s ease;
-                            box-shadow:
-                                0 8px 32px 0 rgba(0, 0, 0, 0.12),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                            box-shadow: ${theme === 'light'
+                                ? '0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
+                                : '0 8px 32px 0 rgba(0, 0, 0, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'};
                         }
 
                         .flip-card:hover .flip-card-front {
@@ -2356,7 +2356,7 @@ useEffect(() => {
 
                         .flip-card-back {
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.2)'
+                                ? 'rgba(255, 255, 255, 0.8)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.5)'
                                 : 'rgba(15, 23, 42, 0.4)'};
@@ -2368,9 +2368,9 @@ useEffect(() => {
                             align-items: center;
                             justify-content: center;
                             padding: 2rem;
-                            box-shadow:
-                                0 12px 40px 0 rgba(14, 165, 233, 0.2),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+                            box-shadow: ${theme === 'light'
+                                ? '0 12px 40px 0 rgba(2, 132, 199, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.9)'
+                                : '0 12px 40px 0 rgba(14, 165, 233, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.12)'};
                         }
 
                         .flip-card-back img {
@@ -2484,23 +2484,23 @@ useEffect(() => {
 
                         .skill-item {
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.12)'
+                                ? 'rgba(255, 255, 255, 0.7)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.35)'
                                 : 'rgba(15, 23, 42, 0.25)'};
                             backdrop-filter: blur(16px) saturate(180%);
                             -webkit-backdrop-filter: blur(16px) saturate(180%);
                             border: 1px solid ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.25)'
+                                ? 'rgba(100, 116, 139, 0.2)'
                                 : 'rgba(148, 163, 184, 0.18)'};
                             border-radius: 12px;
                             padding: 1.2rem;
                             text-align: center;
                             transition: all 0.3s ease;
                             position: relative;
-                            box-shadow:
-                                0 4px 24px 0 rgba(0, 0, 0, 0.08),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+                            box-shadow: ${theme === 'light'
+                                ? '0 4px 24px 0 rgba(0, 0, 0, 0.06), inset 0 1px 0 0 rgba(255, 255, 255, 0.7)'
+                                : '0 4px 24px 0 rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.08)'};
                         }
 
                         .skill-item::before {
@@ -2512,7 +2512,7 @@ useEffect(() => {
                             height: 1px;
                             background: linear-gradient(90deg,
                                 transparent,
-                                rgba(255, 255, 255, 0.2),
+                                ${theme === 'light' ? 'rgba(100, 116, 139, 0.25)' : 'rgba(255, 255, 255, 0.2)'},
                                 transparent);
                         }
 
@@ -2559,23 +2559,23 @@ useEffect(() => {
                         .contact-info {
                             text-align: center;
                             background: ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.15)'
+                                ? 'rgba(255, 255, 255, 0.75)'
                                 : theme === 'dark'
                                 ? 'rgba(30, 41, 59, 0.4)'
                                 : 'rgba(15, 23, 42, 0.3)'};
                             backdrop-filter: blur(20px) saturate(180%);
                             -webkit-backdrop-filter: blur(20px) saturate(180%);
                             border: 1px solid ${theme === 'light'
-                                ? 'rgba(255, 255, 255, 0.3)'
+                                ? 'rgba(100, 116, 139, 0.2)'
                                 : 'rgba(148, 163, 184, 0.2)'};
                             border-radius: 16px;
                             padding: 1.5rem;
                             margin-bottom: 2rem;
                             transition: all 0.3s ease;
                             position: relative;
-                            box-shadow:
-                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
-                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                            box-shadow: ${theme === 'light'
+                                ? '0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.8)'
+                                : '0 8px 32px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'};
                         }
 
                         .contact-info::before {
@@ -2587,7 +2587,7 @@ useEffect(() => {
                             height: 1px;
                             background: linear-gradient(90deg,
                                 transparent,
-                                rgba(255, 255, 255, 0.3),
+                                ${theme === 'light' ? 'rgba(100, 116, 139, 0.3)' : 'rgba(255, 255, 255, 0.3)'},
                                 transparent);
                         }
 
