@@ -1977,12 +1977,12 @@ useEffect(() => {
                         }
 
                         .tag:hover {
-                            transform: translateY(-5px) scale(1.05);
-                            background: rgba(14, 165, 233, 0.2);
-                            border-color: var(--primary-color);
-                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
-                            color: var(--text-primary);
-                            cursor: pointer;
+                            transform: translateY(-5px) scale(1.05) !important;
+                            background: rgba(14, 165, 233, 0.2) !important;
+                            border-color: var(--primary-color) !important;
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4) !important;
+                            color: var(--text-primary) !important;
+                            cursor: pointer !important;
                         }
 
                         @media (min-width: 769px) {
@@ -2290,9 +2290,9 @@ useEffect(() => {
                         }
 
                         .skill-item:hover {
-                            transform: translateY(-5px);
-                            border-color: var(--primary-color);
-                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
+                            transform: translateY(-5px) !important;
+                            border-color: var(--primary-color) !important;
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'} !important;
                         }
 
                         .skill-item i {
@@ -2317,9 +2317,9 @@ useEffect(() => {
                             .skills-grid { gap: 1.5rem; margin-top: 2rem; }
                             .skill-item { border-radius: 12px; padding: 1.5rem; }
                             .skill-item:hover {
-                                transform: translateY(-5px);
-                                border-color: var(--primary-color);
-                                box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
+                                transform: translateY(-5px) !important;
+                                border-color: var(--primary-color) !important;
+                                box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'} !important;
                             }
                             .skill-item i { font-size: 2.5rem; margin-bottom: 1rem; }
                             .skill-item h4 { font-size: 1.1rem; }
