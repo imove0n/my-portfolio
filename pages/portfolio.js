@@ -2193,9 +2193,9 @@ useEffect(() => {
                         }
 
                         .card:hover {
-                            transform: translateY(-3px);
-                            border-color: var(--primary-color);
-                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
+                            transform: translateY(-5px) !important;
+                            border-color: var(--primary-color) !important;
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'} !important;
                         }
 
                         ${theme === 'light' ? `
@@ -2264,7 +2264,11 @@ useEffect(() => {
                                 min-height: 380px;
                             }
 
-                            .card:hover { transform: translateY(-5px); }
+                            .card:hover {
+                                transform: translateY(-5px) !important;
+                                border-color: var(--primary-color) !important;
+                                box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'} !important;
+                            }
                             .card-icon { font-size: 2rem; margin-bottom: 1rem; }
                             .card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
                             .card p { font-size: 1rem; }
