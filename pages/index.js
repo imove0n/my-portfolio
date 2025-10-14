@@ -808,6 +808,35 @@ export default function LoadingPage() {
                         font-size: clamp(0.75rem, 2vw, 0.85rem);
                         letter-spacing: 1px;
                         text-transform: uppercase;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 2px;
+                    }
+
+                    .label-dot {
+                        animation: labelDotFade 1.4s ease-in-out infinite;
+                        opacity: 0;
+                    }
+
+                    .label-dot:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    .label-dot:nth-child(3) {
+                        animation-delay: 0.4s;
+                    }
+
+                    .label-dot:nth-child(4) {
+                        animation-delay: 0.6s;
+                    }
+
+                    @keyframes labelDotFade {
+                        0%, 100% {
+                            opacity: 0;
+                        }
+                        40%, 60% {
+                            opacity: 1;
+                        }
                     }
 
                     @keyframes countPulse {
@@ -1302,7 +1331,12 @@ export default function LoadingPage() {
 
                         <div className="progress-text">
                             <span className="percentage">{Math.floor(progress)}%</span>
-                            <span className="progress-label">Loading Portfolio...</span>
+                            <span className="progress-label">
+                                Loading Portfolio
+                                <span className="label-dot">.</span>
+                                <span className="label-dot">.</span>
+                                <span className="label-dot">.</span>
+                            </span>
                         </div>
                     </div>
 
