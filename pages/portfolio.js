@@ -1323,7 +1323,7 @@ useEffect(() => {
                         .logo {
                             font-size: 1.2rem;
                             font-weight: 700;
-                            color: var(--primary-color);
+                            color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
                             display: flex;
                             align-items: center;
                             gap: 0.3rem;
@@ -1335,12 +1335,12 @@ useEffect(() => {
                         }
 
                         .logo-base {
-                            color: var(--primary-color);
+                            color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
                             min-width: fit-content;
                         }
 
                         .logo-text {
-                            color: var(--primary-color);
+                            color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
                         }
 
                         /* Mobile Navigation */
@@ -1362,14 +1362,15 @@ useEffect(() => {
                         .nav-menu li { list-style: none; }
                         .nav-menu a,
                         .nav-menu button {
-                            color: ${theme === 'light' ? '#ffffff' : 'var(--text-secondary)'};
+                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
                             text-decoration: none;
                             font-weight: 600;
                             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                             padding: 1rem 2rem;
                             display: block;
-                            border-bottom: 1px solid ${theme === 'light' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(51, 65, 85, 0.3)'};
+                            border-bottom: 1px solid ${theme === 'light' ? 'rgba(30, 41, 59, 0.1)' : 'rgba(51, 65, 85, 0.3)'};
                             position: relative;
+                            text-shadow: ${theme === 'light' ? 'none' : 'none'};
                             overflow: hidden;
                             width: 100%;
                             text-align: left;
@@ -1454,20 +1455,20 @@ useEffect(() => {
                             display: block;
                             background: none;
                             border: none;
-                            color: var(--text-secondary);
+                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
                             font-size: 1.5rem;
                             cursor: pointer;
                             padding: 5px;
                             transition: color 0.3s ease;
                         }
 
-                        .mobile-menu-btn:hover { color: var(--primary-color); }
+                        .mobile-menu-btn:hover { color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'}; }
 
                         /* Theme Toggle Button */
                         .theme-toggle-btn {
                             background: transparent;
                             border: none;
-                            color: var(--text-secondary);
+                            color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
                             font-size: 0.85rem;
                             font-weight: 500;
                             cursor: pointer;
@@ -1485,8 +1486,8 @@ useEffect(() => {
                         }
 
                         .theme-toggle-btn:hover {
-                            color: var(--primary-color);
-                            background: rgba(14, 165, 233, 0.05);
+                            color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
+                            background: ${theme === 'light' ? 'rgba(2, 132, 199, 0.08)' : 'rgba(14, 165, 233, 0.05)'};
                         }
 
                         .theme-toggle-btn:active {
