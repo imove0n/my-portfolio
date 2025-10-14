@@ -28,6 +28,8 @@
     const [duration, setDuration] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     const [previousVolume, setPreviousVolume] = useState(50);
+    const [isLooping, setIsLooping] = useState(false);
+    const [isShuffle, setIsShuffle] = useState(false);
     // Profile image cycling
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
@@ -389,7 +391,16 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         };
 
         const handleEnded = () => {
-            setIsPlaying(false);
+            if (isLooping) {
+                // Replay current track
+                if (audioRef.current) {
+                    audioRef.current.currentTime = 0;
+                    audioRef.current.play().catch(err => console.error('Error looping track:', err));
+                }
+            } else {
+                // Play next track automatically
+                playNext();
+            }
         };
 
         const handleError = () => {
@@ -421,7 +432,7 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
             audio.removeEventListener('error', handleError);
         };
         }
-    }, [currentTrackIndex]); // Only re-run when track changes, not volume
+    }, [currentTrackIndex, isLooping, isShuffle]); // Re-run when track changes or loop/shuffle toggles
 
     // Separate effect to update volume without reloading audio
     useEffect(() => {
@@ -514,7 +525,17 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
 };
 
 const playNext = () => {
-    const nextIndex = (currentTrackIndex + 1) % playlist.length;
+    let nextIndex;
+
+    if (isShuffle) {
+        // Generate random index that's different from current
+        do {
+            nextIndex = Math.floor(Math.random() * playlist.length);
+        } while (nextIndex === currentTrackIndex && playlist.length > 1);
+    } else {
+        nextIndex = (currentTrackIndex + 1) % playlist.length;
+    }
+
     setCurrentTrackIndex(nextIndex);
     setCurrentTime(0);
     if (audioRef.current) {
@@ -535,6 +556,14 @@ const playPrevious = () => {
             audioRef.current.play().catch(err => console.error('Error playing previous track:', err));
         }
     }
+};
+
+const toggleLoop = () => {
+    setIsLooping(!isLooping);
+};
+
+const toggleShuffle = () => {
+    setIsShuffle(!isShuffle);
 };
 
     const formatTime = (seconds) => {
@@ -1175,6 +1204,18 @@ useEffect(() => {
 
                         .control-btn:active, .minimize-btn:active {
                             transform: translateY(0);
+                        }
+
+                        .control-btn.active {
+                            color: var(--primary-color);
+                            background: rgba(14, 165, 233, 0.25);
+                            border-color: var(--primary-color);
+                            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+                        }
+
+                        .control-btn.active:hover {
+                            background: rgba(14, 165, 233, 0.35);
+                            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.5);
                         }
 
                         .minimize-btn {
@@ -2823,6 +2864,13 @@ Your browser does not support the audio element.
 
                 <div className="audio-controls">
                     <button
+                        className={`control-btn ${isShuffle ? 'active' : ''}`}
+                        onClick={toggleShuffle}
+                        title={isShuffle ? "Shuffle: On" : "Shuffle: Off"}
+                    >
+                        <i className="fas fa-random"></i>
+                    </button>
+                    <button
                         className="control-btn"
                         onClick={playPrevious}
                         title="Previous Track"
@@ -2835,6 +2883,13 @@ Your browser does not support the audio element.
                         title="Next Track"
                     >
                         <i className="fas fa-step-forward"></i>
+                    </button>
+                    <button
+                        className={`control-btn ${isLooping ? 'active' : ''}`}
+                        onClick={toggleLoop}
+                        title={isLooping ? "Loop: On" : "Loop: Off"}
+                    >
+                        <i className="fas fa-redo"></i>
                     </button>
                     <button
                         className="control-btn"
