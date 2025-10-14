@@ -1738,7 +1738,8 @@ useEffect(() => {
 
                         .btn-primary:hover {
                             background: ${theme === 'dark' ? '#e5e7eb' : '#0284c7'};
-                            transform: translateY(-2px);
+                            transform: translateY(-5px);
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
                         }
 
                         .btn-primary:disabled {
@@ -1756,7 +1757,8 @@ useEffect(() => {
                         .btn-outline:hover {
                             border-color: var(--primary-color);
                             color: var(--primary-color);
-                            transform: translateY(-2px);
+                            transform: translateY(-5px);
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
                         }
 
                         @media (min-width: 769px) {
@@ -2411,13 +2413,13 @@ useEffect(() => {
                         }
 
                         .social-link.linkedin { background: #0077b5; }
-                        .social-link.linkedin:hover { background: #006399; transform: translateY(-2px); }
+                        .social-link.linkedin:hover { background: #006399; transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 119, 181, 0.4); }
                         .social-link.github { background: #333; }
-                        .social-link.github:hover { background: #000; transform: translateY(-2px); }
+                        .social-link.github:hover { background: #000; transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
                         .social-link.facebook { background: #1877f2; }
-                        .social-link.facebook:hover { background: #166fe5; transform: translateY(-2px); }
+                        .social-link.facebook:hover { background: #166fe5; transform: translateY(-5px); box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4); }
                         .social-link.email { background: #ea4335; }
-                        .social-link.email:hover { background: #d93025; transform: translateY(-2px); }
+                        .social-link.email:hover { background: #d93025; transform: translateY(-5px); box-shadow: 0 8px 20px rgba(234, 67, 53, 0.4); }
 
                         @media (min-width: 769px) {
                             .contact-content { max-width: 600px; margin: 0 auto; }
