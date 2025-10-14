@@ -373,7 +373,6 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
     useEffect(() => {
         if (audioRef.current) {
         const audio = audioRef.current;
-        audio.volume = volume / 100;
 
         const handleTimeUpdate = () => {
             setCurrentTime(audio.currentTime);
@@ -409,8 +408,10 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
         audio.addEventListener('ended', handleEnded);
         audio.addEventListener('error', handleError);
 
-        // Force load the audio metadata
-        audio.load();
+        // Only load audio metadata on mount, not on every volume change
+        if (!duration) {
+            audio.load();
+        }
 
         return () => {
             audio.removeEventListener('timeupdate', handleTimeUpdate);
@@ -419,6 +420,13 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
             audio.removeEventListener('ended', handleEnded);
             audio.removeEventListener('error', handleError);
         };
+        }
+    }, [currentTrackIndex]); // Only re-run when track changes, not volume
+
+    // Separate effect to update volume without reloading audio
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = volume / 100;
         }
     }, [volume]);
 
@@ -443,9 +451,32 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
     const handleProgressClick = (e) => {
         if (audioRef.current && duration) {
         const rect = e.currentTarget.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
+        const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
         audioRef.current.currentTime = percent * duration;
         }
+    };
+
+    // Draggable seek bar handlers
+    const handleProgressMouseDown = (e) => {
+        const progressBar = e.currentTarget;
+        const handleMouseMove = (moveEvent) => {
+            if (audioRef.current && duration) {
+                const rect = progressBar.getBoundingClientRect();
+                const percent = Math.max(0, Math.min(1, (moveEvent.clientX - rect.left) / rect.width));
+                audioRef.current.currentTime = percent * duration;
+            }
+        };
+
+        const handleMouseUp = () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+
+        // Immediately seek on mousedown
+        handleProgressClick(e);
     };
 
     const handleVolumeChange = (e) => {
@@ -1055,7 +1086,7 @@ useEffect(() => {
                             height: 6px;
                             background: rgba(148, 163, 184, 0.15);
                             border-radius: 10px;
-                            overflow: hidden;
+                            overflow: visible;
                             cursor: pointer;
                             min-width: 60px;
                             position: relative;
@@ -1067,6 +1098,10 @@ useEffect(() => {
                             background: rgba(148, 163, 184, 0.25);
                         }
 
+                        .progress-bar:active {
+                            cursor: grabbing;
+                        }
+
                         .progress-fill {
                             height: 100%;
                             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
@@ -1076,23 +1111,34 @@ useEffect(() => {
                             box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
                         }
 
-                        .progress-fill::after {
-                            content: '';
+                        .progress-thumb {
                             position: absolute;
-                            right: 0;
+                            right: -8px;
                             top: 50%;
                             transform: translateY(-50%);
-                            width: 12px;
-                            height: 12px;
+                            width: 14px;
+                            height: 14px;
                             background: white;
                             border-radius: 50%;
-                            box-shadow: 0 0 8px rgba(14, 165, 233, 0.8);
+                            box-shadow: 0 0 8px rgba(14, 165, 233, 0.8), 0 2px 4px rgba(0, 0, 0, 0.2);
                             opacity: 0;
-                            transition: opacity 0.3s ease;
+                            transition: all 0.2s ease;
+                            pointer-events: none;
                         }
 
-                        .progress-bar:hover .progress-fill::after {
+                        .progress-bar:hover .progress-thumb {
                             opacity: 1;
+                            width: 16px;
+                            height: 16px;
+                            right: -9px;
+                        }
+
+                        .progress-bar:active .progress-thumb {
+                            opacity: 1;
+                            width: 18px;
+                            height: 18px;
+                            right: -10px;
+                            box-shadow: 0 0 12px rgba(14, 165, 233, 1), 0 2px 6px rgba(0, 0, 0, 0.3);
                         }
 
                         .audio-controls {
@@ -2623,13 +2669,19 @@ Your browser does not support the audio element.
 </div>
             <div className="audio-progress">
                 <span>{formatTime(currentTime)}</span>
-                <div className="progress-bar" onClick={handleProgressClick}>
-                <div 
-                    className="progress-fill" 
-                    style={{ 
-                    width: duration ? `${(currentTime / duration) * 100}%` : '0%' 
-                    }}
-                ></div>
+                <div
+                    className="progress-bar"
+                    onClick={handleProgressClick}
+                    onMouseDown={handleProgressMouseDown}
+                >
+                    <div
+                        className="progress-fill"
+                        style={{
+                        width: duration ? `${(currentTime / duration) * 100}%` : '0%'
+                        }}
+                    >
+                        <div className="progress-thumb"></div>
+                    </div>
                 </div>
                 <span>{formatTime(duration)}</span>
             </div>
