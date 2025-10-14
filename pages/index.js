@@ -14,6 +14,9 @@ export default function LoadingPage() {
     const [typedCompile, setTypedCompile] = useState('');
     const cursorRef = useRef(null);
     const [isClicking, setIsClicking] = useState(false);
+    const [currentMilestone, setCurrentMilestone] = useState(0);
+
+    const milestones = [0, 20, 40, 60, 80, 100];
 
     const messages = [
         { id: 'msg1', text: 'Initializing development environment...', threshold: 10 },
@@ -38,6 +41,13 @@ export default function LoadingPage() {
         setProgress(prev => {
             const increment = 1;
             const newProgress = Math.min(prev + increment, 100);
+
+            // Update milestone indicator
+            milestones.forEach((milestone, index) => {
+                if (newProgress >= milestone && currentMilestone < index) {
+                    setCurrentMilestone(index);
+                }
+            });
 
             messages.forEach((msg, index) => {
                 if (newProgress >= msg.threshold && messageIndex === index) {
@@ -635,24 +645,52 @@ export default function LoadingPage() {
                     }
 
 
+                    .progress-wrapper {
+                        width: 100%;
+                        max-width: min(90vw, 500px);
+                        margin: 1rem auto;
+                    }
+
                     .progress-container {
                         width: 100%;
-                        max-width: min(90vw, 400px);
-                        margin: 1rem auto;
-                        background: rgba(30, 41, 59, 0.5);
-                        border-radius: 10px;
-                        overflow: hidden;
-                        border: 1px solid rgba(14, 165, 233, 0.2);
-                        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+                        height: clamp(30px, 5vw, 40px);
+                        background: rgba(30, 41, 59, 0.6);
+                        border-radius: 25px;
+                        overflow: visible;
+                        border: 2px solid rgba(14, 165, 233, 0.3);
+                        box-shadow:
+                            inset 0 2px 8px rgba(0, 0, 0, 0.3),
+                            0 0 20px rgba(14, 165, 233, 0.2);
+                        position: relative;
+                        backdrop-filter: blur(10px);
                     }
 
                     .progress-bar {
-                        height: clamp(6px, 2vw, 8px);
-                        background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-                        border-radius: 10px;
-                        transition: width 0.3s ease;
+                        height: 100%;
+                        background: linear-gradient(90deg,
+                            #0ea5e9 0%,
+                            #3b82f6 25%,
+                            #0ea5e9 50%,
+                            #3b82f6 75%,
+                            #0ea5e9 100%);
+                        background-size: 200% 100%;
+                        border-radius: 25px;
+                        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                         position: relative;
                         overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        padding-right: clamp(8px, 2vw, 12px);
+                        box-shadow:
+                            0 0 20px rgba(14, 165, 233, 0.6),
+                            inset 0 2px 10px rgba(255, 255, 255, 0.2);
+                        animation: progressGradientShift 3s linear infinite;
+                    }
+
+                    @keyframes progressGradientShift {
+                        0% { background-position: 0% 50%; }
+                        100% { background-position: 200% 50%; }
                     }
 
                     .progress-bar::before {
@@ -662,19 +700,8 @@ export default function LoadingPage() {
                         left: -100%;
                         width: 100%;
                         height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-                        animation: shimmer 1.5s infinite;
-                    }
-
-                    .progress-bar::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
-                        animation: pulse-glow 2s ease-in-out infinite;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                        animation: shimmer 2s infinite;
                     }
 
                     @keyframes shimmer {
@@ -682,13 +709,82 @@ export default function LoadingPage() {
                         100% { left: 100%; }
                     }
 
-                    @keyframes pulse-glow {
-                        0%, 100% { opacity: 0.5; }
-                        50% { opacity: 1; }
+                    .progress-particles {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background:
+                            radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
+                            radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.4) 1.5px, transparent 1.5px),
+                            radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.5) 2px, transparent 2px);
+                        background-size: 50px 50px;
+                        animation: particleMove 3s linear infinite;
+                        opacity: 0.6;
                     }
 
-                 .progress-text {
-                        margin-top: 1rem;
+                    @keyframes particleMove {
+                        0% { background-position: 0 0; }
+                        100% { background-position: 50px 0; }
+                    }
+
+                    .progress-percentage-inner {
+                        font-size: clamp(0.75rem, 2vw, 0.9rem);
+                        font-weight: 700;
+                        color: white;
+                        text-shadow:
+                            0 0 10px rgba(0, 0, 0, 0.8),
+                            0 2px 4px rgba(0, 0, 0, 0.5);
+                        z-index: 10;
+                        position: relative;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .milestone-marker {
+                        position: absolute;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        z-index: 5;
+                        transition: all 0.3s ease;
+                    }
+
+                    .milestone-dot {
+                        width: clamp(10px, 2.5vw, 14px);
+                        height: clamp(10px, 2.5vw, 14px);
+                        background: rgba(148, 163, 184, 0.5);
+                        border: 2px solid rgba(148, 163, 184, 0.8);
+                        border-radius: 50%;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
+                    }
+
+                    .milestone-marker.completed .milestone-dot {
+                        background: linear-gradient(135deg, #10b981, #0ea5e9);
+                        border-color: #10b981;
+                        box-shadow:
+                            0 0 15px rgba(16, 185, 129, 0.8),
+                            0 0 0 4px rgba(16, 185, 129, 0.2);
+                        animation: milestoneComplete 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    }
+
+                    @keyframes milestoneComplete {
+                        0% {
+                            transform: scale(1);
+                        }
+                        50% {
+                            transform: scale(1.5);
+                            box-shadow:
+                                0 0 25px rgba(16, 185, 129, 1),
+                                0 0 0 8px rgba(16, 185, 129, 0.3);
+                        }
+                        100% {
+                            transform: scale(1);
+                        }
+                    }
+
+                    .progress-text {
+                        margin-top: 0.8rem;
                         font-size: clamp(0.85rem, 2.5vw, 1rem);
                         color: #94a3b8;
                         font-family: 'JetBrains Mono', monospace;
@@ -696,18 +792,27 @@ export default function LoadingPage() {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        gap: 0.5rem;
+                        gap: 0.3rem;
                     }
 
                     .percentage {
-                        color: #10b981;
-                        font-weight: 600;
-                        animation: countPulse 0.5s ease-in-out;
+                        color: #0ea5e9;
+                        font-weight: 700;
+                        font-size: clamp(1.2rem, 3vw, 1.5rem);
+                        animation: countPulse 0.3s ease-in-out;
+                        text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+                    }
+
+                    .progress-label {
+                        color: #64748b;
+                        font-size: clamp(0.75rem, 2vw, 0.85rem);
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
                     }
 
                     @keyframes countPulse {
                         0% { transform: scale(1); }
-                        50% { transform: scale(1.15); color: #0ea5e9; }
+                        50% { transform: scale(1.1); color: #10b981; }
                         100% { transform: scale(1); }
                     }
 
@@ -1174,15 +1279,31 @@ export default function LoadingPage() {
                         <span>{typedCompile}<span className="compile-cursor">█</span></span>
                     </div>
 
-                    <div className="progress-container">
-                        <div
-                            className="progress-bar"
-                            style={{ width: `${progress}%` }}
-                        ></div>
-                    </div>
+                    <div className="progress-wrapper">
+                        <div className="progress-container">
+                            <div
+                                className="progress-bar"
+                                style={{ width: `${progress}%` }}
+                            >
+                                <div className="progress-particles"></div>
+                                <span className="progress-percentage-inner">{Math.floor(progress)}%</span>
+                            </div>
+                            {/* Milestone markers */}
+                            {milestones.slice(1, -1).map((milestone, index) => (
+                                <div
+                                    key={milestone}
+                                    className={`milestone-marker ${progress >= milestone ? 'completed' : ''}`}
+                                    style={{ left: `${milestone}%` }}
+                                >
+                                    <div className="milestone-dot"></div>
+                                </div>
+                            ))}
+                        </div>
 
-                    <div className="progress-text">
-                        <span className="percentage">{Math.floor(progress)}%</span>
+                        <div className="progress-text">
+                            <span className="percentage">{Math.floor(progress)}%</span>
+                            <span className="progress-label">Loading Portfolio...</span>
+                        </div>
                     </div>
 
                     <div className="loading-dots" style={{ display: showComplete ? 'none' : 'flex' }}>
