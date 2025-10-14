@@ -1975,11 +1975,12 @@ useEffect(() => {
                         }
 
                         .tag:hover {
-                            transform: translateY(-2px) scale(1.02);
+                            transform: translateY(-5px) scale(1.05);
                             background: rgba(14, 165, 233, 0.2);
                             border-color: var(--primary-color);
-                            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+                            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
                             color: var(--text-primary);
+                            cursor: pointer;
                         }
 
                         @media (min-width: 769px) {
