@@ -45,6 +45,7 @@
     const [flippedCards, setFlippedCards] = useState({});
     // Theme state: 'original' | 'dark' | 'light'
     const [theme, setTheme] = useState('original');
+    const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
     // Logo auto-typing animation
     const [logoTypedText, setLogoTypedText] = useState('');
     const [showBaseName, setShowBaseName] = useState(true);
@@ -753,11 +754,15 @@ useEffect(() => {
 
     // Toggle theme (cycles through original -> dark -> light -> original)
     const toggleTheme = () => {
-        setTheme(prev => {
-            if (prev === 'original') return 'dark';
-            if (prev === 'dark') return 'light';
-            return 'original';
-        });
+        setIsThemeTransitioning(true);
+        setTimeout(() => {
+            setTheme(prev => {
+                if (prev === 'original') return 'dark';
+                if (prev === 'dark') return 'light';
+                return 'original';
+            });
+            setTimeout(() => setIsThemeTransitioning(false), 500);
+        }, 300);
     };
 
     return (
@@ -823,6 +828,20 @@ useEffect(() => {
                             cursor: none;
                             margin: 0;
                             padding: 0;
+                            transition: background-color 0.5s ease, color 0.5s ease;
+                        }
+
+                        /* Theme Transition Overlay */
+                        .theme-transition-overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)'};
+                            z-index: 99999;
+                            pointer-events: none;
+                            animation: fadeIn 0.3s ease-in, fadeIn 0.5s ease-out 0.3s reverse;
                         }
 
                         /* Custom space-themed cursor */
@@ -1233,7 +1252,7 @@ useEffect(() => {
                             backdrop-filter: blur(20px);
                             border-bottom: 1px solid var(--border-color);
                             z-index: 1000;
-                            transition: all 0.3s ease;
+                            transition: all 0.3s ease, background 0.5s ease, border-color 0.5s ease;
                         }
 
                         .nav-container {
@@ -1405,6 +1424,8 @@ useEffect(() => {
                             margin-left: 0.5rem;
                             text-transform: lowercase;
                             letter-spacing: 0.3px;
+                            position: relative;
+                            overflow: hidden;
                         }
 
                         .theme-toggle-btn:hover {
@@ -1416,8 +1437,27 @@ useEffect(() => {
                             transform: scale(0.98);
                         }
 
+                        .theme-toggle-btn:active::before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 20px;
+                            height: 20px;
+                            background: var(--primary-color);
+                            border-radius: 50%;
+                            opacity: 0.3;
+                            animation: ripple 0.6s ease-out;
+                        }
+
                         .theme-toggle-btn i {
                             font-size: 0.9rem;
+                            transition: transform 0.3s ease;
+                        }
+
+                        .theme-icon-rotating {
+                            animation: rotateIcon 0.8s ease-in-out !important;
                         }
 
                         /* Desktop Navigation */
@@ -1588,6 +1628,7 @@ useEffect(() => {
                             z-index: 2;
                             padding: 4rem 1rem 2rem;
                             overflow: hidden;
+                            transition: background 0.5s ease;
                         }
 
                         /* Blend the bottom edge of hero into about section */
@@ -1720,7 +1761,7 @@ useEffect(() => {
                             border-radius: 8px;
                             text-decoration: none;
                             font-weight: 500;
-                            transition: all 0.3s ease;
+                            transition: all 0.3s ease, background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
                             display: inline-flex;
                             align-items: center;
                             gap: 6px;
@@ -1734,6 +1775,7 @@ useEffect(() => {
                         .btn-primary {
                             background: ${theme === 'dark' ? '#ffffff' : 'var(--primary-color)'};
                             color: ${theme === 'dark' ? '#000000' : 'white'};
+                            transition: all 0.3s ease, background 0.5s ease, color 0.5s ease;
                         }
 
                         .btn-primary:hover {
@@ -1770,6 +1812,7 @@ useEffect(() => {
                             padding: 60px 0;
                             position: relative;
                             z-index: 2;
+                            transition: background-color 0.5s ease;
                         }
 
                         .container {
@@ -1784,6 +1827,7 @@ useEffect(() => {
                             text-align: center;
                             margin-bottom: 2rem;
                             position: relative;
+                            transition: color 0.5s ease;
                         }
 
                         .section-title::after {
@@ -1895,6 +1939,38 @@ useEffect(() => {
                             100% {
                                 transform: rotateY(0deg) scale(1);
                                 opacity: 1;
+                            }
+                        }
+
+                        @keyframes rotateIcon {
+                            0% {
+                                transform: rotate(0deg) scale(1);
+                            }
+                            50% {
+                                transform: rotate(180deg) scale(1.2);
+                            }
+                            100% {
+                                transform: rotate(360deg) scale(1);
+                            }
+                        }
+
+                        @keyframes fadeIn {
+                            from {
+                                opacity: 0;
+                            }
+                            to {
+                                opacity: 1;
+                            }
+                        }
+
+                        @keyframes ripple {
+                            0% {
+                                transform: scale(0);
+                                opacity: 1;
+                            }
+                            100% {
+                                transform: scale(4);
+                                opacity: 0;
                             }
                         }
 
@@ -2097,7 +2173,7 @@ useEffect(() => {
                             border: 1px solid var(--border-color);
                             border-radius: 12px;
                             padding: 1.5rem;
-                            transition: all 0.3s ease;
+                            transition: all 0.3s ease, background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
                             position: relative;
                             overflow: hidden;
                             min-height: 240px;
@@ -2673,7 +2749,7 @@ Your browser does not support the audio element.
                         </ul>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <button className="theme-toggle-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === 'original' ? 'Dark' : theme === 'dark' ? 'Light' : 'Base'} mode`}>
-                                <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'}`}></i>
+                                <i className={`fas ${theme === 'original' ? 'fa-moon' : theme === 'dark' ? 'fa-sun' : 'fa-circle'} ${isThemeTransitioning ? 'theme-icon-rotating' : ''}`}></i>
                                 <span>{theme === 'original' ? 'Dark' : theme === 'dark' ? 'Light' : 'Base'}</span>
                             </button>
                             <button className="mobile-menu-btn" onClick={toggleMenu} aria-label={isNavMenuActive ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={isNavMenuActive}>
@@ -2682,6 +2758,9 @@ Your browser does not support the audio element.
                         </div>
                     </div>
                 </nav>
+
+                {/* Theme Transition Overlay */}
+                {isThemeTransitioning && <div className="theme-transition-overlay"></div>}
 
                 {/* Hero Section */}
                 <section id="home" className="hero">
