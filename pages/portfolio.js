@@ -2099,13 +2099,18 @@ useEffect(() => {
                             perspective: 1500px;
                             min-height: 450px;
                             background: transparent;
+                            transition: transform 0.3s ease;
+                        }
+
+                        .flip-card:hover {
+                            transform: translateY(-5px);
                         }
 
                         .flip-card-inner {
                             position: relative;
                             width: 100%;
                             min-height: 450px;
-                            transition: transform 0.6s;
+                            transition: transform 0.6s ease;
                             transform-style: preserve-3d;
                         }
 
@@ -2131,6 +2136,12 @@ useEffect(() => {
                             padding: 1.5rem;
                             transform: rotateY(0deg);
                             overflow: hidden;
+                            transition: all 0.3s ease;
+                        }
+
+                        .flip-card:hover .flip-card-front {
+                            border-color: var(--primary-color);
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
                         }
 
                         .flip-card-front::before {
@@ -2311,6 +2322,13 @@ useEffect(() => {
                             border-radius: 12px;
                             padding: 1.5rem;
                             margin-bottom: 2rem;
+                            transition: all 0.3s ease;
+                        }
+
+                        .contact-info:hover {
+                            transform: translateY(-5px);
+                            border-color: var(--primary-color);
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
                         }
 
                         .contact-info h3 {
