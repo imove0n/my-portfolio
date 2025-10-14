@@ -1946,6 +1946,13 @@ useEffect(() => {
                             border: 1px solid var(--border-color);
                             margin-top: 2rem;
                             text-align: center;
+                            transition: all 0.3s ease;
+                        }
+
+                        .current-learning:hover {
+                            transform: translateY(-5px);
+                            border-color: var(--primary-color);
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
                         }
 
                         .learning-tags {
@@ -2280,8 +2287,9 @@ useEffect(() => {
                         }
 
                         .skill-item:hover {
-                            transform: translateY(-2px);
+                            transform: translateY(-5px);
                             border-color: var(--primary-color);
+                            box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
                         }
 
                         .skill-item i {
