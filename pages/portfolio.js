@@ -2313,7 +2313,11 @@ useEffect(() => {
                         @media (min-width: 769px) {
                             .skills-grid { gap: 1.5rem; margin-top: 2rem; }
                             .skill-item { border-radius: 12px; padding: 1.5rem; }
-                            .skill-item:hover { transform: translateY(-3px); }
+                            .skill-item:hover {
+                                transform: translateY(-5px);
+                                border-color: var(--primary-color);
+                                box-shadow: ${theme === 'light' ? '0 8px 25px rgba(2, 132, 199, 0.15)' : theme === 'dark' ? '0 8px 25px rgba(16, 185, 129, 0.1)' : '0 8px 25px rgba(14, 165, 233, 0.1)'};
+                            }
                             .skill-item i { font-size: 2.5rem; margin-bottom: 1rem; }
                             .skill-item h4 { font-size: 1.1rem; }
                             .skill-item p { font-size: 0.9rem; }
