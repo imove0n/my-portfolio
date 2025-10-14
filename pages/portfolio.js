@@ -2214,16 +2214,39 @@ useEffect(() => {
                         }
 
                         .card {
-                            background: ${theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'var(--bg-card)'};
-                            backdrop-filter: ${theme === 'light' ? 'blur(10px)' : 'none'};
-                            border: 1px solid var(--border-color);
-                            border-radius: 12px;
+                            background: ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.15)'
+                                : theme === 'dark'
+                                ? 'rgba(30, 41, 59, 0.4)'
+                                : 'rgba(15, 23, 42, 0.3)'};
+                            backdrop-filter: blur(20px) saturate(180%);
+                            -webkit-backdrop-filter: blur(20px) saturate(180%);
+                            border: 1px solid ${theme === 'light'
+                                ? 'rgba(255, 255, 255, 0.3)'
+                                : 'rgba(148, 163, 184, 0.2)'};
+                            border-radius: 16px;
                             padding: 1.5rem;
                             transition: all 0.3s ease, background 0.5s ease, border-color 0.5s ease, color 0.5s ease;
                             position: relative;
                             overflow: hidden;
                             min-height: 240px;
                             cursor: pointer;
+                            box-shadow:
+                                0 8px 32px 0 rgba(0, 0, 0, 0.1),
+                                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+                        }
+
+                        .card::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 1px;
+                            background: linear-gradient(90deg,
+                                transparent,
+                                rgba(255, 255, 255, 0.3),
+                                transparent);
                         }
 
                         /* Flip card container */
