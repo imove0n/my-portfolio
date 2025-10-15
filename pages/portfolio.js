@@ -15,6 +15,7 @@
     const [floatingChars, setFloatingChars] = useState([]);
     const [isNavMenuActive, setIsNavMenuActive] = useState(false);
     const [currentText, setCurrentText] = useState("");
+    const [visibleSections, setVisibleSections] = useState(new Set());
     const cursorRef = useRef(null);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [isClicking, setIsClicking] = useState(false);
@@ -699,26 +700,41 @@ useEffect(() => {
         };
     }, []);
 
-    // Smooth scroll animations
+    // EPIC Scroll Animations with Section Detection
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        const element = entry.target;
+
+                        // Mark section as visible
+                        if (element.classList.contains('section')) {
+                            setVisibleSections(prev => new Set([...prev, element.id]));
+                        }
+
+                        // Add visible class for animation
+                        element.classList.add('animate-visible');
                     }
                 });
             },
-            { threshold: 0.1 }
+            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
         );
 
-        const elements = document.querySelectorAll('.section, .card, .skill-item');
-        elements.forEach((el) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+        // Observe sections with staggered animations
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((section, index) => {
+            section.classList.add('animate-on-scroll');
+            section.style.setProperty('--section-index', index);
+            observer.observe(section);
+        });
+
+        // Observe cards with stagger effect
+        const cards = document.querySelectorAll('.card, .skill-item, .flip-card, .current-learning, .contact-info');
+        cards.forEach((card, index) => {
+            card.classList.add('animate-on-scroll', 'animate-card');
+            card.style.setProperty('--card-index', index % 6); // Stagger by 6
+            observer.observe(card);
         });
 
         return () => observer.disconnect();
@@ -2086,6 +2102,127 @@ useEffect(() => {
                                 transform: scale(4);
                                 opacity: 0;
                             }
+                        }
+
+                        /* ========== EPIC SECTION TRANSITION ANIMATIONS ========== */
+
+                        /* Base state for animated elements */
+                        .animate-on-scroll {
+                            opacity: 0;
+                            transform: translateY(80px) scale(0.95);
+                            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+                        }
+
+                        .animate-card {
+                            transform: translateY(60px) scale(0.9) rotateX(15deg);
+                            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+                            transition-delay: calc(var(--card-index) * 0.1s);
+                        }
+
+                        /* Visible state - Triggered when scrolled into view */
+                        .animate-on-scroll.animate-visible {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                        }
+
+                        .animate-card.animate-visible {
+                            transform: translateY(0) scale(1) rotateX(0deg);
+                        }
+
+                        /* Sections slide in from different directions */
+                        .section:nth-child(odd).animate-on-scroll {
+                            transform: translateX(-100px) translateY(50px) scale(0.9);
+                        }
+
+                        .section:nth-child(even).animate-on-scroll {
+                            transform: translateX(100px) translateY(50px) scale(0.9);
+                        }
+
+                        /* Section Dividers - Animated Lines */
+                        .section::before {
+                            content: '';
+                            position: absolute;
+                            top: -60px;
+                            left: 50%;
+                            transform: translateX(-50%) scaleX(0);
+                            width: 80%;
+                            max-width: 600px;
+                            height: 3px;
+                            background: linear-gradient(90deg,
+                                transparent,
+                                var(--primary-color) 20%,
+                                var(--accent-color) 50%,
+                                var(--primary-color) 80%,
+                                transparent);
+                            box-shadow: 0 0 20px var(--primary-color);
+                            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+                        }
+
+                        .section.animate-visible::before {
+                            transform: translateX(-50%) scaleX(1);
+                        }
+
+                        /* First section (hero) has no divider */
+                        .section:first-of-type::before {
+                            display: none;
+                        }
+
+                        /* Animated particles on section entry */
+                        .section::after {
+                            content: '';
+                            position: absolute;
+                            top: -60px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 10px;
+                            height: 10px;
+                            background: var(--primary-color);
+                            border-radius: 50%;
+                            box-shadow:
+                                0 0 30px var(--primary-color),
+                                -80px 0 0 -2px var(--primary-color),
+                                80px 0 0 -2px var(--primary-color),
+                                -150px 0 0 -3px var(--accent-color),
+                                150px 0 0 -3px var(--accent-color);
+                            opacity: 0;
+                            transition: opacity 0.6s ease 0.5s;
+                        }
+
+                        .section.animate-visible::after {
+                            opacity: 1;
+                        }
+
+                        .section:first-of-type::after {
+                            display: none;
+                        }
+
+                        /* Title animations */
+                        .section-title {
+                            opacity: 0;
+                            transform: translateY(40px) scale(0.8);
+                            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+                        }
+
+                        .section.animate-visible .section-title {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                        }
+
+                        /* Pulse effect on section entry */
+                        @keyframes sectionPulse {
+                            0% {
+                                box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
+                            }
+                            50% {
+                                box-shadow: 0 0 60px 20px rgba(14, 165, 233, 0.1);
+                            }
+                            100% {
+                                box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+                            }
+                        }
+
+                        .section.animate-visible {
+                            animation: sectionPulse 1.5s ease-out;
                         }
 
                         .profile-image .fallback-icon {
