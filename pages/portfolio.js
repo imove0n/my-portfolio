@@ -2138,6 +2138,12 @@ useEffect(() => {
                             transform: translateX(100px) translateY(50px) scale(0.9);
                         }
 
+                        /* Reset to center when visible - IMPORTANT! */
+                        .section:nth-child(odd).animate-visible,
+                        .section:nth-child(even).animate-visible {
+                            transform: translateX(0) translateY(0) scale(1) !important;
+                        }
+
                         /* Section Dividers - Animated Lines */
                         .section::before {
                             content: '';
