@@ -224,6 +224,30 @@ export default function LoadingPage() {
         };
     }, []);
 
+    // Convert number to Roman numerals
+    const toRoman = (num) => {
+        const romanNumerals = [
+            { value: 100, symbol: 'C' },
+            { value: 90, symbol: 'XC' },
+            { value: 50, symbol: 'L' },
+            { value: 40, symbol: 'XL' },
+            { value: 10, symbol: 'X' },
+            { value: 9, symbol: 'IX' },
+            { value: 5, symbol: 'V' },
+            { value: 4, symbol: 'IV' },
+            { value: 1, symbol: 'I' }
+        ];
+
+        let result = '';
+        for (const { value, symbol } of romanNumerals) {
+            while (num >= value) {
+                result += symbol;
+                num -= value;
+            }
+        }
+        return result || 'N'; // N for zero (Nulla in Latin)
+    };
+
     const enterPortfolio = () => {
         const audio = document.getElementById('backgroundMusic');
         if (audio && !audio.muted) {
@@ -1330,7 +1354,7 @@ export default function LoadingPage() {
                         </div>
 
                         <div className="progress-text">
-                            <span className="percentage">{Math.floor(progress)}%</span>
+                            <span className="percentage">{toRoman(Math.floor(progress))}</span>
                             <span className="progress-label">
                                 Loading Portfolio
                                 <span className="label-dot">.</span>
