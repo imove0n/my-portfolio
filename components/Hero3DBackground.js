@@ -1020,12 +1020,26 @@ function SpaceDust({ theme }) {
 function FloatingSymbols({ theme }) {
     const shapes = ['box', 'sphere', 'torus', 'octahedron', 'tetrahedron'];
     const spaceColors = [
-        '#0ea5e9',
-        '#8b5cf6',
-        '#ec4899',
-        '#06b6d4',
-        '#a855f7',
-        '#f472b6'
+        '#0ea5e9',    // Cyan/Blue
+        '#8b5cf6',    // Purple
+        '#ec4899',    // Pink
+        '#06b6d4',    // Light Cyan
+        '#a855f7',    // Violet
+        '#f472b6',    // Rose
+        '#10b981',    // Emerald Green
+        '#f59e0b',    // Amber/Orange
+        '#ef4444',    // Red
+        '#14b8a6',    // Teal
+        '#f97316',    // Orange
+        '#84cc16',    // Lime Green
+        '#06b6d4',    // Sky Blue
+        '#6366f1',    // Indigo
+        '#d946ef',    // Fuchsia
+        '#22d3ee',    // Cyan Bright
+        '#fb923c',    // Orange Light
+        '#4ade80',    // Green Light
+        '#c026d3',    // Magenta
+        '#facc15'     // Yellow
     ];
 
     const symbolPositions = React.useMemo(() => {
