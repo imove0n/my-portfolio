@@ -656,8 +656,16 @@ useEffect(() => {
         tapSoundRef.current.load();
     }, []);
 
-    // Custom cursor effect
+    // Custom cursor effect - Desktop only
     useEffect(() => {
+        // Check if device has touch screen (mobile/tablet)
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // Only enable cursor on desktop (non-touch devices)
+        if (isTouchDevice) {
+            return; // Exit early on mobile devices
+        }
+
         const moveCursor = (e) => {
             setCursorPos({ x: e.clientX, y: e.clientY });
             if (cursorRef.current) {
@@ -904,7 +912,7 @@ useEffect(() => {
                             animation: fadeIn 0.3s ease-in, fadeIn 0.5s ease-out 0.3s reverse;
                         }
 
-                        /* Custom space-themed cursor */
+                        /* Custom space-themed cursor - Desktop only */
                         .custom-cursor {
                             position: fixed;
                             width: 20px;
@@ -916,6 +924,13 @@ useEffect(() => {
                             transition: transform 0.15s ease, opacity 0.15s ease;
                             box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), inset 0 0 10px rgba(14, 165, 233, 0.3);
                             background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent);
+                        }
+
+                        /* Hide custom cursor on mobile/touch devices */
+                        @media (hover: none) and (pointer: coarse) {
+                            .custom-cursor {
+                                display: none !important;
+                            }
                         }
 
                         .custom-cursor::after {
