@@ -1530,8 +1530,7 @@ useEffect(() => {
                             color: ${theme === 'light' ? '#1e293b' : 'var(--text-secondary)'};
                             font-size: 1.5rem;
                             cursor: pointer;
-                            padding: 8px 12px;
-                            margin-right: 4px;
+                            padding: 5px;
                             transition: color 0.3s ease;
                         }
 
