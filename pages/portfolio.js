@@ -1383,15 +1383,16 @@ useEffect(() => {
                         }
 
                         .nav-container {
-                                max-width: 1200px;
-                                margin: 0 auto;
-                                padding: 0.8rem 1rem;
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                width: 100%;
-                                box-sizing: border-box;
-                            }
+                            max-width: 1200px;
+                            margin: 0 auto;
+                            padding: 0.8rem 1rem;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            width: 100%;
+                            box-sizing: border-box;
+                            overflow: visible;
+                        }
 
                         .logo {
                                 font-size: 1.2rem;
@@ -1404,7 +1405,7 @@ useEffect(() => {
                                 min-width: 0;
                                 max-width: calc(100vw - 150px);
                                 white-space: nowrap;
-                                overflow: hidden;
+                                overflow: visible;
                                 flex-shrink: 1;
                             }
 
