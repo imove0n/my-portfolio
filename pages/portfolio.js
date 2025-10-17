@@ -3165,7 +3165,7 @@ Your browser does not support the audio element.
                             <span className="serif-i">I</span> <span className="typing-text">{currentText}</span><span className="cursor">|</span>
                         </div>
                         <p className="hero-description">
-                            Computer Technician • IT Generalist • Aspiring Cybersecurity & ERP Specialist
+                            Where imagination meets computation.
                         </p>
                         <div className="hero-buttons">
                             <a href="#contact" className="btn btn-primary" aria-label="Navigate to contact section to connect">
