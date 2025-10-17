@@ -185,9 +185,7 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
                 { text: "", showBase: false, delay: 50 },
 
                 // Type "I'm Goodman"
-                { text: "I", showBase: false, delay: 100 },
                 { text: "I ", showBase: false, delay: 80 },
-                { text: "I a", showBase: false, delay: 100 },
                 { text: "I'm", showBase: false, delay: 100 },
                 { text: "I'm ", showBase: false, delay: 120 },
                 { text: "I'm G", showBase: false, delay: 100 },
@@ -210,8 +208,6 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
                 { text: "I'm G", showBase: false, delay: 50 },
                 { text: "I'm ", showBase: false, delay: 50 },
                 { text: "I'm", showBase: false, delay: 50 },
-                { text: "I a", showBase: false, delay: 50 },
-                { text: "I ", showBase: false, delay: 50 },
                 { text: "I", showBase: false, delay: 50 },
                 { text: "", showBase: false, delay: 50 },
 
