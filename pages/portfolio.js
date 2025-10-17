@@ -2,6 +2,7 @@
     import Head from "next/head";
     import emailjs from '@emailjs/browser';
     import dynamic from 'next/dynamic';
+    import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
     // Dynamically import 3D component (client-side only)
     const Hero3DBackground = dynamic(() => import('../components/Hero3DBackground'), {
@@ -841,6 +842,7 @@ useEffect(() => {
     };
 
     return (
+        <ParallaxProvider>
         <>
             <Head>
                 <title>Laurence De Guzman-Portfolio</title>
@@ -3156,44 +3158,61 @@ Your browser does not support the audio element.
                     {/* 3D Background */}
                     <Hero3DBackground theme={theme} />
 
-                    <div className="hero-content">
-                        <p className="hero-subtitle">Hi, I'm</p>
-                        <h1 className="hero-title">
-                            Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>{glitchText}</span>
-                        </h1>
-                        <div className="typing-container">
-                            <span className="serif-i">I</span> <span className="typing-text">{currentText}</span><span className="cursor">|</span>
+                    <Parallax speed={-10}>
+                        <div className="hero-content">
+                            <Parallax speed={5}>
+                                <p className="hero-subtitle">Hi, I'm</p>
+                            </Parallax>
+                            <Parallax speed={-5}>
+                                <h1 className="hero-title">
+                                    Laurence De <span className="glitch-text" onMouseEnter={handleGlitch}>{glitchText}</span>
+                                </h1>
+                            </Parallax>
+                            <Parallax speed={3}>
+                                <div className="typing-container">
+                                    <span className="serif-i">I</span> <span className="typing-text">{currentText}</span><span className="cursor">|</span>
+                                </div>
+                            </Parallax>
+                            <Parallax speed={-3}>
+                                <p className="hero-description">
+                                    Where imagination meets computation.
+                                </p>
+                            </Parallax>
+                            <Parallax speed={5}>
+                                <div className="hero-buttons">
+                                    <a href="#contact" className="btn btn-primary" aria-label="Navigate to contact section to connect">
+                                        <i className="fas fa-comment-dots"></i>
+                                        Let's Connect
+                                    </a>
+                                    <a href="mailto:laurencedeguzman04142003@gmail.com" className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Send email to Laurence De Guzman">
+                                        <i className="fas fa-envelope"></i>
+                                        Email Me
+                                    </a>
+                                </div>
+                            </Parallax>
                         </div>
-                        <p className="hero-description">
-                            Where imagination meets computation.
-                        </p>
-                        <div className="hero-buttons">
-                            <a href="#contact" className="btn btn-primary" aria-label="Navigate to contact section to connect">
-                                <i className="fas fa-comment-dots"></i>
-                                Let's Connect
-                            </a>
-                            <a href="mailto:laurencedeguzman04142003@gmail.com" className="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Send email to Laurence De Guzman">
-                                <i className="fas fa-envelope"></i>
-                                Email Me
-                            </a>
-                        </div>
-                    </div>
+                    </Parallax>
                 </section>
 
                 {/* About Section */}
                 <section id="about" className="section">
                     <div className="container">
-                        <h2 className="section-title">About Me</h2>
+                        <Parallax speed={-5}>
+                            <h2 className="section-title">About Me</h2>
+                        </Parallax>
                         <div className="about-content fade-in">
-                           <div className={`profile-image ${isFlipping ? 'flipping' : ''}`} onClick={handleImageChange} style={{ cursor: 'pointer' }}>
-    <img
-        src={`/${profileImages[currentImageIndex]}`}
-        alt="Laurence De Guzman"
-        onError={handleImageError}
-    />
-    <i className="fas fa-user fallback-icon"></i>
-</div>
-                            <div className="about-text">
+                            <Parallax speed={-3}>
+                                <div className={`profile-image ${isFlipping ? 'flipping' : ''}`} onClick={handleImageChange} style={{ cursor: 'pointer' }}>
+                                    <img
+                                        src={`/${profileImages[currentImageIndex]}`}
+                                        alt="Laurence De Guzman"
+                                        onError={handleImageError}
+                                    />
+                                    <i className="fas fa-user fallback-icon"></i>
+                                </div>
+                            </Parallax>
+                            <Parallax speed={3}>
+                                <div className="about-text">
                                 <p><br>
                                 </br>
                                     I'm a 22-year-old Tech Enthusiast and TUP Manila Fresh Graduate with a BTVTED Major in Computer Programming. 
@@ -3208,9 +3227,10 @@ Your browser does not support the audio element.
                                 Facebook AI chatbot using N8N for automated customer service and proposed cybersecurity solutions 
                                     including antivirus and firewall implementations. My background spans creating Python games converted 
                                 to APKs, Arduino projects, database design, to full-stack web development. With every challenge, I see 
-                                    an opportunity to grow, because nothing can stop me from moving forward in technology.  
+                                    an opportunity to grow, because nothing can stop me from moving forward in technology.
                                 </p>
-                            </div>
+                                </div>
+                            </Parallax>
                         </div>
                         
                         <div className="current-learning fade-in">
@@ -3243,9 +3263,12 @@ Your browser does not support the audio element.
                 {/* Experience Section */}
                 <section id="experience" className="section">
                     <div className="container">
-                        <h2 className="section-title">Leadership & Experience</h2>
+                        <Parallax speed={-5}>
+                            <h2 className="section-title">Leadership & Experience</h2>
+                        </Parallax>
                         <div className="cards-grid">
-                            <div className="card fade-in">
+                            <Parallax speed={2}>
+                                <div className="card fade-in">
                                 <div className="card-icon">
                                     <i className="fas fa-briefcase"></i>
                                 </div>
@@ -3258,8 +3281,10 @@ Your browser does not support the audio element.
                                     automated cloud backup systems, website theme development, and marketing support. Built a 24/7 Facebook AI
                                     chatbot agent using Ollama model with Cloudflare hosting in one week for automated customer service.</p>
                                 </div>
-                            </div>
-                            <div className="card fade-in">
+                                </div>
+                            </Parallax>
+                            <Parallax speed={-2}>
+                                <div className="card fade-in">
                                 <div className="card-icon">
                                     <i className="fas fa-users-cog"></i>
                                 </div>
@@ -3269,8 +3294,10 @@ Your browser does not support the audio element.
                                     <p>Directed organizational strategies and execution across events. Coordinated multiple teams for event readiness,
                                     participant engagement, and served as emcee for UI/UX workshops and AI events.</p>
                                 </div>
-                            </div>
-                            <div className="card fade-in">
+                                </div>
+                            </Parallax>
+                            <Parallax speed={3}>
+                                <div className="card fade-in">
                                 <div className="card-icon">
                                     <i className="fas fa-laptop-code"></i>
                                 </div>
@@ -3280,8 +3307,10 @@ Your browser does not support the audio element.
                                     <p>Participated in live client demos and business meetings. Gained hands-on experience with Odoo ERP system,
                                     XML data handling, PostgreSQL databases, and advised clients on implementation strategies.</p>
                                 </div>
-                            </div>
-                            <div className="card fade-in">
+                                </div>
+                            </Parallax>
+                            <Parallax speed={-3}>
+                                <div className="card fade-in">
                                 <div className="card-icon">
                                     <i className="fas fa-tools"></i>
                                 </div>
@@ -3292,7 +3321,8 @@ Your browser does not support the audio element.
                                     and repairs for phones/laptops/desktops, custom software development, and academic thesis assistance for students.
                                     Providing comprehensive tech solutions with competitive pricing.</p>
                                 </div>
-                            </div>
+                                </div>
+                            </Parallax>
                         </div>
                     </div>
                 </section>
@@ -3300,8 +3330,11 @@ Your browser does not support the audio element.
                 {/* Skills Section */}
                 <section id="skills" className="section">
                     <div className="container">
-                        <h2 className="section-title">Technical Skills</h2>
-                        <div className="skills-grid">
+                        <Parallax speed={-5}>
+                            <h2 className="section-title">Technical Skills</h2>
+                        </Parallax>
+                        <Parallax speed={2}>
+                            <div className="skills-grid">
                             <div className="skill-item fade-in">
                                 <i className="fab fa-react"></i>
                                 <h4>Modern Full-Stack Development</h4>
@@ -3343,6 +3376,7 @@ Your browser does not support the audio element.
                                   <p>Computer Building/Upgrades, Hardware Diagnostics, Arduino, Raspberry Pi, IoT Development, Circuit Design</p>
                                 </div>
                             </div>
+                        </Parallax>
                         </div>
                     
                 </section>
@@ -3350,13 +3384,16 @@ Your browser does not support the audio element.
                 {/* Projects Section */}
                 <section id="projects" className="section">
                     <div className="container">
-                        <h2 className="section-title">School Projects</h2>
-                        <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1.1rem'}}>
-                            Academic projects from TUP Manila - BTVTED Major in Computer Programming
-                        </p>
+                        <Parallax speed={-5}>
+                            <h2 className="section-title">School Projects</h2>
+                            <p style={{textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1.1rem'}}>
+                                Academic projects from TUP Manila - BTVTED Major in Computer Programming
+                            </p>
+                        </Parallax>
                         <div className="cards-grid">
                             {/* AI Chatbot Card */}
-                            <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
+                            <Parallax speed={2}>
+                                <div className={`flip-card ${flippedCards['chatbot'] ? 'flipped' : ''}`} onClick={() => toggleFlip('chatbot')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -3377,10 +3414,12 @@ Your browser does not support the audio element.
                                         <img src="/chatbot.png" alt="AI Chatbot Project" />
                                     </div>
                                 </div>
-                            </div>
+                                </div>
+                            </Parallax>
 
                             {/* Flappy Bird Card */}
-                            <div className={`flip-card ${flippedCards['flappy'] ? 'flipped' : ''}`} onClick={() => toggleFlip('flappy')}>
+                            <Parallax speed={-2}>
+                                <div className={`flip-card ${flippedCards['flappy'] ? 'flipped' : ''}`} onClick={() => toggleFlip('flappy')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -3403,10 +3442,12 @@ Your browser does not support the audio element.
                                         <img src="/flappy.jpg" alt="Flappy Bird Game Project" />
                                     </div>
                                 </div>
-                            </div>
+                                </div>
+                            </Parallax>
 
                             {/* Arduino Card */}
-                            <div className={`flip-card ${flippedCards['arduino'] ? 'flipped' : ''}`} onClick={() => toggleFlip('arduino')}>
+                            <Parallax speed={3}>
+                                <div className={`flip-card ${flippedCards['arduino'] ? 'flipped' : ''}`} onClick={() => toggleFlip('arduino')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -3427,10 +3468,12 @@ Your browser does not support the audio element.
                                         <img src="/arduino.png" alt="Arduino Smart Car Project" />
                                     </div>
                                 </div>
-                            </div>
+                                </div>
+                            </Parallax>
 
                             {/* Database Card */}
-                            <div className={`flip-card ${flippedCards['database'] ? 'flipped' : ''}`} onClick={() => toggleFlip('database')}>
+                            <Parallax speed={-3}>
+                                <div className={`flip-card ${flippedCards['database'] ? 'flipped' : ''}`} onClick={() => toggleFlip('database')}>
                                 <div className="flip-card-inner">
                                     <div className="flip-card-front">
                                         <div className="card-icon">
@@ -3451,7 +3494,8 @@ Your browser does not support the audio element.
                                         <img src="/autodatabase.png" alt="Database System Project" />
                                     </div>
                                 </div>
-                            </div>
+                                </div>
+                            </Parallax>
                         </div>
                     </div>
                 </section>
@@ -3528,5 +3572,6 @@ Your browser does not support the audio element.
                     </div>
                 </footer>
             </>
+        </ParallaxProvider>
         );
     }
