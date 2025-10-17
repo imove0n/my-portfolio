@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/portfolio.css'
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useRouter } from 'next/router'
@@ -40,29 +41,21 @@ function MyApp({ Component, pageProps }) {
           left: 0;
           right: 0;
           bottom: 0;
-          background: #0f172a;
+          background: var(--color-bg-primary);
           z-index: 99999;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #0ea5e9;
-          font-size: 1.2rem;
-          font-family: 'Inter', sans-serif;
+          color: var(--color-primary);
+          font-size: var(--font-size-lg);
+          font-family: var(--font-primary);
         }
       `}</style>
 
       {isChangingRoute && (
         <div className="page-transition-overlay">
           <div style={{ textAlign: 'center' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              border: '4px solid rgba(14, 165, 233, 0.2)',
-              borderTop: '4px solid #0ea5e9',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-              margin: '0 auto 1rem'
-            }}></div>
+            <div className="loading-spinner"></div>
             Loading...
           </div>
         </div>
@@ -72,6 +65,16 @@ function MyApp({ Component, pageProps }) {
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid rgba(14, 165, 233, 0.2);
+          border-top: 4px solid var(--color-primary);
+          border-radius: var(--radius-full);
+          animation: spin var(--duration-epic) linear infinite;
+          margin: 0 auto 1rem;
         }
       `}</style>
 
