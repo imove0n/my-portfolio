@@ -16,7 +16,13 @@
       "Bash(npm run build:*)",
       "Bash(xcopy:*)",
       "Bash(robocopy:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(if [ -d \"node_modules\" ])",
+      "Bash(then echo \"node_modules exists\")",
+      "Bash(else echo \"node_modules NOT found - need to install\")",
+      "Bash(fi)",
+      "Bash(git config:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
