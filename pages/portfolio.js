@@ -901,6 +901,8 @@ useEffect(() => {
 
                         html {
                             scroll-behavior: smooth;
+                            overflow-x: hidden;
+                            max-width: 100vw;
                         }
 
                         body {
@@ -913,6 +915,8 @@ useEffect(() => {
                             margin: 0;
                             padding: 0;
                             transition: background-color 0.5s ease, color 0.5s ease;
+                            max-width: 100vw;
+                            position: relative;
                         }
 
                         /* Theme Transition Overlay */
@@ -1384,27 +1388,30 @@ useEffect(() => {
                         }
 
                         .nav-container {
-                            max-width: 1200px;
-                            margin: 0 auto;
-                            padding: 0.8rem 1rem;
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
+                                max-width: 1200px;
+                                margin: 0 auto;
+                                padding: 0.8rem 1rem;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                width: 100%;
+                                box-sizing: border-box;
+                            }
 
                         .logo {
-                            font-size: 1.2rem;
-                            font-weight: 700;
-                            color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
-                            display: flex;
-                            align-items: center;
-                            gap: 0.3rem;
-                            position: relative;
-                            min-width: 250px;
-                            width: 250px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                        }
+                                font-size: 1.2rem;
+                                font-weight: 700;
+                                color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
+                                display: flex;
+                                align-items: center;
+                                gap: 0.3rem;
+                                position: relative;
+                                min-width: 0;
+                                max-width: calc(100vw - 150px);
+                                white-space: nowrap;
+                                overflow: hidden;
+                                flex-shrink: 1;
+                            }
 
                         .logo-base {
                             color: ${theme === 'light' ? '#0284c7' : 'var(--primary-color)'};
