@@ -134,87 +134,85 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
                 // Start: wait 3 seconds with "Laurence De Guzman"
                 { text: "", showBase: true, delay: 3000 },
 
-                // Hide base name and type "I am "
+                // Hide base name and type "I'm "
                 { text: "", showBase: false, delay: 100 },
                 { text: "I", showBase: false, delay: 100 },
-                { text: "I ", showBase: false, delay: 80 },
-                { text: "I a", showBase: false, delay: 100 },
-                { text: "I am", showBase: false, delay: 100 },
-                { text: "I am ", showBase: false, delay: 150 },
+                { text: "I'm", showBase: false, delay: 100 },
+
 
                 // Type full name
-                { text: "I am L", showBase: false, delay: 100 },
-                { text: "I am La", showBase: false, delay: 100 },
-                { text: "I am Lau", showBase: false, delay: 100 },
-                { text: "I am Laur", showBase: false, delay: 100 },
-                { text: "I am Laure", showBase: false, delay: 100 },
-                { text: "I am Lauren", showBase: false, delay: 100 },
-                { text: "I am Laurenc", showBase: false, delay: 100 },
-                { text: "I am Laurence", showBase: false, delay: 100 },
-                { text: "I am Laurence ", showBase: false, delay: 120 },
-                { text: "I am Laurence D", showBase: false, delay: 100 },
-                { text: "I am Laurence De", showBase: false, delay: 100 },
-                { text: "I am Laurence De ", showBase: false, delay: 120 },
-                { text: "I am Laurence De G", showBase: false, delay: 100 },
-                { text: "I am Laurence De Gu", showBase: false, delay: 100 },
-                { text: "I am Laurence De Guz", showBase: false, delay: 100 },
-                { text: "I am Laurence De Guzm", showBase: false, delay: 100 },
-                { text: "I am Laurence De Guzma", showBase: false, delay: 100 },
-                { text: "I am Laurence De Guzman", showBase: false, delay: 100 },
+                { text: "I'm L", showBase: false, delay: 100 },
+                { text: "I'm La", showBase: false, delay: 100 },
+                { text: "I'm Lau", showBase: false, delay: 100 },
+                { text: "I'm Laur", showBase: false, delay: 100 },
+                { text: "I'm Laure", showBase: false, delay: 100 },
+                { text: "I'm Lauren", showBase: false, delay: 100 },
+                { text: "I'm Laurenc", showBase: false, delay: 100 },
+                { text: "I'm Laurence", showBase: false, delay: 100 },
+                { text: "I'm Laurence ", showBase: false, delay: 120 },
+                { text: "I'm Laurence D", showBase: false, delay: 100 },
+                { text: "I'm Laurence De", showBase: false, delay: 100 },
+                { text: "I'm Laurence De ", showBase: false, delay: 120 },
+                { text: "I'm Laurence De G", showBase: false, delay: 100 },
+                { text: "I'm Laurence De Gu", showBase: false, delay: 100 },
+                { text: "I'm Laurence De Guz", showBase: false, delay: 100 },
+                { text: "I'm Laurence De Guzm", showBase: false, delay: 100 },
+                { text: "I'm Laurence De Guzma", showBase: false, delay: 100 },
+                { text: "I'm Laurence De Guzman", showBase: false, delay: 100 },
 
-                // Wait with "I am Laurence De Guzman"
-                { text: "I am Laurence De Guzman", showBase: false, delay: 2000 },
+                // Wait with "I'm Laurence De Guzman"
+                { text: "I'm Laurence De Guzman", showBase: false, delay: 2000 },
 
                 // Backspace everything
-                { text: "I am Laurence De Guzma", showBase: false, delay: 50 },
-                { text: "I am Laurence De Guzm", showBase: false, delay: 50 },
-                { text: "I am Laurence De Guz", showBase: false, delay: 50 },
-                { text: "I am Laurence De Gu", showBase: false, delay: 50 },
-                { text: "I am Laurence De G", showBase: false, delay: 50 },
-                { text: "I am Laurence De ", showBase: false, delay: 50 },
-                { text: "I am Laurence De", showBase: false, delay: 50 },
-                { text: "I am Laurence D", showBase: false, delay: 50 },
-                { text: "I am Laurence ", showBase: false, delay: 50 },
-                { text: "I am Laurence", showBase: false, delay: 50 },
-                { text: "I am Lauren", showBase: false, delay: 50 },
-                { text: "I am Laure", showBase: false, delay: 50 },
-                { text: "I am Laur", showBase: false, delay: 50 },
-                { text: "I am Lau", showBase: false, delay: 50 },
-                { text: "I am La", showBase: false, delay: 50 },
-                { text: "I am L", showBase: false, delay: 50 },
-                { text: "I am ", showBase: false, delay: 50 },
-                { text: "I am", showBase: false, delay: 50 },
+                { text: "I'm Laurence De Guzma", showBase: false, delay: 50 },
+                { text: "I'm Laurence De Guzm", showBase: false, delay: 50 },
+                { text: "I'm Laurence De Guz", showBase: false, delay: 50 },
+                { text: "I'm Laurence De Gu", showBase: false, delay: 50 },
+                { text: "I'm Laurence De G", showBase: false, delay: 50 },
+                { text: "I'm Laurence De ", showBase: false, delay: 50 },
+                { text: "I'm Laurence De", showBase: false, delay: 50 },
+                { text: "I'm Laurence D", showBase: false, delay: 50 },
+                { text: "I'm Laurence ", showBase: false, delay: 50 },
+                { text: "I'm Laurence", showBase: false, delay: 50 },
+                { text: "I'm Lauren", showBase: false, delay: 50 },
+                { text: "I'm Laure", showBase: false, delay: 50 },
+                { text: "I'm Laur", showBase: false, delay: 50 },
+                { text: "I'm Lau", showBase: false, delay: 50 },
+                { text: "I'm La", showBase: false, delay: 50 },
+                { text: "I'm L", showBase: false, delay: 50 },
+                { text: "I'm ", showBase: false, delay: 50 },
+                { text: "I'm", showBase: false, delay: 50 },
                 { text: "I a", showBase: false, delay: 50 },
                 { text: "I ", showBase: false, delay: 50 },
                 { text: "I", showBase: false, delay: 50 },
                 { text: "", showBase: false, delay: 50 },
 
-                // Type "I am Goodman"
+                // Type "I'm Goodman"
                 { text: "I", showBase: false, delay: 100 },
                 { text: "I ", showBase: false, delay: 80 },
                 { text: "I a", showBase: false, delay: 100 },
-                { text: "I am", showBase: false, delay: 100 },
-                { text: "I am ", showBase: false, delay: 120 },
-                { text: "I am G", showBase: false, delay: 100 },
-                { text: "I am Go", showBase: false, delay: 100 },
-                { text: "I am Goo", showBase: false, delay: 100 },
-                { text: "I am Good", showBase: false, delay: 100 },
-                { text: "I am Goodm", showBase: false, delay: 100 },
-                { text: "I am Goodma", showBase: false, delay: 100 },
-                { text: "I am Goodman", showBase: false, delay: 100 },
+                { text: "I'm", showBase: false, delay: 100 },
+                { text: "I'm ", showBase: false, delay: 120 },
+                { text: "I'm G", showBase: false, delay: 100 },
+                { text: "I'm Go", showBase: false, delay: 100 },
+                { text: "I'm Goo", showBase: false, delay: 100 },
+                { text: "I'm Good", showBase: false, delay: 100 },
+                { text: "I'm Goodm", showBase: false, delay: 100 },
+                { text: "I'm Goodma", showBase: false, delay: 100 },
+                { text: "I'm Goodman", showBase: false, delay: 100 },
 
                 // Wait
-                { text: "I am Goodman", showBase: false, delay: 1500 },
+                { text: "I'm Goodman", showBase: false, delay: 1500 },
 
                 // Backspace everything
-                { text: "I am Goodma", showBase: false, delay: 50 },
-                { text: "I am Goodm", showBase: false, delay: 50 },
-                { text: "I am Good", showBase: false, delay: 50 },
-                { text: "I am Goo", showBase: false, delay: 50 },
-                { text: "I am Go", showBase: false, delay: 50 },
-                { text: "I am G", showBase: false, delay: 50 },
-                { text: "I am ", showBase: false, delay: 50 },
-                { text: "I am", showBase: false, delay: 50 },
+                { text: "I'm Goodma", showBase: false, delay: 50 },
+                { text: "I'm Goodm", showBase: false, delay: 50 },
+                { text: "I'm Good", showBase: false, delay: 50 },
+                { text: "I'm Goo", showBase: false, delay: 50 },
+                { text: "I'm Go", showBase: false, delay: 50 },
+                { text: "I'm G", showBase: false, delay: 50 },
+                { text: "I'm ", showBase: false, delay: 50 },
+                { text: "I'm", showBase: false, delay: 50 },
                 { text: "I a", showBase: false, delay: 50 },
                 { text: "I ", showBase: false, delay: 50 },
                 { text: "I", showBase: false, delay: 50 },
@@ -900,24 +898,24 @@ useEffect(() => {
                     }
 
                         html {
-                            scroll-behavior: smooth;
-                            overflow-x: hidden;
-                            max-width: 100vw;
-                        }
+                        scroll-behavior: smooth;
+                        overflow-x: hidden;
+                        max-width: 100vw;
+                    }
 
-                        body {
-                            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                            line-height: 1.6;
-                            color: var(--text-primary);
-                            background-color: var(--bg-primary);
-                            overflow-x: hidden;
-                            cursor: none;
-                            margin: 0;
-                            padding: 0;
-                            transition: background-color 0.5s ease, color 0.5s ease;
-                            max-width: 100vw;
-                            position: relative;
-                        }
+                    body {
+                        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                        line-height: 1.6;
+                        color: var(--text-primary);
+                        background-color: var(--bg-primary);
+                        overflow-x: hidden;
+                        cursor: none;
+                        margin: 0;
+                        padding: 0;
+                        transition: background-color 0.5s ease, color 0.5s ease;
+                        max-width: 100vw;
+                        position: relative;
+                    }
 
                         /* Theme Transition Overlay */
                         .theme-transition-overlay {
