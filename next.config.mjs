@@ -8,10 +8,21 @@ const nextConfig = {
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production', // Remove console.logs in production
+
+    // Styled JSX minification (removes whitespace, comments)
+    styledComponents: true,
   },
 
   // Additional optimizations
   swcMinify: true, // Use SWC minifier (faster, better compression)
+
+  // Compress and minify CSS
+  compress: true,
+
+  // Optimize CSS - Remove comments, minify
+  experimental: {
+    optimizeCss: true, // Experimental CSS optimization
+  },
 
   // Headers for additional security
   async headers() {
@@ -30,6 +41,10 @@ const nextConfig = {
           {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
           },
         ],
       },
