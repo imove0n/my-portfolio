@@ -78,6 +78,15 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
     const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 
+    // Debug: Log to check if env vars are loaded (remove after testing)
+    useEffect(() => {
+        console.log('EmailJS Config Check:', {
+            publicKey: EMAILJS_PUBLIC_KEY ? '✓ Loaded' : '✗ Missing',
+            serviceId: EMAILJS_SERVICE_ID ? '✓ Loaded' : '✗ Missing',
+            templateId: EMAILJS_TEMPLATE_ID ? '✓ Loaded' : '✗ Missing'
+        });
+    }, []);
+
     // Typing effect for hero section
     useEffect(() => {
         const texts = [
