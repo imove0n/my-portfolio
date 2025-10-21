@@ -73,10 +73,10 @@ const [currentTrackIndex, setCurrentTrackIndex] = useState(2); // Start with Hat
     const [submitMessage, setSubmitMessage] = useState('');
     const formRef = useRef(null);
 
-    // EmailJS Configuration
-    const EMAILJS_PUBLIC_KEY = 'nBLKDneiC3rU02xZ_';
-    const EMAILJS_SERVICE_ID = 'service_6irrupm';
-    const EMAILJS_TEMPLATE_ID = 'template_vulbg28';
+    // EmailJS Configuration - Now using environment variables for security
+    const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 
     // Typing effect for hero section
     useEffect(() => {
