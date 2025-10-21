@@ -16,7 +16,10 @@
       "Bash(npm run build:*)",
       "Bash(xcopy:*)",
       "Bash(robocopy:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3000)",
+      "Bash(findstr :3001)"
     ],
     "deny": [],
     "ask": []
