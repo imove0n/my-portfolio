@@ -407,38 +407,36 @@ export default function CompanyTests() {
                 </div>
 
                 <div className="cards-grid">
-                    {/* Example: Add your company test projects here */}
-                    {/*
-                    <div className={`flip-card ${flippedCards['test1'] ? 'flipped' : ''}`} onClick={() => toggleFlip('test1')}>
+                    {/* Rent Cubao Company Project */}
+                    <div className={`flip-card ${flippedCards['rentCubao'] ? 'flipped' : ''}`} onClick={(e) => {
+                        if (!e.target.closest('a')) {
+                            toggleFlip('rentCubao');
+                        }
+                    }}>
                         <div className="flip-card-inner">
                             <div className="flip-card-front">
                                 <div className="card-header">
                                     <div className="card-icon">
-                                        <i className="fas fa-code-branch"></i>
+                                        <i className="fas fa-building"></i>
                                     </div>
                                 </div>
                                 <div className="card-content">
-                                    <h3>Company Name - Technical Assessment</h3>
-                                    <p>Description of the test challenge and what you built</p>
+                                    <h3>Rent Cubao - Property Rental Platform</h3>
+                                    <p>A comprehensive property rental management system for Rent Cubao company. Click the image to view the live website.</p>
                                     <div className="card-tags">
-                                        <span className="tag">Technology 1</span>
-                                        <span className="tag">Technology 2</span>
+                                        <span className="tag">Next.js</span>
+                                        <span className="tag">React</span>
+                                        <span className="tag">Web App</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="flip-card-back">
-                                <img src="/test-screenshot.png" alt="Test Project" />
+                                <a href="https://rent-cubao.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
+                                    <img src="/project1.png" alt="Rent Cubao Project" />
+                                </a>
                             </div>
                         </div>
                     </div>
-                    */}
-                </div>
-
-                {/* Empty state */}
-                <div className="empty-state">
-                    <i className="fas fa-clipboard-list"></i>
-                    <h3>Projects Coming Soon</h3>
-                    <p>Technical assessments and coding challenges will be showcased here as they are completed.</p>
                 </div>
             </div>
 
