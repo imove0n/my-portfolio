@@ -3115,6 +3115,7 @@ Your browser does not support the audio element.
                                 <ul className={`dropdown-menu ${isProjectsDropdownOpen ? 'show' : ''}`} role="menu">
                                     <li role="menuitem"><a href="#projects" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View School Projects">School Projects</a></li>
                                     <li role="menuitem"><a href="/projects/self-made" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Self-Made Projects">Self-Made Projects</a></li>
+                                    <li role="menuitem"><a href="/projects/company-projects" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Company Projects">Company Projects</a></li>
                                     <li role="menuitem"><a href="/projects/company-tests" onClick={() => { closeMenu(); setIsProjectsDropdownOpen(false); }} aria-label="View Program Test for Companies">Program Test for Companies</a></li>
                                 </ul>
                             </li>

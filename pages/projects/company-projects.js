@@ -2,18 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-export default function CompanyTests() {
+export default function CompanyProjects() {
     const router = useRouter();
-    const [flippedCards, setFlippedCards] = useState({});
     const cursorRef = useRef(null);
     const [isClicking, setIsClicking] = useState(false);
-
-    const toggleFlip = (cardId) => {
-        setFlippedCards(prev => ({
-            ...prev,
-            [cardId]: !prev[cardId]
-        }));
-    };
 
     const goBack = () => {
         router.push('/portfolio#projects');
@@ -42,10 +34,23 @@ export default function CompanyTests() {
         };
     }, []);
 
+    // Company projects data
+    const projects = [
+        {
+            id: 1,
+            title: 'Rent Cubao - Property Rental Platform',
+            description: 'A comprehensive property rental management system for Rent Cubao company. Managing and updating their website to provide seamless user experience for property rentals.',
+            image: '/project1.png',
+            icon: 'fas fa-building',
+            tags: ['Next.js', 'React', 'Web Development'],
+            url: 'https://rent-cubao.vercel.app/'
+        }
+    ];
+
     return (
         <>
             <Head>
-                <title>Program Tests for Companies - Laurence De Guzman</title>
+                <title>Company Projects - Laurence De Guzman</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
                 <style>{`
@@ -79,7 +84,7 @@ export default function CompanyTests() {
                         position: absolute;
                         left: 2rem;
                         top: 2rem;
-                        background: linear-gradient(135deg, #f59e0b, #ef4444);
+                        background: linear-gradient(135deg, #10b981, #059669);
                         border: none;
                         color: white;
                         padding: 0.875rem 1.75rem;
@@ -91,7 +96,7 @@ export default function CompanyTests() {
                         align-items: center;
                         gap: 0.625rem;
                         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+                        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
                         position: relative;
                         overflow: hidden;
                     }
@@ -103,7 +108,7 @@ export default function CompanyTests() {
                         left: 0;
                         width: 100%;
                         height: 100%;
-                        background: linear-gradient(135deg, #ef4444, #f59e0b);
+                        background: linear-gradient(135deg, #059669, #10b981);
                         opacity: 0;
                         transition: opacity 0.3s ease;
                     }
@@ -114,7 +119,7 @@ export default function CompanyTests() {
 
                     .back-btn:hover {
                         transform: translateY(-3px);
-                        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.6);
+                        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.6);
                     }
 
                     .back-btn span {
@@ -125,7 +130,7 @@ export default function CompanyTests() {
                     .page-title {
                         font-size: 3rem;
                         font-weight: 700;
-                        color: #0ea5e9;
+                        color: #10b981;
                         margin-bottom: 1rem;
                     }
 
@@ -134,158 +139,132 @@ export default function CompanyTests() {
                         color: #94a3b8;
                     }
 
-                    .flip-card {
-                        perspective: 2000px;
-                        min-height: 480px;
-                        background: transparent;
-                        cursor: pointer;
+                    .project-card {
                         position: relative;
-                    }
-
-                    .flip-card::after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
-                        height: 4px;
-                        background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
-                        background-size: 200% 100%;
-                        animation: shimmer 3s linear infinite;
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                        border-radius: 0 0 16px 16px;
-                    }
-
-                    .flip-card:hover::after {
-                        opacity: 1;
-                    }
-
-                    @keyframes shimmer {
-                        0% { background-position: -200% 0; }
-                        100% { background-position: 200% 0; }
-                    }
-
-                    .flip-card-inner {
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-                        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-                        transform-style: preserve-3d;
-                    }
-
-                    .flip-card.flipped .flip-card-inner {
-                        transform: rotateY(180deg);
-                    }
-
-                    .flip-card-front, .flip-card-back {
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        backface-visibility: hidden;
+                        background: #1a2332;
+                        border: 2px solid #2d3748;
                         border-radius: 16px;
                         overflow: hidden;
-                    }
-
-                    .flip-card-front {
-                        background: linear-gradient(145deg, #1e2936, #161d28);
-                        border: 2px solid #2a3441;
-                        padding: 0;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                         display: flex;
                         flex-direction: column;
-                        transition: all 0.3s ease;
+                        cursor: pointer;
                     }
 
-                    .flip-card:hover .flip-card-front {
-                        border-color: #f59e0b;
-                        box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
-                    }
-
-                    .flip-card-back {
-                        background: #0f1419;
-                        border: 2px solid #f59e0b;
-                        transform: rotateY(180deg);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        padding: 1.5rem;
-                        box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
-                    }
-
-                    .flip-card-back img {
-                        max-width: 100%;
-                        max-height: 100%;
-                        object-fit: contain;
-                        border-radius: 12px;
-                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-                    }
-
-                    .card-header {
-                        background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-                        padding: 1.5rem 2rem;
-                        position: relative;
-                        overflow: hidden;
-                    }
-
-                    .card-header::before {
+                    .project-card::before {
                         content: '';
                         position: absolute;
-                        top: -50%;
-                        right: -50%;
-                        width: 200%;
-                        height: 200%;
-                        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15), transparent);
+                        transition: left 0.5s ease;
                     }
 
-                    .flip-card:hover .card-header::before {
+                    .project-card:hover::before {
+                        left: 100%;
+                    }
+
+                    .project-card:hover {
+                        transform: translateY(-10px) scale(1.02);
+                        border-color: #10b981;
+                        box-shadow: 0 25px 50px rgba(16, 185, 129, 0.25), 0 0 0 1px rgba(16, 185, 129, 0.3);
+                    }
+
+                    .card-image {
+                        position: relative;
+                        width: 100%;
+                        height: 240px;
+                        overflow: hidden;
+                        background: #0f1419;
+                        border-bottom: 3px solid #10b981;
+                    }
+
+                    .card-image::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(180deg, transparent 60%, #1a2332 100%);
+                        pointer-events: none;
+                    }
+
+                    .card-image img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: all 0.4s ease;
+                        filter: brightness(0.85) saturate(1.1);
+                    }
+
+                    .project-card:hover .card-image img {
+                        transform: scale(1.15);
+                        filter: brightness(1) saturate(1.2);
+                    }
+
+                    .card-overlay {
+                        position: absolute;
+                        top: 1rem;
+                        right: 1rem;
+                        display: flex;
+                        gap: 0.5rem;
+                        opacity: 0;
+                        transform: translateY(-10px);
+                        transition: all 0.3s ease;
+                        z-index: 2;
+                    }
+
+                    .project-card:hover .card-overlay {
                         opacity: 1;
+                        transform: translateY(0);
+                    }
+
+                    .card-body {
+                        padding: 2rem 1.75rem;
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1;
+                        background: linear-gradient(to bottom, #1a2332, #141c28);
                     }
 
                     .card-icon {
-                        width: 75px;
-                        height: 75px;
-                        background: rgba(255, 255, 255, 0.25);
-                        backdrop-filter: blur(10px);
-                        border: 3px solid rgba(255, 255, 255, 0.4);
+                        position: absolute;
+                        top: 200px;
+                        left: 1.75rem;
+                        width: 65px;
+                        height: 65px;
+                        background: linear-gradient(145deg, #10b981, #059669);
                         border-radius: 50%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        transition: all 0.4s ease;
-                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4), 0 0 0 4px #1a2332;
+                        z-index: 1;
+                        transition: all 0.3s ease;
                     }
 
-                    .flip-card:hover .card-icon {
-                        transform: rotate(-15deg) scale(1.15);
-                        background: rgba(255, 255, 255, 0.35);
-                        border-color: rgba(255, 255, 255, 0.6);
+                    .project-card:hover .card-icon {
+                        transform: rotate(360deg) scale(1.1);
+                        box-shadow: 0 12px 30px rgba(16, 185, 129, 0.6), 0 0 0 4px #1a2332;
                     }
 
                     .card-icon i {
-                        font-size: 2.25rem;
+                        font-size: 1.75rem;
                         color: white;
-                        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
                     }
 
-                    .card-content {
-                        padding: 2rem;
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    .card-content h3 {
-                        font-size: 1.5rem;
+                    .card-body h3 {
+                        font-size: 1.4rem;
                         color: #f1f5f9;
-                        margin-bottom: 1rem;
+                        margin: 2.5rem 0 0.875rem;
                         font-weight: 700;
                         letter-spacing: -0.02em;
-                        line-height: 1.3;
                     }
 
-                    .card-content p {
+                    .card-body p {
                         color: #94a3b8;
                         line-height: 1.7;
                         margin-bottom: 1.75rem;
@@ -293,31 +272,82 @@ export default function CompanyTests() {
                         font-size: 0.975rem;
                     }
 
+                    .view-btn {
+                        background: #10b981;
+                        color: white;
+                        border: none;
+                        padding: 0.875rem 1.75rem;
+                        border-radius: 10px;
+                        font-size: 0.975rem;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        text-decoration: none;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.625rem;
+                        justify-content: center;
+                        margin-top: auto;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .view-btn::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                        transition: left 0.5s ease;
+                    }
+
+                    .view-btn:hover::before {
+                        left: 100%;
+                    }
+
+                    .view-btn:hover {
+                        background: #059669;
+                        transform: translateY(-3px);
+                        box-shadow: 0 12px 24px rgba(16, 185, 129, 0.5);
+                    }
+
+                    .view-btn i {
+                        font-size: 0.875rem;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .view-btn:hover i {
+                        transform: translateX(3px);
+                    }
+
                     .card-tags {
                         display: flex;
                         flex-wrap: wrap;
                         gap: 0.625rem;
-                        margin-top: auto;
                     }
 
                     .tag {
-                        background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+                        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
                         border: none;
-                        color: #fbbf24;
-                        padding: 0.5rem 1.125rem;
+                        color: #34d399;
+                        padding: 0.5rem 1rem;
                         border-radius: 8px;
                         font-size: 0.8rem;
                         font-weight: 600;
                         text-transform: uppercase;
                         letter-spacing: 0.05em;
                         backdrop-filter: blur(10px);
-                        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
                     }
 
                     .cards-grid {
                         display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                        grid-template-columns: repeat(3, 1fr);
                         gap: 2rem;
+                        margin-bottom: 2rem;
                     }
 
                     .empty-state {
@@ -337,6 +367,13 @@ export default function CompanyTests() {
                         margin-bottom: 0.5rem;
                     }
 
+                    @media (max-width: 1024px) {
+                        .cards-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 1.5rem;
+                        }
+                    }
+
                     @media (max-width: 768px) {
                         .container {
                             padding: 2rem 1rem;
@@ -350,10 +387,15 @@ export default function CompanyTests() {
 
                         .cards-grid {
                             grid-template-columns: 1fr;
+                            gap: 1.5rem;
                         }
 
                         .page-title {
                             font-size: 2rem;
+                        }
+
+                        .card-image {
+                            height: 200px;
                         }
                     }
 
@@ -362,13 +404,13 @@ export default function CompanyTests() {
                         position: fixed;
                         width: 20px;
                         height: 20px;
-                        border: 2px solid #0ea5e9;
+                        border: 2px solid #10b981;
                         border-radius: 50%;
                         pointer-events: none;
                         z-index: 9999;
                         transition: transform 0.15s ease, opacity 0.15s ease;
-                        box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), inset 0 0 10px rgba(14, 165, 233, 0.3);
-                        background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent);
+                        box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), inset 0 0 10px rgba(16, 185, 129, 0.3);
+                        background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent);
                     }
 
                     .custom-cursor::after {
@@ -376,12 +418,12 @@ export default function CompanyTests() {
                         position: absolute;
                         width: 4px;
                         height: 4px;
-                        background: #0ea5e9;
+                        background: #10b981;
                         border-radius: 50%;
                         top: 50%;
                         left: 50%;
                         transform: translate(-50%, -50%);
-                        box-shadow: 0 0 10px #0ea5e9;
+                        box-shadow: 0 0 10px #10b981;
                     }
 
                     .custom-cursor.clicking {
@@ -399,46 +441,44 @@ export default function CompanyTests() {
             <div className="container">
                 <div className="header">
                     <h1 className="page-title">
-                        <i className="fas fa-briefcase"></i> Program Tests for Companies
+                        <i className="fas fa-briefcase"></i> Company Projects
                     </h1>
                     <p className="page-subtitle">
-                        Technical assessments and coding challenges completed for various companies
+                        Professional projects developed for clients and companies
                     </p>
                 </div>
 
                 <div className="cards-grid">
-                    {/* Example: Add your company test projects here */}
-                    {/*
-                    <div className={`flip-card ${flippedCards['test1'] ? 'flipped' : ''}`} onClick={() => toggleFlip('test1')}>
-                        <div className="flip-card-inner">
-                            <div className="flip-card-front">
-                                <div className="card-header">
-                                    <div className="card-icon">
-                                        <i className="fas fa-code-branch"></i>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <h3>Company Name - Technical Assessment</h3>
-                                    <p>Description of the test challenge and what you built</p>
+                    {projects.map((project) => (
+                        <div key={project.id} className="project-card">
+                            <div className="card-image">
+                                <img src={project.image} alt={project.title} />
+                                <div className="card-overlay">
                                     <div className="card-tags">
-                                        <span className="tag">Technology 1</span>
-                                        <span className="tag">Technology 2</span>
+                                        {project.tags.map((tag, idx) => (
+                                            <span key={idx} className="tag">{tag}</span>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-                            <div className="flip-card-back">
-                                <img src="/test-screenshot.png" alt="Test Project" />
+                            <div className="card-body">
+                                <div className="card-icon">
+                                    <i className={project.icon}></i>
+                                </div>
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
+                                <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="view-btn"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    Visit Website <i className="fas fa-external-link-alt"></i>
+                                </a>
                             </div>
                         </div>
-                    </div>
-                    */}
-                </div>
-
-                {/* Empty state */}
-                <div className="empty-state">
-                    <i className="fas fa-clipboard-list"></i>
-                    <h3>Projects Coming Soon</h3>
-                    <p>Technical assessments and coding challenges will be showcased here as they are completed.</p>
+                    ))}
                 </div>
             </div>
 
